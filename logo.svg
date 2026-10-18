@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2D87B"/>
+      <stop offset="50%" stop-color="#C9A227"/>
+      <stop offset="100%" stop-color="#9A7712"/>
+    </linearGradient>
+    <linearGradient id="navyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#143044"/>
+      <stop offset="100%" stop-color="#07131F"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Card with Gold Border -->
+  <rect x="2" y="2" width="44" height="44" rx="10" fill="url(#navyBg)" stroke="url(#gold)" stroke-width="2"/>
+  <!-- Inner Geometric Framing -->
+  <rect x="7" y="7" width="34" height="34" rx="6" fill="none" stroke="rgba(201,162,39,0.25)" stroke-width="1"/>
+  <!-- Interwoven G and I Monogram -->
+  <path d="M27 15 H19 C16.8 15 15 16.8 15 19 V29 C15 31.2 16.8 33 19 33 H29 C31.2 33 33 31.2 33 29 V25 H23" fill="none" stroke="url(#gold)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23 19 V31" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="23" cy="16" r="1.5" fill="#FFFFFF"/>
+</svg>
