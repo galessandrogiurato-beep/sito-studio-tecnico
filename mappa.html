@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Visualizzatore WebGIS Professionale — Studio Tecnico Associato Geometri Giurato & Iacono (Rosolini, Siracusa). Mappe catastali Agenzia delle Entrate, Piano Paesaggistico Regione Siciliana, strumenti di misura e geolocalizzazione GPS.">
-  <title>WebGIS Professionale &amp; Cartografia | Studio Tecnico Giurato &amp; Iacono</title>
+  <meta name="description" content="Visualizzatore WebGIS Professionale — Studio Tecnico Associato Geometri Giurato & Iacono (Rosolini, Siracusa). Mappe catastali Agenzia delle Entrate in tempo reale, Piano Paesaggistico Regione Siciliana (SR e RG), ricerca particella e misurazioni.">
+  <title>WebGIS Catasto &amp; Piano Paesaggistico | Studio Tecnico Giurato &amp; Iacono</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B1C2D'/%3E%3Cpath d='M20 22 H32 A8 8 0 0 1 40 30 A8 8 0 0 1 32 38 H24 V46' fill='none' stroke='%23C9A227' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M42 22 V46' fill='none' stroke='%23C9A227' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='30' r='3' fill='%23C9A227'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,34 +49,35 @@
       <!-- Floating / Collapsible GIS Sidebar -->
       <aside class="gis-sidebar" id="gisSidebar">
         <div class="gis-sidebar-header">
-          <h3>Pannello WebGIS</h3>
+          <h3>WebGIS Catasto &amp; SITR</h3>
           <button class="gis-sidebar-close" id="gisSidebarToggle" type="button" aria-label="Comprimi o espandi pannello">◀</button>
         </div>
 
         <div class="gis-sidebar-content">
-          <!-- Search Box -->
-          <div class="sidebar-block">
-            <h4>Ricerca Comune / Indirizzo</h4>
-            <div class="search-box-group">
-              <input type="text" id="gisSearchInput" placeholder="Es. Rosolini, Noto, Modica..." autocomplete="off">
-              <button class="btn btn-gold" id="gisSearchBtn" type="button">Cerca</button>
-            </div>
-            <div id="gisSearchResults" class="search-results-list"></div>
+          <!-- Avviso Zoom Catasto + Interrogazione al Click -->
+          <div style="background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 10px; padding: 0.7rem 0.85rem; font-size: 0.8rem; color: #075985; line-height: 1.4;">
+            <strong>💡 Modalità Geomappe Attiva:</strong><br>
+            • I numeri delle particelle sono visibili da <strong>Zoom 17+</strong>.<br>
+            • <strong>Clicca su un terreno o fabbricato</strong> sulla mappa per leggere in tempo reale Comune, Foglio e Particella.
           </div>
 
           <!-- Cadastral Search -->
           <div class="sidebar-block">
-            <h4>Ricerca Catastale</h4>
+            <h4>Ricerca Catastale Reale</h4>
             <div class="catastral-search-group" style="display: grid; gap: 0.6rem;">
               <label style="font-size: 0.82rem; margin: 0; font-weight: 600; color: var(--navy);">
-                Comune
+                Comune (Codice Catastale)
                 <select id="gisComuneSelect" style="margin-top: 0.2rem; padding: 0.5rem; font-size: 0.85rem; border-radius: 8px; width: 100%;">
-                  <option value="rosolini">Rosolini (SR)</option>
-                  <option value="noto">Noto (SR)</option>
-                  <option value="ispica">Ispica (RG)</option>
-                  <option value="ragusa">Ragusa (RG)</option>
-                  <option value="avola">Avola (SR)</option>
-                  <option value="scicli">Scicli (RG)</option>
+                  <option value="H574">Rosolini (SR) - H574</option>
+                  <option value="F943">Noto (SR) - F943</option>
+                  <option value="E366">Ispica (RG) - E366</option>
+                  <option value="F258">Modica (RG) - F258</option>
+                  <option value="H163">Ragusa (RG) - H163</option>
+                  <option value="A522">Avola (SR) - A522</option>
+                  <option value="I535">Scicli (RG) - I535</option>
+                  <option value="G224">Pachino (SR) - G224</option>
+                  <option value="G923">Pozzallo (RG) - G923</option>
+                  <option value="I754">Siracusa (SR) - I754</option>
                 </select>
               </label>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
@@ -89,57 +90,94 @@
                   <input type="text" id="gisParticellaInput" placeholder="Es. 345" style="margin-top: 0.2rem; padding: 0.5rem; font-size: 0.85rem; border-radius: 8px; width: 100%;">
                 </label>
               </div>
-              <button class="btn btn-gold" id="gisCatastralSearchBtn" type="button" style="width: 100%; min-height: 38px; font-size: 0.85rem; margin-top: 0.2rem;">🔍 Cerca e Centra Particella</button>
+              <button class="btn btn-gold" id="gisCatastralSearchBtn" type="button" style="width: 100%; min-height: 38px; font-size: 0.85rem; margin-top: 0.2rem;">🔍 Localizza Foglio / Particella</button>
+              <div id="catastralSearchStatus" style="font-size: 0.78rem; color: var(--muted); display: none;"></div>
+            </div>
+          </div>
+
+          <!-- Search Box Indirizzo -->
+          <div class="sidebar-block">
+            <h4>Ricerca Indirizzo / Contrada</h4>
+            <div class="search-box-group">
+              <input type="text" id="gisSearchInput" placeholder="Es. Corso Savoia 46, Rosolini..." autocomplete="off">
+              <button class="btn btn-gold" id="gisSearchBtn" type="button">Vai</button>
+            </div>
+            <div id="gisSearchResults" class="search-results-list"></div>
+          </div>
+
+          <!-- WMS Layers -->
+          <div class="sidebar-block">
+            <h4>Sovrapposizioni Ufficiali (WMS)</h4>
+            
+            <!-- Catasto AdE -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="toggleCatasto" checked> <strong>Catasto Agenzia Entrate</strong>
+                </label>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                Fogli, Particelle, Fabbricati, Acque e Strade (EPSG:6706)
+              </div>
+              <div class="opacity-slider-row">
+                <span>Opacità: <strong id="catastoOpacityVal">95%</strong></span>
+                <input type="range" id="catastoOpacity" min="0" max="100" value="95">
+              </div>
+            </div>
+
+            <!-- Piano Paesaggistico Siracusa -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="togglePaesaggisticoSR"> <strong>Piano Paesaggistico Siracusa</strong>
+                </label>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                SITR Sicilia: Beni Paesaggistici e Regimi Normativi (SR)
+              </div>
+              <div class="opacity-slider-row">
+                <span>Opacità: <strong id="paesaggisticoSROpacityVal">70%</strong></span>
+                <input type="range" id="paesaggisticoSROpacity" min="0" max="100" value="70">
+              </div>
+            </div>
+
+            <!-- Piano Paesaggistico Ragusa -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="togglePaesaggisticoRG"> <strong>Piano Paesaggistico Ragusa</strong>
+                </label>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                SITR Sicilia: Beni Paesaggistici e Regimi Normativi (RG)
+              </div>
+              <div class="opacity-slider-row">
+                <span>Opacità: <strong id="paesaggisticoRGOpacityVal">70%</strong></span>
+                <input type="range" id="paesaggisticoRGOpacity" min="0" max="100" value="70">
+              </div>
             </div>
           </div>
 
           <!-- Base Maps -->
           <div class="sidebar-block">
-            <h4>Mappe di Base</h4>
+            <h4>Mappa di Base</h4>
             <div class="base-layers-group">
               <label class="radio-label"><input type="radio" name="baseMap" value="googleHybrid" checked> Google Ibrido (Sat + Vie)</label>
-              <label class="radio-label"><input type="radio" name="baseMap" value="googleSat"> Google Satellite</label>
+              <label class="radio-label"><input type="radio" name="baseMap" value="googleSat"> Google Satellite Puro</label>
               <label class="radio-label"><input type="radio" name="baseMap" value="googleStreet"> Google Stradario</label>
-              <label class="radio-label"><input type="radio" name="baseMap" value="osm"> OpenStreetMap Standard</label>
-            </div>
-          </div>
-
-          <!-- WMS Layers -->
-          <div class="sidebar-block">
-            <h4>Livelli Tematici WMS</h4>
-            <div class="wms-layer-item">
-              <div class="layer-toggle-row">
-                <label class="checkbox-label">
-                  <input type="checkbox" id="toggleCatasto" checked> Catasto (Agenzia Entrate)
-                </label>
-              </div>
-              <div class="opacity-slider-row">
-                <span>Opacità: <strong id="catastoOpacityVal">100%</strong></span>
-                <input type="range" id="catastoOpacity" min="0" max="100" value="100">
-              </div>
-            </div>
-
-            <div class="wms-layer-item">
-              <div class="layer-toggle-row">
-                <label class="checkbox-label">
-                  <input type="checkbox" id="togglePaesaggisticoSR"> Piano Paesaggistico (SITR Sicilia)
-                </label>
-              </div>
-              <div class="opacity-slider-row">
-                <span>Opacità: <strong id="paesaggisticoSROpacityVal">80%</strong></span>
-                <input type="range" id="paesaggisticoSROpacity" min="0" max="100" value="80">
-              </div>
+              <label class="radio-label"><input type="radio" name="baseMap" value="osm"> OpenStreetMap</label>
             </div>
           </div>
 
           <!-- Measurements & Tools -->
           <div class="sidebar-block">
-            <h4>Misurazioni Interattive</h4>
+            <h4>Strumenti Topografici &amp; CAD</h4>
             <div style="display: grid; gap: 0.5rem;">
+              <button class="btn btn-ghost" id="btnInspectParcel" type="button" style="width: 100%; color: var(--navy); border-color: var(--gold); background: #fffdf5; font-size: 0.85rem; min-height: 38px;">🎯 Modalità Info Particella (Attiva)</button>
               <button class="btn btn-ghost" id="btnMeasureDist" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8; font-size: 0.85rem; min-height: 38px;">📏 Misura Distanza Lineare</button>
               <button class="btn btn-ghost" id="btnMeasureArea" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8; font-size: 0.85rem; min-height: 38px;">📐 Misura Area (m² / Ettari)</button>
-              <button class="btn btn-ghost" id="btnExportCsv" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8; font-size: 0.85rem; min-height: 38px;">📥 Esporta Punti in CSV / Coordinate</button>
-              <button class="btn btn-ghost" id="btnClearMeasure" type="button" style="width: 100%; color: #9b2c2c; border-color: #fed7d7; font-size: 0.82rem; min-height: 34px; background: #fff5f5;">Pulisci Misure</button>
+              <button class="btn btn-ghost" id="btnExportCsv" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8; font-size: 0.85rem; min-height: 38px;">📥 Esporta Coordinate CSV (CAD)</button>
+              <button class="btn btn-ghost" id="btnClearMeasure" type="button" style="width: 100%; color: #9b2c2c; border-color: #fed7d7; font-size: 0.82rem; min-height: 34px; background: #fff5f5;">🗑️ Pulisci Disegni e Misure</button>
             </div>
           </div>
 
@@ -157,11 +195,11 @@
         
         <!-- Floating Status Overlays -->
         <div id="mapLoadingStatus" class="map-loading-status" style="display: none;">
-          <span class="spinner"></span> Connessione WMS in corso...
+          <span class="spinner"></span> Caricamento cartografia WMS...
         </div>
         
         <div class="map-coordinates-bar" id="mapCoordsBar">
-          Lat: 36.8800, Lon: 14.9500 | Zoom: 10 | Modalità Esplorazione GIS
+          Lat: 36.81900, Lon: 14.94800 | Zoom: 18 | Clicca su una particella per i dati catastali
         </div>
       </div>
     </div>
