@@ -627,6 +627,46 @@ textarea {
   background: #fff5f5;
 }
 
+.faq-section {
+  background: var(--white);
+  padding: 5rem 0;
+  border-top: 1px solid var(--mist);
+  border-bottom: 1px solid var(--mist);
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.faq-card {
+  background: var(--paper);
+  border: 1px solid var(--mist);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: 0 4px 12px rgba(11, 28, 45, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.faq-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.faq-card h3 {
+  font-size: 1.25rem;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+}
+
+.faq-card p {
+  color: var(--muted);
+  margin: 0;
+  font-size: 0.95rem;
+}
+
 @media (max-width: 980px) {
   .cards,
   .card,

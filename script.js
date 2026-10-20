@@ -104,4 +104,46 @@
     form.reset();
     window.open(buildWhatsAppUrl(summary), "_blank", "noopener,noreferrer");
   });
+
+  // Cadastral Map Viewer Layer Switcher & Query Form
+  const mapIframe = document.getElementById("catastralMapIframe");
+  const layerBtns = document.querySelectorAll(".map-layer-btn");
+  const catastralForm = document.getElementById("catastralForm");
+  const foglioInput = document.getElementById("foglioInput");
+  const particellaInput = document.getElementById("particellaInput");
+
+  layerBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      layerBtns.forEach((b) => {
+        b.classList.remove("btn-gold");
+        b.classList.add("btn-ghost");
+        b.style.color = "var(--navy)";
+        b.style.borderColor = "#d7d2c8";
+      });
+      btn.classList.remove("btn-ghost");
+      btn.classList.add("btn-gold");
+      btn.style.color = "var(--navy)";
+      btn.style.borderColor = "transparent";
+
+      const type = btn.getAttribute("data-type") || "m";
+      if (mapIframe) {
+        mapIframe.src = `https://maps.google.com/maps?q=Corso+Savoia+46,+96019+Rosolini+SR&t=${type}&z=17&ie=UTF8&iwloc=&output=embed`;
+      }
+    });
+  });
+
+  catastralForm?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const foglio = foglioInput?.value.trim() || "";
+    const particella = particellaInput?.value.trim() || "";
+
+    const msg = [
+      "Buongiorno, vorrei richiedere una verifica catastale / rilievo per:",
+      `Comune: Rosolini (SR)`,
+      `Foglio: ${foglio}`,
+      `Particella: ${particella}`,
+    ].join("\n");
+
+    window.open(buildWhatsAppUrl(msg), "_blank", "noopener,noreferrer");
+  });
 })();
