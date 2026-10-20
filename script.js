@@ -438,6 +438,7 @@
     // Interactive Measurement Tools (Distance & Area)
     const btnMeasureDist = document.getElementById("btnMeasureDist");
     const btnMeasureArea = document.getElementById("btnMeasureArea");
+    const btnExportCsv = document.getElementById("btnExportCsv");
     const btnClearMeasure = document.getElementById("btnClearMeasure");
 
     let measureMode = null; // 'dist' or 'area'
@@ -456,6 +457,24 @@
       measurePoints = [];
       measureLayerGroup.clearLayers();
       alert("Modalità Misura Area attivata: clicca sulla mappa per delimitare il perimetro. Almeno 3 punti.");
+    });
+
+    btnExportCsv?.addEventListener("click", () => {
+      if (!measurePoints || measurePoints.length === 0) {
+        alert("Nessun punto o vertice di misura attivo sulla mappa. Utilizza prima gli strumenti di misurazione (Distanza o Area) per aggiungere punti.");
+        return;
+      }
+      let csvContent = "data:text/csv;charset=utf-8,ID,Latitudine,Longitudine\n";
+      measurePoints.forEach((pt, index) => {
+        csvContent += `${index + 1},${pt.lat.toFixed(6)},${pt.lng.toFixed(6)}\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "coordinate_rilievo_studio.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     });
 
     btnClearMeasure?.addEventListener("click", () => {
