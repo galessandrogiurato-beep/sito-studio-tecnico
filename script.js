@@ -239,7 +239,7 @@
         "crs=EPSG:6706",
         "width=256",
         "height=256",
-        "layers=province,CP.CadastralZoning,acque,strade,fabbricati,CP.CadastralParcel,codice_plla,simbolo_graffa,vestizioni",
+        "layers=province,CP.CadastralZoning,acque,strade,CP.CadastralParcel,fabbricati,codice_plla,simbolo_graffa,vestizioni",
         "styles=default,default,default,default,default,default,default,default,default",
         "format=image/png",
         "transparent=TRUE"
@@ -253,34 +253,39 @@
     maxZoom: 21,
     minZoom: 6,
     opacity: 0.95,
+    zIndex: 600,
     attribution: "© Agenzia delle Entrate - Cartografia Catastale CC-BY 4.0"
   });
 
   // 3. LAYER PIANO PAESAGGISTICO SITR REGIONE SICILIANA (ArcGIS REST MapServer Export PNG32)
-  // Supporta sia Beni Paesaggistici che Regimi Normativi per Siracusa (SR) e Ragusa (RG)
+  // Supporta Componenti, Regimi Normativi e Beni Paesaggistici per Siracusa (SR) e Ragusa (RG)
   const SitrArcGisLayer = L.TileLayer.extend({
     initialize: function (servicePath, options) {
       this._servicePath = servicePath;
       L.TileLayer.prototype.initialize.call(this, "", options);
     },
     getTileUrl: function (coords) {
-      const nw = this._map.options.crs.project(L.latLng(tile2lat(coords.y, coords.z), tile2lon(coords.x, coords.z)));
-      const se = this._map.options.crs.project(L.latLng(tile2lat(coords.y + 1, coords.z), tile2lon(coords.x + 1, coords.z)));
-      const bbox3857 = `${nw.x.toFixed(2)},${se.y.toFixed(2)},${se.x.toFixed(2)},${nw.y.toFixed(2)}`;
+      const nwLon = tile2lon(coords.x, coords.z);
+      const nwLat = tile2lat(coords.y, coords.z);
+      const seLon = tile2lon(coords.x + 1, coords.z);
+      const seLat = tile2lat(coords.y + 1, coords.z);
+      const bbox4326 = `${nwLon.toFixed(7)},${seLat.toFixed(7)},${seLon.toFixed(7)},${nwLat.toFixed(7)}`;
 
-      return `https://map.sitr.regione.sicilia.it/gis/rest/services/piani_paesaggistici/${this._servicePath}/MapServer/export?bbox=${bbox3857}&bboxSR=3857&imageSR=3857&size=256,256&format=png32&transparent=true&f=image`;
+      return `https://map.sitr.regione.sicilia.it/gis/rest/services/piani_paesaggistici/${this._servicePath}/MapServer/export?bbox=${bbox4326}&bboxSR=4326&imageSR=3857&size=256,256&format=png32&transparent=true&f=image`;
     }
   });
 
-  // Provincia di Siracusa (Beni Paesaggistici + Regimi Normativi)
-  const srBeniLayer = new SitrArcGisLayer("sr_beni_paesaggistici", { maxZoom: 21, opacity: 0.7, attribution: "© SITR Sicilia - PP Siracusa" });
-  const srRegimiLayer = new SitrArcGisLayer("sr_regimi_normativi", { maxZoom: 21, opacity: 0.6, attribution: "© SITR Sicilia - PP Siracusa" });
-  const paesaggisticoSRGroup = L.layerGroup([srRegimiLayer, srBeniLayer]);
+  // Provincia di Siracusa (Componenti, Regimi Normativi e Beni Paesaggistici)
+  const srComponentiLayer = new SitrArcGisLayer("sr_componenti_paesaggio", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Siracusa" });
+  const srRegimiLayer = new SitrArcGisLayer("sr_regimi_normativi", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Siracusa" });
+  const srBeniLayer = new SitrArcGisLayer("sr_beni_paesaggistici", { maxZoom: 21, opacity: 0.7, zIndex: 450, attribution: "© SITR Sicilia - PP Siracusa" });
+  const paesaggisticoSRGroup = L.layerGroup([srComponentiLayer, srRegimiLayer, srBeniLayer]);
 
-  // Provincia di Ragusa (Beni Paesaggistici + Regimi Normativi)
-  const rgBeniLayer = new SitrArcGisLayer("rg_beni_paesaggistici", { maxZoom: 21, opacity: 0.7, attribution: "© SITR Sicilia - PP Ragusa" });
-  const rgRegimiLayer = new SitrArcGisLayer("rg_regimi_normativi", { maxZoom: 21, opacity: 0.6, attribution: "© SITR Sicilia - PP Ragusa" });
-  const paesaggisticoRGGroup = L.layerGroup([rgRegimiLayer, rgBeniLayer]);
+  // Provincia di Ragusa (Componenti, Regimi Normativi e Beni Paesaggistici)
+  const rgComponentiLayer = new SitrArcGisLayer("rg_componenti_paesaggio", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Ragusa" });
+  const rgRegimiLayer = new SitrArcGisLayer("rg_regimi_normativi", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Ragusa" });
+  const rgBeniLayer = new SitrArcGisLayer("rg_beni_paesaggistici", { maxZoom: 21, opacity: 0.7, zIndex: 450, attribution: "© SITR Sicilia - PP Ragusa" });
+  const paesaggisticoRGGroup = L.layerGroup([rgComponentiLayer, rgRegimiLayer, rgBeniLayer]);
 
   // Gestione spinner di caricamento sulle tile WMS/ArcGIS
   [catastoLayer, srBeniLayer, rgBeniLayer].forEach((lyr) => {
@@ -338,8 +343,10 @@
   paesaggisticoSROpacity?.addEventListener("input", (e) => {
     const val = parseInt(e.target.value, 10);
     if (paesaggisticoSROpacityVal) paesaggisticoSROpacityVal.textContent = `${val}%`;
-    srBeniLayer.setOpacity(val / 100);
-    srRegimiLayer.setOpacity((val / 100) * 0.85);
+    const op = val / 100;
+    srComponentiLayer.setOpacity(op);
+    srRegimiLayer.setOpacity(op);
+    srBeniLayer.setOpacity(op);
   });
 
   // Toggle Piano Paesaggistico Ragusa
@@ -362,8 +369,10 @@
   paesaggisticoRGOpacity?.addEventListener("input", (e) => {
     const val = parseInt(e.target.value, 10);
     if (paesaggisticoRGOpacityVal) paesaggisticoRGOpacityVal.textContent = `${val}%`;
-    rgBeniLayer.setOpacity(val / 100);
-    rgRegimiLayer.setOpacity((val / 100) * 0.85);
+    const op = val / 100;
+    rgComponentiLayer.setOpacity(op);
+    rgRegimiLayer.setOpacity(op);
+    rgBeniLayer.setOpacity(op);
   });
 
   // Barra delle coordinate in tempo reale
