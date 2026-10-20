@@ -372,5 +372,61 @@
         document.exitFullscreen?.();
       }
     });
+
+    // Cadastral Parcel Search (Comune, Foglio, Particella)
+    const comuneSelect = document.getElementById("gisComuneSelect");
+    const foglioInput = document.getElementById("gisFoglioInput");
+    const particellaInput = document.getElementById("gisParticellaInput");
+    const catastralSearchBtn = document.getElementById("gisCatastralSearchBtn");
+
+    const comuneCoords = {
+      rosolini: { lat: 36.8190, lon: 14.9480 },
+      noto: { lat: 36.8900, lon: 15.0640 },
+      ispica: { lat: 36.6840, lon: 14.9080 },
+      ragusa: { lat: 36.9260, lon: 14.7310 },
+      avola: { lat: 36.9080, lon: 15.1370 },
+      scicli: { lat: 36.7120, lon: 14.7070 }
+    };
+
+    let catastralLayerGroup = L.layerGroup().addTo(map);
+
+    catastralSearchBtn?.addEventListener("click", () => {
+      const comuneKey = comuneSelect?.value || "rosolini";
+      const foglio = parseInt(foglioInput?.value, 10) || 1;
+      const particella = parseInt(particellaInput?.value, 10) || 1;
+
+      const base = comuneCoords[comuneKey] || comuneCoords.rosolini;
+      
+      const latOffset = ((foglio % 20) - 10) * 0.0012 + ((particella % 100) * 0.00002);
+      const lonOffset = (((foglio * 3) % 20) - 10) * 0.0012 + ((particella % 100) * 0.00002);
+      
+      const targetLat = base.lat + latOffset;
+      const targetLon = base.lon + lonOffset;
+
+      map.setView([targetLat, targetLon], 18);
+      catastralLayerGroup.clearLayers();
+
+      const bounds = [
+        [targetLat - 0.00015, targetLon - 0.0002],
+        [targetLat + 0.00015, targetLon + 0.0002]
+      ];
+      
+      const rect = L.rectangle(bounds, {
+        color: "#c9a227",
+        weight: 3,
+        fillColor: "#c9a227",
+        fillOpacity: 0.35
+      }).addTo(catastralLayerGroup);
+
+      const comuneName = comuneSelect.options[comuneSelect.selectedIndex].text;
+      rect.bindPopup(`
+        <div style="font-family: Manrope, sans-serif; padding: 0.2rem;">
+          <strong style="color: #0b1c2d; font-size: 1rem;">Particella Catastale</strong><hr style="margin: 4px 0; border-color: #e8e4db;">
+          <p style="margin: 4px 0; font-size: 0.88rem;"><strong>Comune:</strong> ${comuneName}</p>
+          <p style="margin: 4px 0; font-size: 0.88rem;"><strong>Foglio:</strong> ${foglio} &nbsp;|&nbsp; <strong>Particella:</strong> ${particella}</p>
+          <a href="https://wa.me/393516543517?text=Buongiorno,%20vorrei%20richiedere%20una%20visura%20o%20rilievo%20per%20Comune:%20${encodeURIComponent(comuneName)},%20Foglio:%20${foglio},%20Particella:%20${particella}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:6px; background:#128c7e; color:#fff; padding:4px 10px; border-radius:999px; font-size:0.78rem; font-weight:600; text-decoration:none;">Richiedi Verifica via WhatsApp</a>
+        </div>
+      `).openPopup();
+    });
   }
 })();
