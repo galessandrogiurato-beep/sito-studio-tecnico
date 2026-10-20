@@ -313,128 +313,13 @@
     </section>
 
     <section class="section webgis-section" id="webgis">
-      <div class="container">
-        <header class="section-head">
-          <p class="eyebrow">Geomarketing &amp; Territorio</p>
-          <h2>WebGIS &amp; Cartografia</h2>
-          <p class="section-intro">
-            Esplora il territorio tra Siracusa e Ragusa con il nostro visualizzatore cartografico professionale. Sovrapponi le mappe catastali dell'Agenzia delle Entrate e i vincoli del Piano Paesaggistico.
-          </p>
-        </header>
-
-        <div class="webgis-layout">
-          <!-- Sidebar Controls -->
-          <aside class="webgis-sidebar">
-            <div class="sidebar-block">
-              <h4>Ricerca Comune / Indirizzo</h4>
-              <div class="search-box-group">
-                <input type="text" id="gisSearchInput" placeholder="Es. Rosolini, Noto, Modica..." autocomplete="off">
-                <button class="btn btn-gold" id="gisSearchBtn" type="button">Cerca</button>
-              </div>
-              <div id="gisSearchResults" class="search-results-list"></div>
-            </div>
-
-            <div class="sidebar-block">
-              <h4>Ricerca Catastale per Particella</h4>
-              <div class="catastral-search-group" style="display: grid; gap: 0.6rem;">
-                <label style="font-size: 0.82rem; margin: 0; font-weight: 600; color: var(--navy);">
-                  Comune
-                  <select id="gisComuneSelect" style="margin-top: 0.2rem; padding: 0.5rem; font-size: 0.85rem; border-radius: 8px; width: 100%;">
-                    <option value="rosolini">Rosolini (SR)</option>
-                    <option value="noto">Noto (SR)</option>
-                    <option value="ispica">Ispica (RG)</option>
-                    <option value="ragusa">Ragusa (RG)</option>
-                    <option value="avola">Avola (SR)</option>
-                    <option value="scicli">Scicli (RG)</option>
-                  </select>
-                </label>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                  <label style="font-size: 0.82rem; margin: 0; font-weight: 600; color: var(--navy);">
-                    Foglio
-                    <input type="text" id="gisFoglioInput" placeholder="Es. 12" style="margin-top: 0.2rem; padding: 0.5rem; font-size: 0.85rem; border-radius: 8px; width: 100%;">
-                  </label>
-                  <label style="font-size: 0.82rem; margin: 0; font-weight: 600; color: var(--navy);">
-                    Particella
-                    <input type="text" id="gisParticellaInput" placeholder="Es. 345" style="margin-top: 0.2rem; padding: 0.5rem; font-size: 0.85rem; border-radius: 8px; width: 100%;">
-                  </label>
-                </div>
-                <button class="btn btn-gold" id="gisCatastralSearchBtn" type="button" style="width: 100%; min-height: 38px; font-size: 0.85rem; margin-top: 0.2rem;">🔍 Cerca e Centra Particella</button>
-              </div>
-            </div>
-
-            <div class="sidebar-block">
-              <h4>Mappa di Base</h4>
-              <div class="base-layers-group">
-                <label class="radio-label"><input type="radio" name="baseMap" value="googleHybrid" checked> Google Ibrido (Sat + Vie)</label>
-                <label class="radio-label"><input type="radio" name="baseMap" value="googleSat"> Google Satellite</label>
-                <label class="radio-label"><input type="radio" name="baseMap" value="googleStreet"> Google Stradario</label>
-                <label class="radio-label"><input type="radio" name="baseMap" value="osm"> OpenStreetMap</label>
-              </div>
-            </div>
-
-            <div class="sidebar-block">
-              <h4>Livelli Tematici (WMS)</h4>
-              <div class="wms-layer-item">
-                <div class="layer-toggle-row">
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="toggleCatasto" checked> Catasto (Agenzia Entrate)
-                  </label>
-                </div>
-                <div class="opacity-slider-row">
-                  <span>Opacità: <strong id="catastoOpacityVal">100%</strong></span>
-                  <input type="range" id="catastoOpacity" min="0" max="100" value="100">
-                </div>
-              </div>
-
-              <div class="wms-layer-item">
-                <div class="layer-toggle-row">
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="togglePaesaggisticoSR"> Piano Paesaggistico Siracusa
-                  </label>
-                </div>
-                <div class="opacity-slider-row">
-                  <span>Opacità: <strong id="paesaggisticoSROpacityVal">80%</strong></span>
-                  <input type="range" id="paesaggisticoSROpacity" min="0" max="100" value="80">
-                </div>
-              </div>
-
-              <div class="wms-layer-item">
-                <div class="layer-toggle-row">
-                  <label class="checkbox-label">
-                    <input type="checkbox" id="togglePaesaggisticoRG"> Piano Paesaggistico Ragusa
-                  </label>
-                </div>
-                <div class="opacity-slider-row">
-                  <span>Opacità: <strong id="paesaggisticoRGOpacityVal">80%</strong></span>
-                  <input type="range" id="paesaggisticoRGOpacity" min="0" max="100" value="80">
-                </div>
-              </div>
-            </div>
-
-            <div class="sidebar-block">
-              <h4>Strumenti GIS &amp; Misurazioni</h4>
-              <div style="display: grid; gap: 0.5rem;">
-                <button class="btn btn-ghost" id="btnMeasureDist" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8; font-size: 0.85rem; min-height: 38px;">📏 Misura Distanza (Metri)</button>
-                <button class="btn btn-ghost" id="btnMeasureArea" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8; font-size: 0.85rem; min-height: 38px;">📐 Misura Area (m² / Ettari)</button>
-                <button class="btn btn-ghost" id="btnClearMeasure" type="button" style="width: 100%; color: #9b2c2c; border-color: #fed7d7; font-size: 0.82rem; min-height: 34px; background: #fff5f5;">Pulisci Misure</button>
-              </div>
-            </div>
-
-            <div class="sidebar-block actions-block">
-              <button class="btn btn-gold" id="btnGps" type="button" style="width: 100%; margin-bottom: 0.5rem;">📍 La mia posizione GPS</button>
-              <button class="btn btn-ghost" id="btnFullscreen" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8;">⛶ Schermo Intero Mappa</button>
-            </div>
-          </aside>
-
-          <!-- Map Container -->
-          <div class="webgis-map-wrapper" style="position: relative;">
-            <div id="leafletMap" class="leaflet-map-container" aria-label="Visualizzatore WebGIS Cartografico"></div>
-            <div id="mapLoadingSpinner" style="position: absolute; top: 1rem; right: 1rem; background: rgba(11,28,45,0.85); color: #fff; padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.78rem; display: none; z-index: 1000; align-items: center; gap: 0.4rem;">
-              <span class="spinner" style="width: 12px; height: 12px; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite;"></span> Caricamento WMS...
-            </div>
-            <div class="map-coordinates-bar" id="mapCoordsBar">Lat: 36.8800, Lon: 14.9500 | Zoom: 10</div>
-          </div>
-        </div>
+      <div class="container" style="text-align: center; max-width: 48rem;">
+        <p class="eyebrow">Geomarketing &amp; Territorio</p>
+        <h2>Visualizzatore WebGIS Professionale</h2>
+        <p class="section-intro" style="margin-left: auto; margin-right: auto; margin-bottom: 2rem;">
+          Esplora il territorio tra Siracusa e Ragusa con il nostro visualizzatore cartografico a tutto schermo. Sovrapponi le mappe catastali dell'Agenzia delle Entrate, i vincoli del Piano Paesaggistico, misura distanze e aree ed esporta le coordinate.
+        </p>
+        <a class="btn btn-gold" href="mappa.html" style="font-size: 1.05rem; padding: 0.9rem 2rem;">🗺️ Apri WebGIS a Schermo Intero</a>
       </div>
     </section>
 
