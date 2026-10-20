@@ -577,30 +577,80 @@ textarea {
 
 .site-footer {
   background: var(--navy-deep);
-  color: rgba(255, 255, 255, 0.72);
-  padding: 2.5rem 0 5.5rem;
+  color: rgba(255, 255, 255, 0.78);
+  padding: 4rem 0 3rem;
+  border-top: 1px solid rgba(201, 162, 39, 0.22);
 }
 
 .footer-inner {
   display: grid;
-  gap: 1.2rem;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.footer-inner > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .footer-name {
   color: var(--white);
-  font-size: 1.5rem;
-  margin: 0.15rem 0 0.4rem;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 0.15rem 0 0.3rem;
+  line-height: 1.2;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.site-footer a {
+  color: var(--gold-soft);
+  font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .site-footer a:hover {
-  color: var(--gold-soft);
+  color: var(--white);
+  text-decoration: underline;
 }
 
 .copyright {
-  margin: 0.5rem 0 0;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 0.85rem;
+  grid-column: 1 / -1;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    padding: 3rem 0 5rem;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-name {
+    font-size: 1.25rem;
+  }
+
+  .copyright {
+    text-align: center;
+    padding-top: 1.2rem;
+    margin-top: 1rem;
+  }
 }
 
 .whatsapp-fab {
@@ -1033,4 +1083,9 @@ textarea {
   .webgis-app-container.sidebar-collapsed .gis-sidebar {
     max-height: 50px;
   }
+}
+
+.wms-crisp-layer {
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(1.12) saturate(1.1) drop-shadow(0 0 1px rgba(255, 255, 255, 0.6));
 }
