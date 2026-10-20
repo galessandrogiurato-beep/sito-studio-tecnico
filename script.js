@@ -204,12 +204,12 @@
     // Loading status element for WMS
     const loadingStatus = document.getElementById("mapLoadingStatus") || document.getElementById("mapLoadingSpinner");
 
-    // WMS Overlays with robust parameters & error handling
+    // WMS Overlays with robust version 1.1.1 parameters & error handling
     const catastoLayer = L.tileLayer.wms('https://wms.cartografia.agenziaentrate.gov.it/inspire/wms/ows01.php', {
       layers: 'CP.CadastralZoning,CP.CadastralParcel,fabbricati',
       format: 'image/png',
       transparent: true,
-      version: '1.3.0',
+      version: '1.1.1',
       uppercase: true,
       crs: L.CRS.EPSG3857,
       opacity: 1.0,
@@ -221,7 +221,7 @@
       layers: 'sitr:piano_paesaggistico',
       format: 'image/png',
       transparent: true,
-      version: '1.3.0',
+      version: '1.1.1',
       uppercase: true,
       crs: L.CRS.EPSG3857,
       opacity: 0.8,
@@ -229,8 +229,9 @@
       attribution: '© SITR Regione Siciliana'
     });
 
-    // WMS Error and loading event listeners for robustness
-    [catastoLayer, paesaggisticoSRLayer].forEach((layer) => {
+    // WMS Error and loading event listeners with detailed console logging for CORS and network diagnostics
+    [catastoLayer, paesaggisticoSRLayer].forEach((layer, index) => {
+      const layerName = index === 0 ? "Catasto (Agenzia Entrate)" : "Piano Paesaggistico (SITR Sicilia)";
       layer.on('loading', () => {
         if (loadingStatus) loadingStatus.style.display = 'flex';
       });
@@ -238,7 +239,7 @@
         if (loadingStatus) loadingStatus.style.display = 'none';
       });
       layer.on('tileerror', (err) => {
-        console.warn("WMS tile load error/warning (managed gracefully):", err);
+        console.warn(`[WebGIS WMS Warning] Failed to load tile for ${layerName}. Possible CORS restriction, server timeout, or invalid bbox:`, err);
         if (loadingStatus) loadingStatus.style.display = 'none';
       });
     });
