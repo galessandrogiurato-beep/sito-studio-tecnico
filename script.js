@@ -178,33 +178,53 @@
       });
     });
 
-    // WMS Overlays
+    // WMS Overlays with robust parameters for Agenzia Entrate and SITR Sicilia
     const catastoLayer = L.tileLayer.wms('https://wms.cartografia.agenziaentrate.gov.it/inspire/wms/ows01.php', {
       layers: 'CP.CadastralZoning,CP.CadastralParcel,fabbricati',
       format: 'image/png',
       transparent: true,
+      version: '1.3.0',
+      uppercase: true,
+      crs: L.CRS.EPSG3857,
       opacity: 1.0,
       maxZoom: 20,
       attribution: '© Agenzia delle Entrate'
     });
 
-    const paesaggisticoSRLayer = L.tileLayer.wms('https://wms.pcn.minambiente.it/ogc?map=/ms_tmp/vincoli/vincoli.map', {
-      layers: 'vincoli',
+    const paesaggisticoSRLayer = L.tileLayer.wms('https://sitr.regione.sicilia.it/geoserver/wms', {
+      layers: 'sitr:piano_paesaggistico',
       format: 'image/png',
       transparent: true,
+      version: '1.3.0',
+      uppercase: true,
+      crs: L.CRS.EPSG3857,
       opacity: 0.8,
       maxZoom: 20,
-      attribution: '© Geoportale Nazionale / SITR'
+      attribution: '© SITR Regione Siciliana'
     });
 
-    const paesaggisticoRGLayer = L.tileLayer.wms('https://wms.pcn.minambiente.it/ogc?map=/ms_tmp/vincoli/vincoli.map', {
-      layers: 'vincoli',
+    const paesaggisticoRGLayer = L.tileLayer.wms('https://sitr.regione.sicilia.it/geoserver/wms', {
+      layers: 'sitr:piano_paesaggistico',
       format: 'image/png',
       transparent: true,
+      version: '1.3.0',
+      uppercase: true,
+      crs: L.CRS.EPSG3857,
       opacity: 0.8,
       maxZoom: 20,
-      attribution: '© Geoportale Nazionale / SITR'
+      attribution: '© SITR Regione Siciliana'
     });
+
+    // Initial layer state based on checkboxes
+    if (document.getElementById("toggleCatasto")?.checked) {
+      catastoLayer.addTo(map);
+    }
+    if (document.getElementById("togglePaesaggisticoSR")?.checked) {
+      paesaggisticoSRLayer.addTo(map);
+    }
+    if (document.getElementById("togglePaesaggisticoRG")?.checked) {
+      paesaggisticoRGLayer.addTo(map);
+    }
 
     // Toggle Catasto
     const toggleCatasto = document.getElementById("toggleCatasto");
