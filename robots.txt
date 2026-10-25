@@ -1,0 +1,14 @@
+# Robots.txt per Studio Tecnico Associato Giurato & Iacono
+# Dominio: https://www.studiotecnicogiuratoiacono.it/
+
+User-agent: *
+Allow: /
+
+# Protezione file interni di sviluppo o dati grezzi non necessari ai motori di ricerca
+Disallow: /.git/
+Disallow: /.gemini/
+Disallow: /.cursor/
+Disallow: /catasto/*.json$
+
+# Indicazione della Sitemap per Googlebot, Bingbot e motori di ricerca
+Sitemap: https://www.studiotecnicogiuratoiacono.it/sitemap.xml
