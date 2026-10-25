@@ -4,10 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Visualizzatore WebGIS Professionale — Studio Tecnico Associato Geometri Giurato & Iacono (Rosolini, Siracusa). Mappe catastali Agenzia delle Entrate in tempo reale, Piano Paesaggistico Regione Siciliana (SR e RG), ricerca particella e misurazioni.">
+  <meta name="keywords" content="webgis catasto rosolini, mappa catastale agenzia entrate siracusa ragusa, piano paesaggistico sicilia, particelle catastali wms, sitr sicilia, giurato iacono">
+  <meta name="author" content="Geom. Alessandro Giurato &amp; Geom. Piernicolò Iacono">
+  <meta name="theme-color" content="#0b1c2d">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.studiotecnicogiuratoiacono.it/mappa.html">
+  <meta property="og:site_name" content="Studio Tecnico Associato Giurato &amp; Iacono">
+  <meta property="og:title" content="WebGIS Catasto &amp; Piano Paesaggistico | Studio Tecnico Giurato &amp; Iacono">
+  <meta property="og:description" content="Mappe catastali ufficiali dell'Agenzia delle Entrate e vincoli del Piano Paesaggistico SITR per Siracusa e Ragusa con ricerca particella e GPS.">
+  <meta property="og:image" content="https://www.studiotecnicogiuratoiacono.it/ig_post_catasto.png">
+  <meta property="og:locale" content="it_IT">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WebGIS Catasto &amp; Piano Paesaggistico | Geometri Giurato &amp; Iacono">
+  <meta name="twitter:description" content="Visualizzatore cartografico professionale WMS per particelle catastali e beni paesaggistici a Rosolini e dintorni.">
+  <meta name="twitter:image" content="https://www.studiotecnicogiuratoiacono.it/ig_post_catasto.png">
+
   <title>WebGIS Catasto &amp; Piano Paesaggistico | Studio Tecnico Giurato &amp; Iacono</title>
+  <link rel="canonical" href="https://www.studiotecnicogiuratoiacono.it/mappa.html">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B1C2D'/%3E%3Cpath d='M20 22 H32 A8 8 0 0 1 40 30 A8 8 0 0 1 32 38 H24 V46' fill='none' stroke='%23C9A227' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M42 22 V46' fill='none' stroke='%23C9A227' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='30' r='3' fill='%23C9A227'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://wms.cartografia.agenziaentrate.gov.it" crossorigin>
+  <link rel="preconnect" href="https://map.sitr.regione.sicilia.it" crossorigin>
+  <link rel="preconnect" href="https://mt0.google.com" crossorigin>
+  <link rel="preconnect" href="https://mt1.google.com" crossorigin>
+  <link rel="preconnect" href="https://mt2.google.com" crossorigin>
+  <link rel="preconnect" href="https://mt3.google.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -125,35 +151,51 @@
               </div>
             </div>
 
-            <!-- Piano Paesaggistico Siracusa -->
+            <!-- PP - Beni Paesaggistici (SR/RG) -->
             <div class="wms-layer-item">
               <div class="layer-toggle-row">
                 <label class="checkbox-label">
-                  <input type="checkbox" id="togglePaesaggisticoSR"> <strong>Piano Paesaggistico Siracusa</strong>
+                  <input type="checkbox" id="togglePpBeni"> <strong>PP - Beni Paesaggistici (SR/RG)</strong>
                 </label>
               </div>
               <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
-                SITR Sicilia: Beni Paesaggistici e Regimi Normativi (SR)
+                SITR Sicilia: Beni Paesaggistici (Siracusa &amp; Ragusa)
               </div>
               <div class="opacity-slider-row">
-                <span>Opacità: <strong id="paesaggisticoSROpacityVal">70%</strong></span>
-                <input type="range" id="paesaggisticoSROpacity" min="0" max="100" value="70">
+                <span>Opacità: <strong id="ppBeniOpacityVal">80%</strong></span>
+                <input type="range" id="ppBeniOpacity" min="0" max="100" value="80">
               </div>
             </div>
 
-            <!-- Piano Paesaggistico Ragusa -->
+            <!-- PP - Regimi Normativi / Livelli Tutela (SR/RG) -->
             <div class="wms-layer-item">
               <div class="layer-toggle-row">
                 <label class="checkbox-label">
-                  <input type="checkbox" id="togglePaesaggisticoRG"> <strong>Piano Paesaggistico Ragusa</strong>
+                  <input type="checkbox" id="togglePpRegimi"> <strong>PP - Regimi Normativi / Livelli Tutela (SR/RG)</strong>
                 </label>
               </div>
               <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
-                SITR Sicilia: Beni Paesaggistici e Regimi Normativi (RG)
+                SITR Sicilia: Regimi Normativi (Siracusa &amp; Ragusa)
               </div>
               <div class="opacity-slider-row">
-                <span>Opacità: <strong id="paesaggisticoRGOpacityVal">70%</strong></span>
-                <input type="range" id="paesaggisticoRGOpacity" min="0" max="100" value="70">
+                <span>Opacità: <strong id="ppRegimiOpacityVal">75%</strong></span>
+                <input type="range" id="ppRegimiOpacity" min="0" max="100" value="75">
+              </div>
+            </div>
+
+            <!-- PP - Componenti del Paesaggio (SR/RG) -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="togglePpComponenti"> <strong>PP - Componenti del Paesaggio (SR/RG)</strong>
+                </label>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                SITR Sicilia: Componenti del Paesaggio (Siracusa &amp; Ragusa)
+              </div>
+              <div class="opacity-slider-row">
+                <span>Opacità: <strong id="ppComponentiOpacityVal">65%</strong></span>
+                <input type="range" id="ppComponentiOpacity" min="0" max="100" value="65">
               </div>
             </div>
           </div>
@@ -186,11 +228,65 @@
             <button class="btn btn-gold" id="btnGps" type="button" style="width: 100%; margin-bottom: 0.5rem;">📍 Posizione GPS in Tempo Reale</button>
             <button class="btn btn-ghost" id="btnFullscreen" type="button" style="width: 100%; color: var(--navy); border-color: #d7d2c8;">⛶ Schermo Intero Mappa</button>
           </div>
+
+          <!-- QR Code Mobile Block -->
+          <div class="sidebar-block" style="text-align: center; background: #fffdf5; border: 1px solid var(--gold); border-radius: 10px; padding: 0.85rem; margin-top: 0.75rem;">
+            <h4 style="margin-bottom: 0.35rem; color: var(--navy); font-size: 0.88rem;">📱 Apri su Smartphone</h4>
+            <p style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.6rem; line-height: 1.3;">
+              Inquadra per aprire il WebGIS in cantiere con GPS attivo.
+            </p>
+            <div style="background: #ffffff; padding: 0.4rem; border-radius: 8px; border: 1px solid #e2e8f0; display: inline-block; margin-bottom: 0.6rem;">
+              <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&ecc=H&margin=8&color=0b1c2d&bgcolor=ffffff&data=https%3A%2F%2Fwww.studiotecnicogiuratoiacono.it%2Fmappa.html" alt="QR Code WebGIS" style="display: block; width: 120px; height: 120px; margin: 0 auto;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem;">
+              <a href="https://api.qrserver.com/v1/create-qr-code/?size=600x600&ecc=H&margin=16&color=0b1c2d&bgcolor=ffffff&data=https%3A%2F%2Fwww.studiotecnicogiuratoiacono.it%2Fmappa.html" download="QR_WebGIS_Studio_Giurato_Iacono.png" target="_blank" class="btn btn-gold" style="font-size: 0.75rem; padding: 0.4rem 0.4rem; text-decoration: none; text-align: center; min-height: 32px;">📥 Scarica</a>
+              <button class="btn btn-ghost" type="button" id="btnShareQr" style="font-size: 0.75rem; padding: 0.4rem 0.4rem; color: var(--navy); border-color: #d7d2c8; min-height: 32px;">🔗 Condividi</button>
+            </div>
+          </div>
         </div>
       </aside>
 
       <!-- Map Display Area -->
       <div class="gis-map-viewport">
+        <!-- Floating Home & Legend Quick Actions -->
+        <div class="map-floating-controls">
+          <a href="index.html" class="map-floating-home-btn" title="Torna alla Home dello Studio">
+            <span aria-hidden="true">←</span> <span>Studio Tecnico</span>
+          </a>
+          <button type="button" class="map-floating-legend-btn" id="btnToggleLegend" aria-expanded="false" title="Legenda Vincoli e Catasto">
+            <span aria-hidden="true">📖</span> <span>Legenda Vincoli</span>
+          </button>
+        </div>
+
+        <!-- Interactive Collapsible Legend Card -->
+        <div id="mapLegendCard" class="map-legend-card" style="display: none;" role="region" aria-label="Legenda cartografica">
+          <div class="map-legend-header">
+            <h4><span>🗺️</span> Legenda Cartografia</h4>
+            <button type="button" class="map-legend-close" id="btnCloseLegend" aria-label="Chiudi legenda">✕</button>
+          </div>
+          
+          <div class="legend-section">
+            <span class="legend-section-title">Catasto Agenzia Entrate</span>
+            <div class="legend-list">
+              <div class="legend-item"><span class="legend-swatch cat-foglio"></span><span>Confine di Foglio (Arancione)</span></div>
+              <div class="legend-item"><span class="legend-swatch cat-particella"></span><span>Particelle fondiarie (Nero / Numero)</span></div>
+              <div class="legend-item"><span class="legend-swatch cat-fabbricato"></span><span>Fabbricati urbani (Campiti/Retino)</span></div>
+              <div class="legend-item"><span class="legend-swatch cat-acque"></span><span>Fiumi, canali e acque pubbliche</span></div>
+              <div class="legend-item"><span class="legend-swatch cat-strade"></span><span>Strade e viabilità pubblica</span></div>
+            </div>
+          </div>
+
+          <div class="legend-section">
+            <span class="legend-section-title">Piano Paesaggistico (SITR Sicilia)</span>
+            <div class="legend-list">
+              <div class="legend-item"><span class="legend-swatch pp-liv1"></span><span><strong>Livello 1:</strong> Tutela e conservazione integrale</span></div>
+              <div class="legend-item"><span class="legend-swatch pp-liv2"></span><span><strong>Livello 2:</strong> Tutela orientata e mantenimento</span></div>
+              <div class="legend-item"><span class="legend-swatch pp-liv3"></span><span><strong>Livello 3:</strong> Tutela generale e sviluppo</span></div>
+              <div class="legend-item"><span class="legend-swatch pp-beni"></span><span><strong>Beni Paesaggistici:</strong> Coste, corsi d'acqua, boschi (art. 136/142)</span></div>
+            </div>
+          </div>
+        </div>
+
         <div id="leafletMap" class="leaflet-fullscreen-container" aria-label="Visualizzatore WebGIS Interattivo"></div>
         
         <!-- Floating Status Overlays -->

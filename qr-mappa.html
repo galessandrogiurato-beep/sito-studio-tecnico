@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generatore QR Code WebGIS | Studio Tecnico Giurato &amp; Iacono</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+  <style>
+    .qr-page-wrap {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 2rem 1rem;
+      background: linear-gradient(160deg, var(--navy-deep), var(--navy) 60%, var(--navy-mid));
+    }
+    .qr-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2.2rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      border: 2px solid var(--gold);
+    }
+    .qr-canvas-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 1.5rem auto;
+      padding: 1rem;
+      background: #ffffff;
+      border: 1px solid var(--mist);
+      border-radius: 16px;
+      width: fit-content;
+    }
+    .qr-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="qr-page-wrap">
+    <div class="qr-card">
+      <p class="eyebrow" style="margin-bottom: 0.3rem;">Studio Tecnico Associato</p>
+      <h2 style="margin-bottom: 0.3rem; color: var(--navy);">Giurato &amp; Iacono</h2>
+      <p style="font-size: 0.9rem; color: var(--muted); margin-bottom: 1rem;">
+        Inquadra il QR Code con lo smartphone per aprire in cantiere il <strong>WebGIS Catasto &amp; Piano Paesaggistico</strong> con GPS attivo.
+      </p>
+
+      <label style="text-align: left; font-size: 0.8rem;">
+        URL di destinazione del QR Code:
+        <select id="qrUrlSelect" style="margin-top: 0.3rem; font-size: 0.85rem;">
+          <option value="https://www.studiotecnicogiuratoiacono.it/mappa.html">Dominio Ufficiale (studiotecnicogiuratoiacono.it/mappa.html)</option>
+          <option value="https://galessandrogiurato-beep.github.io/sito-studio-tecnico/mappa.html">GitHub Pages (galessandrogiurato-beep.github.io/.../mappa.html)</option>
+        </select>
+      </label>
+
+      <div id="qrCanvas" class="qr-canvas-box"></div>
+
+      <div class="qr-actions">
+        <button class="btn btn-gold" id="downloadPng" type="button">📥 Scarica PNG (HD)</button>
+        <button class="btn btn-ghost" id="downloadSvg" type="button" style="color: var(--navy); border-color: var(--navy);">📐 Scarica SVG (CAD)</button>
+      </div>
+      <a href="mappa.html" style="display: inline-block; margin-top: 1.2rem; font-size: 0.85rem; font-weight: 700; color: var(--navy);">→ Vai al Visualizzatore WebGIS</a>
+    </div>
+  </div>
+
+  <script>
+    const qrCode = new QRCodeStyling({
+      width: 300,
+      height: 300,
+      type: "svg",
+      data: "https://www.studiotecnicogiuratoiacono.it/mappa.html",
+      image: "logo.svg",
+      margin: 8,
+      qrOptions: {
+        typeNumber: 0,
+        mode: "Byte",
+        errorCorrectionLevel: "H"
+      },
+      imageOptions: {
+        hideBackgroundDots: true,
+        imageSize: 0.35,
+        margin: 6,
+        crossOrigin: "anonymous"
+      },
+      dotsOptions: {
+        color: "#0b1c2d",
+        type: "rounded"
+      },
+      backgroundOptions: {
+        color: "#ffffff"
+      },
+      cornersSquareOptions: {
+        color: "#0b1c2d",
+        type: "extra-rounded"
+      },
+      cornersDotOptions: {
+        color: "#c9a227",
+        type: "dot"
+      }
+    });
+
+    qrCode.append(document.getElementById("qrCanvas"));
+
+    document.getElementById("qrUrlSelect").addEventListener("change", (e) => {
+      qrCode.update({ data: e.target.value });
+    });
+
+    document.getElementById("downloadPng").addEventListener("click", () => {
+      qrCode.download({ name: "QR_WebGIS_Studio_Giurato_Iacono", extension: "png" });
+    });
+
+    document.getElementById("downloadSvg").addEventListener("click", () => {
+      qrCode.download({ name: "QR_WebGIS_Studio_Giurato_Iacono", extension: "svg" });
+    });
+  </script>
+</body>
+</html>

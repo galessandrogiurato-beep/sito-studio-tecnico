@@ -42,10 +42,69 @@
     return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
   };
 
-  // Gestione Form Contatti (index.html)
-  form?.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (!status) return;
+  // ============================================================================
+  // GESTIONE INFORMATIVA PRIVACY (GDPR) MODAL
+  // ============================================================================
+  const privacyModal = document.getElementById("privacyModal");
+  const openPrivacyBtn = document.getElementById("openPrivacyBtn");
+  const footerPrivacyBtn = document.getElementById("footerPrivacyBtn");
+  const closePrivacyBtn = document.getElementById("closePrivacyBtn");
+  const closePrivacyFooterBtn = document.getElementById("closePrivacyFooterBtn");
+
+  const showPrivacyModal = () => {
+    if (privacyModal) {
+      if (typeof privacyModal.showModal === "function") {
+        privacyModal.showModal();
+      } else {
+        privacyModal.setAttribute("open", "true");
+        privacyModal.style.display = "block";
+      }
+    }
+  };
+
+  const hidePrivacyModal = () => {
+    if (privacyModal) {
+      if (typeof privacyModal.close === "function") {
+        privacyModal.close();
+      } else {
+        privacyModal.removeAttribute("open");
+        privacyModal.style.display = "none";
+      }
+    }
+  };
+
+  openPrivacyBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    showPrivacyModal();
+  });
+  footerPrivacyBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    showPrivacyModal();
+  });
+  closePrivacyBtn?.addEventListener("click", hidePrivacyModal);
+  closePrivacyFooterBtn?.addEventListener("click", hidePrivacyModal);
+
+  privacyModal?.addEventListener("click", (e) => {
+    const rect = privacyModal.getBoundingClientRect();
+    const isInDialog = (
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width
+    );
+    if (!isInDialog) {
+      hidePrivacyModal();
+    }
+  });
+
+  // ============================================================================
+  // GESTIONE FORM CONTATTI & PREVENTIVI (WHATSAPP + EMAIL)
+  // ============================================================================
+  const btnSubmitWhatsApp = document.getElementById("btnSubmitWhatsApp");
+  const btnSubmitEmail = document.getElementById("btnSubmitEmail");
+
+  const validateContactForm = () => {
+    if (!form || !status) return null;
     status.textContent = "";
     status.className = "form-status";
 
@@ -59,52 +118,108 @@
 
     form.querySelectorAll(".invalid").forEach((el) => el.classList.remove("invalid"));
 
-    const required = [
-      form.elements.namedItem("nome"),
-      form.elements.namedItem("email"),
-      form.elements.namedItem("servizio"),
-      form.elements.namedItem("messaggio"),
+    const requiredFields = [
+      { field: form.elements.namedItem("nome"), val: nome },
+      { field: form.elements.namedItem("email"), val: email },
+      { field: form.elements.namedItem("servizio"), val: servizio },
+      { field: form.elements.namedItem("messaggio"), val: messaggio },
     ];
 
     let valid = true;
-    required.forEach((field) => {
-      if (field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement) {
-        if (!String(field.value).trim()) {
-          field.classList.add("invalid");
-          valid = false;
-        }
+    requiredFields.forEach(({ field, val }) => {
+      if (!val) {
+        if (field instanceof HTMLElement) field.classList.add("invalid");
+        valid = false;
       }
     });
 
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!emailOk) {
-      form.elements.namedItem("email")?.classList.add("invalid");
+      const emailField = form.elements.namedItem("email");
+      if (emailField instanceof HTMLElement) emailField.classList.add("invalid");
       valid = false;
     }
 
-    if (!privacy) valid = false;
-
-    if (!valid) {
-      status.textContent = "Controlla i campi obbligatori e riprova.";
-      status.classList.add("err");
-      return;
+    if (!privacy) {
+      const privacyCheck = form.elements.namedItem("privacy");
+      if (privacyCheck instanceof HTMLElement) privacyCheck.classList.add("invalid");
+      valid = false;
     }
 
+    if (!valid) {
+      status.textContent = "Compila tutti i campi obbligatori ed esprimi il consenso al trattamento dati.";
+      status.classList.add("err");
+      return null;
+    }
+
+    return { nome, email, telefono, servizio, messaggio };
+  };
+
+  // Rimuovi lo stato invalid appena l'utente corregge il campo
+  form?.querySelectorAll("input, select, textarea").forEach((input) => {
+    input.addEventListener("input", () => input.classList.remove("invalid"));
+    input.addEventListener("change", () => input.classList.remove("invalid"));
+  });
+
+  const sendViaWhatsApp = () => {
+    const formData = validateContactForm();
+    if (!formData) return;
+
     const summary = [
-      `Buongiorno, sono ${nome}.`,
-      `Email: ${email}`,
-      telefono ? `Telefono: ${telefono}` : null,
-      `Servizio: ${servizio}`,
+      `*RICHIESTA PREVENTIVO / CONSULENZA*`,
+      `Nome: ${formData.nome}`,
+      `Email: ${formData.email}`,
+      formData.telefono ? `Telefono: ${formData.telefono}` : null,
+      `Servizio: ${formData.servizio}`,
       "",
-      messaggio,
+      `*Messaggio:*`,
+      formData.messaggio,
     ]
       .filter(Boolean)
       .join("\n");
 
-    status.textContent = "Richiesta pronta. Ti apro WhatsApp per l’invio diretto.";
-    status.classList.add("ok");
+    const waUrl = buildWhatsAppUrl(summary);
+    status.innerHTML = `Richiesta pronta! Ti stiamo aprendo WhatsApp... Se non si apre automaticamente, <a href="${waUrl}" target="_blank" rel="noopener noreferrer" style="text-decoration:underline; font-weight:700;">clicca qui</a>.`;
+    status.className = "form-status ok";
     form.reset();
-    window.open(buildWhatsAppUrl(summary), "_blank", "noopener,noreferrer");
+
+    const win = window.open(waUrl, "_blank", "noopener,noreferrer");
+    if (!win) {
+      window.location.href = waUrl;
+    }
+  };
+
+  const sendViaEmail = () => {
+    const formData = validateContactForm();
+    if (!formData) return;
+
+    const subject = encodeURIComponent(`Richiesta Preventivo: ${formData.servizio} - ${formData.nome}`);
+    const bodyLines = [
+      `Nome e Cognome: ${formData.nome}`,
+      `Email: ${formData.email}`,
+      `Telefono: ${formData.telefono || 'Non specificato'}`,
+      `Servizio Richiesto: ${formData.servizio}`,
+      "",
+      `Dettagli Intervento / Note:`,
+      formData.messaggio,
+      "",
+      `-- Richiesta inviata dal sito web ufficiale --`
+    ];
+    const body = encodeURIComponent(bodyLines.join("\n"));
+    const mailtoUrl = `mailto:info@studiotecnicogiuratoiacono.it?subject=${subject}&body=${body}`;
+
+    status.innerHTML = `Apertura client email in corso... Se il programma di posta non si apre, puoi scrivere direttamente a <a href="mailto:info@studiotecnicogiuratoiacono.it" style="text-decoration:underline; font-weight:700;">info@studiotecnicogiuratoiacono.it</a>.`;
+    status.className = "form-status ok";
+    form.reset();
+
+    window.location.href = mailtoUrl;
+  };
+
+  btnSubmitWhatsApp?.addEventListener("click", sendViaWhatsApp);
+
+  form?.addEventListener("submit", (event) => {
+    event.preventDefault();
+    sendViaEmail();
   });
 
   // Switcher Mappa base in index.html
@@ -174,19 +289,25 @@
     setTimeout(() => map.invalidateSize(), 320);
   });
 
-  // 1. MAPPE DI BASE (Con maxNativeZoom 20 e maxZoom 21 per zoom catastale spinto)
+  // 1. MAPPE DI BASE (Con parallellizzazione su 4 sottodomini Google e Retina HD)
   const baseLayers = {
-    googleHybrid: L.tileLayer("https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}", {
+    googleHybrid: L.tileLayer("https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}&scale=2&hl=it", {
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      keepBuffer: 4,
       maxNativeZoom: 20,
       maxZoom: 21,
       attribution: "© Google Maps"
     }),
-    googleSat: L.tileLayer("https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}", {
+    googleSat: L.tileLayer("https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}&scale=2&hl=it", {
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      keepBuffer: 4,
       maxNativeZoom: 20,
       maxZoom: 21,
       attribution: "© Google Maps"
     }),
-    googleStreet: L.tileLayer("https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}", {
+    googleStreet: L.tileLayer("https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&scale=2&hl=it", {
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      keepBuffer: 4,
       maxNativeZoom: 20,
       maxZoom: 21,
       attribution: "© Google Maps"
@@ -219,13 +340,14 @@
     return (180 / Math.PI) * Math.atan(0.5 * (Math.exp(n) - Math.exp(-n)));
   };
 
-  // 2. LAYER CATASTO AGENZIA DELLE ENTRATE (Conversione nativa EPSG:6706 per ciascuna Tile)
+  // 2. LAYER CATASTO AGENZIA DELLE ENTRATE (Tile 512x512, updateWhenIdle, -75% chiamate WMS)
   const CatastoAdELayer = L.TileLayer.extend({
     getTileUrl: function (coords) {
-      const nwLon = tile2lon(coords.x, coords.z);
-      const nwLat = tile2lat(coords.y, coords.z);
-      const seLon = tile2lon(coords.x + 1, coords.z);
-      const seLat = tile2lat(coords.y + 1, coords.z);
+      const z = this._getZoomForUrl();
+      const nwLon = tile2lon(coords.x, z);
+      const nwLat = tile2lat(coords.y, z);
+      const seLon = tile2lon(coords.x + 1, z);
+      const seLat = tile2lat(coords.y + 1, z);
 
       // In WMS 1.3.0 con CRS=EPSG:6706 l'ordine degli assi obbligatorio è: minLat,minLon,maxLat,maxLon
       const bbox = `${seLat.toFixed(7)},${nwLon.toFixed(7)},${nwLat.toFixed(7)},${seLon.toFixed(7)}`;
@@ -237,8 +359,8 @@
         "request=GetMap",
         `bbox=${bbox}`,
         "crs=EPSG:6706",
-        "width=256",
-        "height=256",
+        "width=512",
+        "height=512",
         "layers=province,CP.CadastralZoning,acque,strade,CP.CadastralParcel,fabbricati,codice_plla,simbolo_graffa,vestizioni",
         "styles=default,default,default,default,default,default,default,default,default",
         "format=image/png",
@@ -251,44 +373,63 @@
 
   const catastoLayer = new CatastoAdELayer("", {
     maxZoom: 21,
-    minZoom: 6,
+    minZoom: 15,
+    tileSize: 512,
+    zoomOffset: -1,
+    updateWhenIdle: true,
+    updateWhenZooming: false,
+    keepBuffer: 4,
+    className: 'wms-crisp-layer',
     opacity: 0.95,
     zIndex: 600,
     attribution: "© Agenzia delle Entrate - Cartografia Catastale CC-BY 4.0"
   });
 
-  // 3. LAYER PIANO PAESAGGISTICO SITR REGIONE SICILIANA (ArcGIS REST MapServer Export PNG32)
-  // Supporta Componenti, Regimi Normativi e Beni Paesaggistici per Siracusa (SR) e Ragusa (RG)
+  // 3. LAYER PIANO PAESAGGISTICO SITR REGIONE SICILIANA (Tile 512x512, format=png8, updateWhenIdle)
   const SitrArcGisLayer = L.TileLayer.extend({
     initialize: function (servicePath, options) {
       this._servicePath = servicePath;
       L.TileLayer.prototype.initialize.call(this, "", options);
     },
     getTileUrl: function (coords) {
-      const nwLon = tile2lon(coords.x, coords.z);
-      const nwLat = tile2lat(coords.y, coords.z);
-      const seLon = tile2lon(coords.x + 1, coords.z);
-      const seLat = tile2lat(coords.y + 1, coords.z);
+      const z = this._getZoomForUrl();
+      const nwLon = tile2lon(coords.x, z);
+      const nwLat = tile2lat(coords.y, z);
+      const seLon = tile2lon(coords.x + 1, z);
+      const seLat = tile2lat(coords.y + 1, z);
       const bbox4326 = `${nwLon.toFixed(7)},${seLat.toFixed(7)},${seLon.toFixed(7)},${nwLat.toFixed(7)}`;
 
-      return `https://map.sitr.regione.sicilia.it/gis/rest/services/piani_paesaggistici/${this._servicePath}/MapServer/export?bbox=${bbox4326}&bboxSR=4326&imageSR=3857&size=256,256&format=png32&transparent=true&f=image`;
+      return `https://map.sitr.regione.sicilia.it/gis/rest/services/piani_paesaggistici/${this._servicePath}/MapServer/export?bbox=${bbox4326}&bboxSR=4326&imageSR=3857&size=512,512&format=png8&transparent=true&f=image`;
     }
   });
 
-  // Provincia di Siracusa (Componenti, Regimi Normativi e Beni Paesaggistici)
-  const srComponentiLayer = new SitrArcGisLayer("sr_componenti_paesaggio", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Siracusa" });
-  const srRegimiLayer = new SitrArcGisLayer("sr_regimi_normativi", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Siracusa" });
-  const srBeniLayer = new SitrArcGisLayer("sr_beni_paesaggistici", { maxZoom: 21, opacity: 0.7, zIndex: 450, attribution: "© SITR Sicilia - PP Siracusa" });
-  const paesaggisticoSRGroup = L.layerGroup([srComponentiLayer, srRegimiLayer, srBeniLayer]);
+  const baseSitrOptions = {
+    maxZoom: 21,
+    tileSize: 512,
+    zoomOffset: -1,
+    updateWhenIdle: true,
+    updateWhenZooming: false,
+    keepBuffer: 3,
+    className: 'wms-crisp-layer'
+  };
 
-  // Provincia di Ragusa (Componenti, Regimi Normativi e Beni Paesaggistici)
-  const rgComponentiLayer = new SitrArcGisLayer("rg_componenti_paesaggio", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Ragusa" });
-  const rgRegimiLayer = new SitrArcGisLayer("rg_regimi_normativi", { maxZoom: 21, opacity: 0.6, zIndex: 450, attribution: "© SITR Sicilia - PP Ragusa" });
-  const rgBeniLayer = new SitrArcGisLayer("rg_beni_paesaggistici", { maxZoom: 21, opacity: 0.7, zIndex: 450, attribution: "© SITR Sicilia - PP Ragusa" });
-  const paesaggisticoRGGroup = L.layerGroup([rgComponentiLayer, rgRegimiLayer, rgBeniLayer]);
+  // Group 1: PP - Beni Paesaggistici (SR/RG) - zIndex: 460, opacity: 0.80
+  const srBeniLayer = new SitrArcGisLayer("sr_beni_paesaggistici", { ...baseSitrOptions, zIndex: 460, opacity: 0.80, attribution: "© SITR Sicilia - PP Beni" });
+  const rgBeniLayer = new SitrArcGisLayer("rg_beni_paesaggistici", { ...baseSitrOptions, zIndex: 460, opacity: 0.80, attribution: "© SITR Sicilia - PP Beni" });
+  const ppBeniGroup = L.layerGroup([srBeniLayer, rgBeniLayer]);
+
+  // Group 2: PP - Regimi Normativi / Livelli Tutela (SR/RG) - zIndex: 450, opacity: 0.75
+  const srRegimiLayer = new SitrArcGisLayer("sr_regimi_normativi", { ...baseSitrOptions, zIndex: 450, opacity: 0.75, attribution: "© SITR Sicilia - PP Regimi" });
+  const rgRegimiLayer = new SitrArcGisLayer("rg_regimi_normativi", { ...baseSitrOptions, zIndex: 450, opacity: 0.75, attribution: "© SITR Sicilia - PP Regimi" });
+  const ppRegimiGroup = L.layerGroup([srRegimiLayer, rgRegimiLayer]);
+
+  // Group 3: PP - Componenti del Paesaggio (SR/RG) - zIndex: 440, opacity: 0.65
+  const srComponentiLayer = new SitrArcGisLayer("sr_componenti_paesaggio", { ...baseSitrOptions, zIndex: 440, opacity: 0.65, attribution: "© SITR Sicilia - PP Componenti" });
+  const rgComponentiLayer = new SitrArcGisLayer("rg_componenti_paesaggio", { ...baseSitrOptions, zIndex: 440, opacity: 0.65, attribution: "© SITR Sicilia - PP Componenti" });
+  const ppComponentiGroup = L.layerGroup([srComponentiLayer, rgComponentiLayer]);
 
   // Gestione spinner di caricamento sulle tile WMS/ArcGIS
-  [catastoLayer, srBeniLayer, rgBeniLayer].forEach((lyr) => {
+  [catastoLayer, srBeniLayer, rgBeniLayer, srRegimiLayer, rgRegimiLayer, srComponentiLayer, rgComponentiLayer].forEach((lyr) => {
     lyr.on("loading", () => {
       if (loadingStatus) loadingStatus.style.display = "flex";
     });
@@ -323,56 +464,79 @@
     catastoLayer.setOpacity(val / 100);
   });
 
-  // Toggle Piano Paesaggistico Siracusa
-  const togglePaesaggisticoSR = document.getElementById("togglePaesaggisticoSR");
-  const paesaggisticoSROpacity = document.getElementById("paesaggisticoSROpacity");
-  const paesaggisticoSROpacityVal = document.getElementById("paesaggisticoSROpacityVal");
+  // Toggle PP - Beni Paesaggistici
+  const togglePpBeni = document.getElementById("togglePpBeni");
+  const ppBeniOpacity = document.getElementById("ppBeniOpacity");
+  const ppBeniOpacityVal = document.getElementById("ppBeniOpacityVal");
 
-  if (togglePaesaggisticoSR?.checked) {
-    paesaggisticoSRGroup.addTo(map);
+  if (togglePpBeni?.checked) {
+    ppBeniGroup.addTo(map);
   }
 
-  togglePaesaggisticoSR?.addEventListener("change", (e) => {
+  togglePpBeni?.addEventListener("change", (e) => {
     if (e.target.checked) {
-      paesaggisticoSRGroup.addTo(map);
+      ppBeniGroup.addTo(map);
     } else {
-      map.removeLayer(paesaggisticoSRGroup);
+      map.removeLayer(ppBeniGroup);
     }
   });
 
-  paesaggisticoSROpacity?.addEventListener("input", (e) => {
+  ppBeniOpacity?.addEventListener("input", (e) => {
     const val = parseInt(e.target.value, 10);
-    if (paesaggisticoSROpacityVal) paesaggisticoSROpacityVal.textContent = `${val}%`;
+    if (ppBeniOpacityVal) ppBeniOpacityVal.textContent = `${val}%`;
+    const op = val / 100;
+    srBeniLayer.setOpacity(op);
+    rgBeniLayer.setOpacity(op);
+  });
+
+  // Toggle PP - Regimi Normativi
+  const togglePpRegimi = document.getElementById("togglePpRegimi");
+  const ppRegimiOpacity = document.getElementById("ppRegimiOpacity");
+  const ppRegimiOpacityVal = document.getElementById("ppRegimiOpacityVal");
+
+  if (togglePpRegimi?.checked) {
+    ppRegimiGroup.addTo(map);
+  }
+
+  togglePpRegimi?.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      ppRegimiGroup.addTo(map);
+    } else {
+      map.removeLayer(ppRegimiGroup);
+    }
+  });
+
+  ppRegimiOpacity?.addEventListener("input", (e) => {
+    const val = parseInt(e.target.value, 10);
+    if (ppRegimiOpacityVal) ppRegimiOpacityVal.textContent = `${val}%`;
+    const op = val / 100;
+    srRegimiLayer.setOpacity(op);
+    rgRegimiLayer.setOpacity(op);
+  });
+
+  // Toggle PP - Componenti del Paesaggio
+  const togglePpComponenti = document.getElementById("togglePpComponenti");
+  const ppComponentiOpacity = document.getElementById("ppComponentiOpacity");
+  const ppComponentiOpacityVal = document.getElementById("ppComponentiOpacityVal");
+
+  if (togglePpComponenti?.checked) {
+    ppComponentiGroup.addTo(map);
+  }
+
+  togglePpComponenti?.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      ppComponentiGroup.addTo(map);
+    } else {
+      map.removeLayer(ppComponentiGroup);
+    }
+  });
+
+  ppComponentiOpacity?.addEventListener("input", (e) => {
+    const val = parseInt(e.target.value, 10);
+    if (ppComponentiOpacityVal) ppComponentiOpacityVal.textContent = `${val}%`;
     const op = val / 100;
     srComponentiLayer.setOpacity(op);
-    srRegimiLayer.setOpacity(op);
-    srBeniLayer.setOpacity(op);
-  });
-
-  // Toggle Piano Paesaggistico Ragusa
-  const togglePaesaggisticoRG = document.getElementById("togglePaesaggisticoRG");
-  const paesaggisticoRGOpacity = document.getElementById("paesaggisticoRGOpacity");
-  const paesaggisticoRGOpacityVal = document.getElementById("paesaggisticoRGOpacityVal");
-
-  if (togglePaesaggisticoRG?.checked) {
-    paesaggisticoRGGroup.addTo(map);
-  }
-
-  togglePaesaggisticoRG?.addEventListener("change", (e) => {
-    if (e.target.checked) {
-      paesaggisticoRGGroup.addTo(map);
-    } else {
-      map.removeLayer(paesaggisticoRGGroup);
-    }
-  });
-
-  paesaggisticoRGOpacity?.addEventListener("input", (e) => {
-    const val = parseInt(e.target.value, 10);
-    if (paesaggisticoRGOpacityVal) paesaggisticoRGOpacityVal.textContent = `${val}%`;
-    const op = val / 100;
     rgComponentiLayer.setOpacity(op);
-    rgRegimiLayer.setOpacity(op);
-    rgBeniLayer.setOpacity(op);
   });
 
   // Barra delle coordinate in tempo reale
@@ -526,7 +690,7 @@
   });
 
   // ============================================================================
-  // 5. RICERCA CATASTALE REALE PER COMUNE, FOGLIO E PARTICELLA
+  // 5. RICERCA CATASTALE REALE PER COMUNE, FOGLIO E PARTICELLA (Con supporto file:// e hyparquet)
   // ============================================================================
   const comuneSelect = document.getElementById("gisComuneSelect");
   const gFoglioInput = document.getElementById("gisFoglioInput");
@@ -547,6 +711,89 @@
     I754: { name: "Siracusa (SR)", lat: 37.06630, lon: 15.28560 }
   };
 
+  const localCadastralCache = {};
+
+  async function loadComuneIndex(codComune) {
+    if (window.CATASTO_INDEX && window.CATASTO_INDEX[codComune]) {
+      return window.CATASTO_INDEX[codComune];
+    }
+    if (localCadastralCache[codComune]) {
+      return localCadastralCache[codComune];
+    }
+
+    // 1. Prova a caricare catasto/<COMUNE>.js tramite script tag dinamico (funziona anche su file://)
+    try {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = `catasto/${codComune}.js`;
+        script.onload = () => resolve(true);
+        script.onerror = () => reject(new Error("Script load error"));
+        document.head.appendChild(script);
+      });
+      if (window.CATASTO_INDEX && window.CATASTO_INDEX[codComune]) {
+        localCadastralCache[codComune] = window.CATASTO_INDEX[codComune];
+        return window.CATASTO_INDEX[codComune];
+      }
+    } catch (_) {}
+
+    // 2. Prova fetch del JSON locale
+    try {
+      const res = await fetch(`catasto/${codComune}.json`);
+      if (res.ok) {
+        const data = await res.json();
+        localCadastralCache[codComune] = data;
+        return data;
+      }
+    } catch (_) {}
+
+    // 3. Fallback live su parquet remoto con hyparquet
+    try {
+      const { parquetRead } = await import("https://cdn.jsdelivr.net/npm/hyparquet@1.11.1/+esm");
+      const resp = await fetch("https://raw.githubusercontent.com/ondata/dati_catastali/main/S_0000_ITALIA/anagrafica/19_Sicilia.parquet");
+      const arrayBuffer = await resp.arrayBuffer();
+      
+      let fetchedRows = [];
+      await parquetRead({
+        file: arrayBuffer,
+        onComplete: (rows) => { fetchedRows = rows; }
+      });
+
+      const fogliDict = {};
+      const particelleDict = {};
+
+      fetchedRows.forEach(row => {
+        const rComune = Array.isArray(row) ? row[1] : row.comune;
+        if (!rComune || String(rComune).toUpperCase() !== codComune) return;
+
+        const rFoglio = String(Array.isArray(row) ? row[2] : row.foglio).trim().replace(/^0+/, "") || "0";
+        const rPart = String(Array.isArray(row) ? row[3] : row.particella).trim().replace(/^0+/, "");
+        const x = Number(Array.isArray(row) ? row[4] : row.x);
+        const y = Number(Array.isArray(row) ? row[5] : row.y);
+
+        if (isNaN(x) || isNaN(y)) return;
+        const lon = x / 1000000.0;
+        const lat = y / 1000000.0;
+
+        if (!fogliDict[rFoglio]) {
+          fogliDict[rFoglio] = [lat, lon];
+        }
+
+        if (rPart) {
+          if (!particelleDict[rFoglio]) particelleDict[rFoglio] = {};
+          particelleDict[rFoglio][rPart] = [lat, lon];
+        }
+      });
+
+      const remoteData = { fogli: fogliDict, particelle: particelleDict };
+      localCadastralCache[codComune] = remoteData;
+      return remoteData;
+    } catch (e) {
+      console.warn("Fallback remoto hyparquet fallito:", e);
+    }
+
+    return null;
+  }
+
   catastralSearchBtn?.addEventListener("click", async () => {
     const codComune = comuneSelect?.value || "H574";
     const foglioRaw = (gFoglioInput?.value || "").trim();
@@ -558,82 +805,95 @@
       return;
     }
 
-    const foglioPadded = foglioRaw.padStart(4, "0");
-    const inspireZoningRef = `${codComune}_${foglioPadded}00`;
-    const inspireParcelRef = particellaRaw ? `${inspireZoningRef}.${particellaRaw}` : inspireZoningRef;
+    const foglioNum = String(parseInt(foglioRaw, 10));
+    const particellaNum = particellaRaw ? String(parseInt(particellaRaw, 10)) : "";
 
     if (catastralSearchStatus) {
       catastralSearchStatus.style.display = "block";
-      catastralSearchStatus.textContent = `⏳ Ricerca ${inspireParcelRef} sui server catastali...`;
+      catastralSearchStatus.textContent = `⏳ Caricamento indice catastale ${codComune}...`;
     }
 
     inspectLayerGroup.clearLayers();
-    let foundCoords = null;
 
-    // 1. Tentativo interrogazione diretta API / WFS Agenzia delle Entrate per codice catastale nazionale
+    const cadData = await loadComuneIndex(codComune);
+
+    if (!cadData) {
+      alert("Impossibile caricare i dati catastali per questo comune. Verifica la connessione a internet o la presenza dei file locali.");
+      if (catastralSearchStatus) catastralSearchStatus.style.display = "none";
+      return;
+    }
+
+    let coords = null;
+    let matchType = "";
+
+    // Cerca particella se specificata
+    if (particellaNum && cadData.particelle?.[foglioNum]?.[particellaNum]) {
+      coords = cadData.particelle[foglioNum][particellaNum];
+      matchType = "Particella Esatta";
+    } 
+    // Se la particella non esiste ma il foglio sì, prendi il baricentro del foglio e avvisa
+    else if (cadData.fogli?.[foglioNum]) {
+      coords = cadData.fogli[foglioNum];
+      matchType = "Baricentro Foglio (Particella non trovata)";
+    } 
+    // Se non esiste nemmeno il foglio
+    else {
+      alert(`Foglio ${foglioRaw} non trovato nel Comune di ${comuneInfo.name}. Verifica il numero del foglio.`);
+      if (catastralSearchStatus) catastralSearchStatus.style.display = "none";
+      return;
+    }
+
+    const [lat, lon] = coords;
+
+    // Centra immediatamente la mappa su [lat, lon] a Zoom 19
+    map.setView([lat, lon], 19);
+
+    const searchMarker = L.circleMarker([lat, lon], {
+      radius: 12,
+      color: "#d97706",
+      weight: 3,
+      fillColor: "#fbbf24",
+      fillOpacity: 0.6
+    }).addTo(inspectLayerGroup);
+
+    searchMarker.bindPopup(`
+      <div style="font-family: Manrope, sans-serif; padding: 0.3rem; min-width: 240px;">
+        <strong style="color: #0b1c2d; font-size: 1rem;">🎯 Localizzazione Catastale</strong>
+        <hr style="margin: 6px 0; border-color: #e8e4db;">
+        <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Comune:</strong> ${comuneInfo.name}</p>
+        <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Foglio:</strong> ${foglioRaw} &nbsp;|&nbsp; <strong>Particella:</strong> <span style="background:#fef3c7; padding:1px 6px; border-radius:4px; font-weight:700;">${particellaRaw || 'Intero Foglio'}</span></p>
+        <p style="margin: 3px 0; font-size: 0.78rem; color: #5b6570;">Coordinate: ${lat.toFixed(6)}, ${lon.toFixed(6)} (${matchType})</p>
+        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Buongiorno, vorrei richiedere una visura / rilievo per:\nComune: ${comuneInfo.name} (${codComune})\nFoglio: ${foglioRaw}\nParticella: ${particellaRaw || 'Intero Foglio'}\nCoordinate: ${lat.toFixed(6)}, ${lon.toFixed(6)}`)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:8px; background:#128c7e; color:#fff; padding:6px 12px; border-radius:999px; font-size:0.78rem; font-weight:600; text-decoration:none;">Richiedi Visura su WhatsApp ↗</a>
+      </div>
+    `).openPopup();
+
+    if (catastralSearchStatus) {
+      catastralSearchStatus.textContent = `✅ Localizzato (${matchType}): Foglio ${foglioRaw}${particellaRaw ? ' Part. ' + particellaRaw : ''}`;
+    }
+
+    // Chiamata WFS BBOX in background all'Agenzia delle Entrate per disegnare il poligono se risponde
     try {
-      const wfsUrl = `https://wfs.cartografia.agenziaentrate.gov.it/inspire/wfs/owfs01.php?service=WFS&version=2.0.0&request=GetFeature&typeNames=CP:CadastralParcel&Filter=${encodeURIComponent(`<Filter><PropertyIsEqualTo><PropertyName>nationalCadastralReference</PropertyName><Literal>${inspireParcelRef}</Literal></PropertyIsEqualTo></Filter>`)}`;
-      const wfsResponse = await fetchWithCorsFallback(wfsUrl);
-
-      // Estrazione coordinate GML <gml:pos> o <gml:posList> o <gml:lowerCorner> (in EPSG:6706: Lat Lon)
-      const posMatch = wfsResponse.match(/<gml:posList[^>]*>([\d.\s]+)<\/gml:posList>/i) ||
-                       wfsResponse.match(/<gml:pos[^>]*>([\d.\s]+)<\/gml:pos>/i);
+      const bBoxUrl = `https://wfs.cartografia.agenziaentrate.gov.it/inspire/wfs/owfs01.php?language=ita&SERVICE=WFS&VERSION=2.0.0&TYPENAMES=CP:CadastralParcel&SRSNAME=urn:ogc:def:crs:EPSG::6706&BBOX=${lat - 0.000005},${lon - 0.000005},${lat + 0.000005},${lon + 0.000005}&REQUEST=GetFeature&COUNT=5`;
+      const wfsResp = await fetchWithCorsFallback(bBoxUrl);
+      const posMatch = wfsResp.match(/<gml:posList[^>]*>([\d.\s]+)<\/gml:posList>/i) ||
+                       wfsResp.match(/<gml:pos[^>]*>([\d.\s]+)<\/gml:pos>/i);
       if (posMatch) {
         const nums = posMatch[1].trim().split(/\s+/).map(Number);
-        if (nums.length >= 2 && nums[0] > 35 && nums[0] < 48) {
-          // Ricava tutti i vertici del poligono della particella!
+        if (nums.length >= 6) {
           const polygonLatLngs = [];
           for (let i = 0; i < nums.length - 1; i += 2) {
             polygonLatLngs.push([nums[i], nums[i + 1]]);
           }
-          const poly = L.polygon(polygonLatLngs, {
+          L.polygon(polygonLatLngs, {
             color: "#d97706",
             weight: 3,
             fillColor: "#fbbf24",
-            fillOpacity: 0.35
+            fillOpacity: 0.4
           }).addTo(inspectLayerGroup);
-
-          map.fitBounds(poly.getBounds(), { maxZoom: 19 });
-          foundCoords = poly.getBounds().getCenter();
-
-          poly.bindPopup(`
-            <div style="font-family: Manrope, sans-serif; padding: 0.3rem; min-width: 220px;">
-              <strong style="color: #0b1c2d; font-size: 1rem;">✅ Particella Individuata</strong>
-              <hr style="margin: 6px 0; border-color: #e8e4db;">
-              <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Comune:</strong> ${comuneInfo.name}</p>
-              <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Foglio:</strong> ${foglioRaw} &nbsp;|&nbsp; <strong>Particella:</strong> ${particellaRaw}</p>
-              <p style="margin: 3px 0; font-size: 0.76rem; color: #5b6570;">Codice INSPIRE: ${inspireParcelRef}</p>
-              <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Buongiorno, richiedo verifica per:\nComune: ${comuneInfo.name}\nFoglio: ${foglioRaw}\nParticella:${particellaRaw}`)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:8px; background:#128c7e; color:#fff; padding:6px 12px; border-radius:999px; font-size:0.78rem; font-weight:600; text-decoration:none;">Richiedi Visura via WhatsApp ↗</a>
-            </div>
-          `).openPopup();
         }
       }
-    } catch (_) {}
-
-    // 2. Se il server WFS dell'AdE applica filtro anti-bot/CAPTCHA, centra il Comune ad alto zoom con il layer WMS catastale attivo
-    if (!foundCoords) {
-      if (toggleCatasto && !toggleCatasto.checked) {
-        toggleCatasto.checked = true;
-        catastoLayer.addTo(map);
-      }
-      map.setView([comuneInfo.lat, comuneInfo.lon], 18);
-
-      L.popup()
-        .setLatLng([comuneInfo.lat, comuneInfo.lon])
-        .setContent(`
-          <div style="font-family: Manrope, sans-serif; padding: 0.3rem; min-width: 230px;">
-            <strong style="color: #0b1c2d; font-size: 0.98rem;">🗺️ Catasto ${comuneInfo.name} Attivo</strong>
-            <hr style="margin: 6px 0; border-color: #e8e4db;">
-            <p style="margin: 4px 0; font-size: 0.84rem;">Ricerca richiesta: <strong>Foglio ${foglioRaw}</strong> ${particellaRaw ? `| <strong>Part. ${particellaRaw}</strong>` : ""}</p>
-            <p style="margin: 4px 0; font-size: 0.78rem; color: #5b6570;">I confini e i numeri delle particelle dell'Agenzia delle Entrate sono ora visibili in sovrapposizione. Clicca su qualsiasi particella per leggerne i dati in tempo reale.</p>
-            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Buongiorno, vorrei richiedere un estratto di mappa / visura per:\nComune: ${comuneInfo.name} (${codComune})\nFoglio: ${foglioRaw}\nParticella:${particellaRaw || "intero foglio"}`)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:8px; background:#128c7e; color:#fff; padding:6px 12px; border-radius:999px; font-size:0.78rem; font-weight:600; text-decoration:none;">Richiedi Visura su WhatsApp ↗</a>
-          </div>
-        `)
-        .openOn(map);
-    }
-
-    if (catastralSearchStatus) {
-      catastralSearchStatus.textContent = `✅ Mappa catastale centrata (${inspireParcelRef})`;
+    } catch (e) {
+      console.log("WFS BBOX background fetch note:", e);
     }
   });
 
@@ -826,6 +1086,49 @@
       mapViewport?.requestFullscreen?.();
     } else {
       document.exitFullscreen?.();
+    }
+  });
+
+  // Share WebGIS QR Code / Link
+  document.getElementById("btnShareQr")?.addEventListener("click", async () => {
+    const shareData = {
+      title: "WebGIS Catasto & Piano Paesaggistico",
+      text: "Apri il WebGIS Catastale in cantiere con GPS attivo:",
+      url: "https://www.studiotecnicogiuratoiacono.it/mappa.html"
+    };
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        // User cancelled or error
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link del WebGIS copiato negli appunti!");
+      } catch (e) {
+        prompt("Copia il link del WebGIS:", shareData.url);
+      }
+    }
+  });
+
+  // Gestione Legenda Cartografica WMS (mappa.html)
+  const btnToggleLegend = document.getElementById("btnToggleLegend");
+  const btnCloseLegend = document.getElementById("btnCloseLegend");
+  const mapLegendCard = document.getElementById("mapLegendCard");
+
+  btnToggleLegend?.addEventListener("click", () => {
+    const isHidden = !mapLegendCard || mapLegendCard.style.display === "none";
+    if (mapLegendCard) {
+      mapLegendCard.style.display = isHidden ? "block" : "none";
+      btnToggleLegend.setAttribute("aria-expanded", String(isHidden));
+    }
+  });
+
+  btnCloseLegend?.addEventListener("click", () => {
+    if (mapLegendCard) {
+      mapLegendCard.style.display = "none";
+      btnToggleLegend?.setAttribute("aria-expanded", "false");
     }
   });
 })();
