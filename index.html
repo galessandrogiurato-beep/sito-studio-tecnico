@@ -30,7 +30,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,6 +44,24 @@
         "telephone": ["+393516543517", "+393318679786"],
         "email": "info@studiotecnicogiuratoiacono.it",
         "priceRange": "€€",
+        "founder": [
+          {
+            "@type": "Person",
+            "name": "Geom. Alessandro Giurato",
+            "jobTitle": "Geometra Libero Professionista"
+          },
+          {
+            "@type": "Person",
+            "name": "Geom. Piernicolò Iacono",
+            "jobTitle": "Geometra Libero Professionista"
+          }
+        ],
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "bestRating": "5.0",
+          "ratingCount": "42"
+        },
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Corso Savoia, 46",
@@ -136,6 +153,7 @@
       <nav class="main-nav" id="mainNav" aria-label="Navigazione principale">
         <ul>
           <li><a href="#servizi">Servizi</a></li>
+          <li><a href="#progetti">Progetti</a></li>
           <li><a href="#studio">Lo Studio</a></li>
           <li><a href="#recensioni">Recensioni</a></li>
           <li><a href="mappa.html">WebGIS Mappa</a></li>
@@ -289,6 +307,95 @@
       </div>
     </section>
 
+    <section class="section portfolio-section" id="progetti">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Casi Studio &amp; Tecnologie</p>
+          <h2>Elaborati Tecnici, Rilievi &amp; Rendering</h2>
+          <p class="section-intro">
+            Esempi concreti delle attività svolte dallo Studio Associato tra Rosolini, Siracusa e Ragusa: dalla restituzione fotogrammetrica con drone alla modellazione architettonica 3D e all'aggiornamento catastale.
+          </p>
+        </header>
+
+        <div class="portfolio-grid">
+          <article class="portfolio-card">
+            <div class="portfolio-visual">
+              <img src="ig_post_drone.png" alt="Rilievo Aerofotogrammetrico con Drone APR e Modello 3D" loading="lazy">
+              <span class="portfolio-tag">Aerofotogrammetria APR</span>
+            </div>
+            <div class="portfolio-body">
+              <h3>Rilievo con Drone, Ortofoto &amp; Modello 3D</h3>
+              <p>Acquisizione aerea nadirale e obliqua con drone professionale, elaborazione fotogrammetrica di nuvole di punti dense, curve di livello e ortofotopiano georeferenziato centimetro-accurato.</p>
+              <div class="portfolio-specs">
+                <span>🎯 Precisione GSD &lt; 2 cm/px</span>
+                <span>📐 DSM / DTM / Volumetrie</span>
+              </div>
+              <button type="button" class="btn btn-ghost portfolio-cta-btn" data-prefill-service="Rilievi aerofotogrammetrici con drone">
+                Richiedi preventivo simile →
+              </button>
+            </div>
+          </article>
+
+          <article class="portfolio-card">
+            <div class="portfolio-visual">
+              <img src="ig_post_catasto.png" alt="Pratiche Catastali PREGEO DOCFA e WebGIS Vincoli" loading="lazy">
+              <span class="portfolio-tag">Catasto &amp; Topografia GNSS</span>
+            </div>
+            <div class="portfolio-body">
+              <h3>Riconfinamento GPS, Tipo Mappale &amp; DOCFA</h3>
+              <p>Rilievo celerimetrico e satellitare GNSS RTK con picchettamento dei confini di proprietà, redazione di frazionamento PREGEO e variazione planimetrica DOCFA per conformità urbanistico-catastale.</p>
+              <div class="portfolio-specs">
+                <span>📡 Strumentazione GNSS / Laser</span>
+                <span>📋 Allineamento Mappe AdE</span>
+              </div>
+              <button type="button" class="btn btn-ghost portfolio-cta-btn" data-prefill-service="Pratiche catastali (DOCFA, PREGEO, Volture)">
+                Richiedi preventivo simile →
+              </button>
+            </div>
+          </article>
+
+          <article class="portfolio-card">
+            <div class="portfolio-visual portfolio-svg-visual" aria-hidden="true">
+              <svg viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="bg3d" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#07131f"/>
+                    <stop offset="100%" stop-color="#143044"/>
+                  </linearGradient>
+                </defs>
+                <rect width="600" height="380" fill="url(#bg3d)"/>
+                <g stroke="rgba(255,255,255,0.06)" stroke-width="1">
+                  <line x1="0" y1="76" x2="600" y2="76"/><line x1="0" y1="152" x2="600" y2="152"/><line x1="0" y1="228" x2="600" y2="228"/><line x1="0" y1="304" x2="600" y2="304"/>
+                  <line x1="120" y1="0" x2="120" y2="380"/><line x1="240" y1="0" x2="240" y2="380"/><line x1="360" y1="0" x2="360" y2="380"/><line x1="480" y1="0" x2="480" y2="380"/>
+                </g>
+                <!-- Isometric 3D Architectural Villa Wireframe -->
+                <polygon points="300,75 470,155 470,275 300,335 130,275 130,155" fill="rgba(201,162,39,0.08)" stroke="#c9a227" stroke-width="2.2"/>
+                <line x1="300" y1="75" x2="300" y2="335" stroke="#e0c56a" stroke-width="1.8"/>
+                <line x1="130" y1="155" x2="300" y2="215" stroke="#c9a227" stroke-width="1.8"/>
+                <line x1="470" y1="155" x2="300" y2="215" stroke="#c9a227" stroke-width="1.8"/>
+                <polygon points="325,220 445,175 445,255 325,300" fill="rgba(255,255,255,0.08)" stroke="#e0c56a" stroke-width="1.5"/>
+                <polygon points="155,180 275,222 275,295 155,253" fill="rgba(255,255,255,0.05)" stroke="#c9a227" stroke-width="1.5"/>
+                <line x1="110" y1="295" x2="285" y2="355" stroke="rgba(255,255,255,0.45)" stroke-width="1.2" stroke-dasharray="4,4"/>
+                <text x="175" y="348" fill="#e0c56a" font-family="monospace" font-size="13">14.80 m · RenderBIM 3D</text>
+              </svg>
+              <span class="portfolio-tag">Progettazione &amp; Render 3D</span>
+            </div>
+            <div class="portfolio-body">
+              <h3>Ristrutturazione Edilizia &amp; Rendering 3D</h3>
+              <p>Progettazione architettonica completa, pratiche edilizie (CILA, SCIA, Permesso di Costruire), autorizzazione paesaggistica e viste fotorealistiche 3D di interni ed esterni prima dell'inizio lavori.</p>
+              <div class="portfolio-specs">
+                <span>🏠 CILA / SCIA / PdC</span>
+                <span>✨ Render Fotorealistici</span>
+              </div>
+              <button type="button" class="btn btn-ghost portfolio-cta-btn" data-prefill-service="Progettazione e ristrutturazioni / Rendering 3D">
+                Richiedi preventivo simile →
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <section class="section studio" id="studio">
       <div class="container studio-grid">
         <div class="studio-copy">
@@ -410,6 +517,12 @@
               </div>
             </div>
           </article>
+        </div>
+
+        <div class="reviews-cta-wrap">
+          <a class="btn btn-gold" href="https://maps.google.com/?q=Studio+Tecnico+Associato+Giurato+Iacono+Corso+Savoia+46+Rosolini" target="_blank" rel="noopener noreferrer">
+            ⭐ Vedi su Google Maps o Lascia una Recensione ↗
+          </a>
         </div>
       </div>
     </section>
@@ -646,12 +759,13 @@
           <div class="catastral-query-box">
             <div class="catastral-query-info">
               <strong>Hai bisogno di una verifica catastale o di un rilievo su particella?</strong>
-              <span>Inserisci Foglio e Particella per inviare una richiesta immediata ai geometri.</span>
+              <span>Inserisci Foglio e Particella per aprire direttamente il punto sulla Mappa WebGIS o inviare una richiesta ai geometri.</span>
             </div>
             <form id="catastralForm" class="catastral-query-form">
               <input type="text" id="foglioInput" placeholder="Foglio es. 12" required>
               <input type="text" id="particellaInput" placeholder="Particella es. 345" required>
-              <button class="btn btn-gold" type="submit" style="min-height: 42px; padding: 0.6rem 1.1rem; font-size: 0.88rem;">Verifica WhatsApp</button>
+              <button class="btn btn-ghost" id="btnOpenWebgisParcel" type="button" style="min-height: 42px; padding: 0.6rem 1rem; font-size: 0.86rem; color: var(--navy); border-color: var(--navy);">🗺️ Apri su WebGIS</button>
+              <button class="btn btn-gold" type="submit" style="min-height: 42px; padding: 0.6rem 1.1rem; font-size: 0.88rem;">💬 Verifica WhatsApp</button>
             </form>
           </div>
         </div>
@@ -719,8 +833,8 @@
       <h4>5. Diritti dell'Interessato</h4>
       <p>In ogni momento l'utente può esercitare i diritti garantiti dagli artt. 15-22 del GDPR (accesso ai dati, rettifica, cancellazione, limitazione del trattamento, opposizione) inviando una comunicazione scritta all'indirizzo email <a href="mailto:info@studiotecnicogiuratoiacono.it">info@studiotecnicogiuratoiacono.it</a>.</p>
 
-      <h4>6. Cookie e Strumenti di Cartografia</h4>
-      <p>Il sito utilizza esclusivamente cookie tecnici essenziali al corretto funzionamento della navigazione e caricamento di mappe WMS pubbliche (Agenzia delle Entrate e SITR Sicilia). Nessun cookie di profilazione o tracciamento pubblicitario viene memorizzato.</p>
+      <h4>6. Cookie, Strumenti di Cartografia e Statistiche Anonime</h4>
+      <p>Il sito utilizza esclusivamente cookie tecnici essenziali al corretto funzionamento della navigazione e al caricamento di mappe WMS pubbliche (Agenzia delle Entrate e SITR Sicilia). Per il conteggio aggregato delle visite viene utilizzato <strong>GoatCounter</strong>, un sistema di analisi statistica <em>cookie-free</em> conforme al GDPR che non memorizza dati personali né effettua profilazione pubblicitaria.</p>
     </div>
     <div class="privacy-modal-footer">
       <button type="button" class="btn btn-gold" id="closePrivacyFooterBtn" style="min-height: 38px; padding: 0.4rem 1.2rem; font-size: 0.88rem;">Ho Compreso</button>
@@ -731,16 +845,7 @@
     <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.3-.1-1.7-.8-1.9-.9s-.5-.1-.7.1-.8.9-1 .11c-.2.3-.7.9-.9 1.1s-.3.2-.6.1a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1 1-1 2.5 1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.8.8 2.5.8 3.4.7.5 0 1.7-.7 1.9-1.4.2-.7.2-1.3.1-1.4-.1 0-.3-.1-.6-.2zM16 27.2h-.1A11.2 11.2 0 0 1 6.4 8.4 11.2 11.2 0 0 1 27.2 16 11.2 11.2 0 0 1 16 27.2zm0-22.4C10 4.8 5.1 9.7 5.1 15.7c0 2.1.6 4.1 1.6 5.9L5 27l5.5-1.7a11.2 11.2 0 0 0 16.4-9.6C26.9 9.7 22 4.8 16 4.8z"/></svg>
   </a>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="script.js"></script>
-</body>
-</html>
-
-  <a class="whatsapp-fab" id="whatsappFab" href="https://wa.me/393516543517?text=Buongiorno%2C%20vorrei%20richiedere%20informazioni%20allo%20Studio%20Tecnico%20Associato%20Giurato%20%26%20Iacono." target="_blank" rel="noopener noreferrer" aria-label="Contatta lo studio su WhatsApp">
-    <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M19.1 17.4c-.3-.1-1.7-.8-1.9-.9s-.5-.1-.7.1-.8.9-1 .11c-.2.3-.7.9-.9 1.1s-.3.2-.6.1a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4s-1 1-1 2.5 1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5 1.8.8 2.5.8 3.4.7.5 0 1.7-.7 1.9-1.4.2-.7.2-1.3.1-1.4-.1 0-.3-.1-.6-.2zM16 27.2h-.1A11.2 11.2 0 0 1 6.4 8.4 11.2 11.2 0 0 1 27.2 16 11.2 11.2 0 0 1 16 27.2zm0-22.4C10 4.8 5.1 9.7 5.1 15.7c0 2.1.6 4.1 1.6 5.9L5 27l5.5-1.7a11.2 11.2 0 0 0 16.4-9.6C26.9 9.7 22 4.8 16 4.8z"/></svg>
-  </a>
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="script.js"></script>
+  <script src="script.js?v=20261026-3"></script>
+  <script data-goatcounter="https://studiotecnicogiuratoiacono.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -222,12 +222,31 @@
     sendViaEmail();
   });
 
+  // Pre-compilazione servizio dai pulsanti Portfolio / Casi Studio
+  document.querySelectorAll("[data-prefill-service]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const serviceVal = btn.getAttribute("data-prefill-service");
+      const contactSection = document.getElementById("contatti");
+      const serviceSelect = form?.elements?.namedItem("servizio");
+      const msgArea = form?.elements?.namedItem("messaggio");
+
+      if (serviceSelect && serviceVal) {
+        serviceSelect.value = serviceVal;
+      }
+      contactSection?.scrollIntoView({ behavior: "smooth" });
+      setTimeout(() => {
+        if (msgArea instanceof HTMLElement) msgArea.focus();
+      }, 450);
+    });
+  });
+
   // Switcher Mappa base in index.html
   const mapIframe = document.getElementById("catastralMapIframe");
   const layerBtns = document.querySelectorAll(".map-layer-btn");
   const catastralForm = document.getElementById("catastralForm");
   const foglioInput = document.getElementById("foglioInput");
   const particellaInput = document.getElementById("particellaInput");
+  const btnOpenWebgisParcel = document.getElementById("btnOpenWebgisParcel");
 
   layerBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -247,6 +266,19 @@
         mapIframe.src = `https://maps.google.com/maps?q=Corso+Savoia+46,+96019+Rosolini+SR&t=${type}&z=17&ie=UTF8&iwloc=&output=embed`;
       }
     });
+  });
+
+  btnOpenWebgisParcel?.addEventListener("click", () => {
+    const foglio = foglioInput?.value.trim() || "";
+    const particella = particellaInput?.value.trim() || "";
+    if (!foglio) {
+      foglioInput?.focus();
+      alert("Inserisci almeno il numero di Foglio catastale per aprire il punto sul WebGIS.");
+      return;
+    }
+    const params = new URLSearchParams({ comune: "H574", foglio });
+    if (particella) params.set("particella", particella);
+    window.location.href = `mappa.html?${params.toString()}`;
   });
 
   catastralForm?.addEventListener("submit", (e) => {
@@ -658,14 +690,18 @@
     try {
       const info = await queryCatastoAtPoint(lat, lng);
       if (info) {
+        const directUrl = updateParcelShareState(info.codComune || comuneSelect?.value || "H574", info.foglio, info.particella);
         popup.setContent(`
-          <div style="font-family: Manrope, sans-serif; padding: 0.3rem; min-width: 230px;">
+          <div style="font-family: Manrope, sans-serif; padding: 0.3rem; min-width: 235px;">
             <strong style="color: #0b1c2d; font-size: 1rem;">📋 ${info.tipo}</strong>
             <hr style="margin: 6px 0; border-color: #e8e4db;">
             <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Comune:</strong> ${info.comune}</p>
             <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Foglio:</strong> ${info.foglio} &nbsp;|&nbsp; <strong>Particella:</strong> <span style="background:#fef3c7; padding:1px 6px; border-radius:4px; font-weight:700;">${info.particella}</span></p>
             <p style="margin: 3px 0; font-size: 0.78rem; color: #5b6570;">Coord: ${lat.toFixed(6)}, ${lng.toFixed(6)}</p>
-            <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Buongiorno, vorrei richiedere una visura/rilievo per:\nComune: ${info.comune}\nFoglio: ${info.foglio}\nParticella:${info.particella}\nCoordinate: ${lat.toFixed(6)},${lng.toFixed(6)}`)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:8px; background:#128c7e; color:#fff; padding:6px 12px; border-radius:999px; font-size:0.78rem; font-weight:600; text-decoration:none;">Richiedi Visura su WhatsApp ↗</a>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
+              <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Buongiorno, vorrei richiedere una visura/rilievo per:\nComune: ${info.comune}\nFoglio: ${info.foglio}\nParticella: ${info.particella}\nLink Mappa: ${directUrl}`)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; background:#128c7e; color:#fff; padding:6px 11px; border-radius:999px; font-size:0.76rem; font-weight:600; text-decoration:none;">WhatsApp ↗</a>
+              <button type="button" onclick="navigator.clipboard.writeText('${directUrl}').then(() => { this.textContent = '✅ Link Copiato!'; })" style="background:#0b1c2d; color:#e0c56a; border:1px solid #c9a227; padding:5px 10px; border-radius:999px; font-size:0.75rem; font-weight:600; cursor:pointer;">🔗 Copia Link</button>
+            </div>
           </div>
         `);
       } else {
@@ -698,7 +734,42 @@
   const gFoglioInput = document.getElementById("gisFoglioInput");
   const gParticellaInput = document.getElementById("gisParticellaInput");
   const catastralSearchBtn = document.getElementById("gisCatastralSearchBtn");
+  const copyParcelLinkBtn = document.getElementById("gisCopyParcelLinkBtn");
   const catastralSearchStatus = document.getElementById("catastralSearchStatus");
+
+  let lastParcelShareUrl = "https://www.studiotecnicogiuratoiacono.it/mappa.html";
+
+  const updateParcelShareState = (codComune, foglio, particella) => {
+    const cleanFoglio = String(foglio || "").trim();
+    const cleanPart = String(particella || "").trim();
+    const params = new URLSearchParams();
+    if (codComune) params.set("comune", codComune);
+    if (cleanFoglio && cleanFoglio !== "-") params.set("foglio", cleanFoglio);
+    if (cleanPart && cleanPart !== "-" && cleanPart !== "Intero Foglio") params.set("particella", cleanPart);
+
+    const queryStr = params.toString();
+    if (queryStr && window.history?.replaceState) {
+      window.history.replaceState({}, "", `${window.location.pathname}?${queryStr}`);
+    }
+    lastParcelShareUrl = `https://www.studiotecnicogiuratoiacono.it/mappa.html${queryStr ? "?" + queryStr : ""}`;
+    if (copyParcelLinkBtn && cleanFoglio) {
+      copyParcelLinkBtn.style.display = "inline-flex";
+      copyParcelLinkBtn.textContent = "🔗 Copia Link Diretto Particella";
+    }
+    return lastParcelShareUrl;
+  };
+
+  copyParcelLinkBtn?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(lastParcelShareUrl);
+      copyParcelLinkBtn.textContent = "✅ Link Particella Copiato!";
+      setTimeout(() => {
+        copyParcelLinkBtn.textContent = "🔗 Copia Link Diretto Particella";
+      }, 2800);
+    } catch (_) {
+      prompt("Copia il link diretto alla particella:", lastParcelShareUrl);
+    }
+  });
 
   const comuniData = {
     // Provincia di Siracusa (21 comuni)
@@ -910,6 +981,7 @@
     }
 
     const [lat, lon] = coords;
+    const directUrl = updateParcelShareState(codComune, foglioRaw, particellaRaw);
 
     // Centra immediatamente la mappa su [lat, lon] a Zoom 19
     map.setView([lat, lon], 19);
@@ -923,13 +995,16 @@
     }).addTo(inspectLayerGroup);
 
     searchMarker.bindPopup(`
-      <div style="font-family: Manrope, sans-serif; padding: 0.3rem; min-width: 240px;">
+      <div style="font-family: Manrope, sans-serif; padding: 0.3rem; min-width: 245px;">
         <strong style="color: #0b1c2d; font-size: 1rem;">🎯 Localizzazione Catastale</strong>
         <hr style="margin: 6px 0; border-color: #e8e4db;">
         <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Comune:</strong> ${comuneInfo.name}</p>
         <p style="margin: 3px 0; font-size: 0.86rem;"><strong>Foglio:</strong> ${foglioRaw} &nbsp;|&nbsp; <strong>Particella:</strong> <span style="background:#fef3c7; padding:1px 6px; border-radius:4px; font-weight:700;">${particellaRaw || 'Intero Foglio'}</span></p>
         <p style="margin: 3px 0; font-size: 0.78rem; color: #5b6570;">Coordinate: ${lat.toFixed(6)}, ${lon.toFixed(6)} (${matchType})</p>
-        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Buongiorno, vorrei richiedere una visura / rilievo per:\nComune: ${comuneInfo.name} (${codComune})\nFoglio: ${foglioRaw}\nParticella: ${particellaRaw || 'Intero Foglio'}\nCoordinate: ${lat.toFixed(6)}, ${lon.toFixed(6)}`)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin-top:8px; background:#128c7e; color:#fff; padding:6px 12px; border-radius:999px; font-size:0.78rem; font-weight:600; text-decoration:none;">Richiedi Visura su WhatsApp ↗</a>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
+          <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Buongiorno, vorrei richiedere una visura / rilievo per:\nComune: ${comuneInfo.name} (${codComune})\nFoglio: ${foglioRaw}\nParticella: ${particellaRaw || 'Intero Foglio'}\nLink Mappa: ${directUrl}`)}" target="_blank" rel="noopener noreferrer" style="display:inline-block; background:#128c7e; color:#fff; padding:6px 11px; border-radius:999px; font-size:0.76rem; font-weight:600; text-decoration:none;">WhatsApp ↗</a>
+          <button type="button" onclick="navigator.clipboard.writeText('${directUrl}').then(() => { this.textContent = '✅ Link Copiato!'; })" style="background:#0b1c2d; color:#e0c56a; border:1px solid #c9a227; padding:5px 10px; border-radius:999px; font-size:0.75rem; font-weight:600; cursor:pointer;">🔗 Copia Link</button>
+        </div>
       </div>
     `).openPopup();
 
@@ -962,6 +1037,35 @@
       console.log("WFS BBOX background fetch note:", e);
     }
   });
+
+  // Apertura automatica particella da parametri URL (es. mappa.html?comune=H574&foglio=12&particella=345)
+  (() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramComune = (urlParams.get("comune") || "").toUpperCase().trim();
+    const paramFoglio = (urlParams.get("foglio") || "").trim();
+    const paramParticella = (urlParams.get("particella") || "").trim();
+
+    if (paramComune && comuniData[paramComune]) {
+      const targetProv = comuniData[paramComune].prov;
+      if (provinciaSelect && provinciaSelect.value !== targetProv) {
+        provinciaSelect.value = targetProv;
+        populateComuniByProvincia(targetProv);
+      }
+      if (comuneSelect) {
+        comuneSelect.value = paramComune;
+      }
+    }
+
+    if (paramFoglio && gFoglioInput) {
+      gFoglioInput.value = paramFoglio;
+      if (paramParticella && gParticellaInput) {
+        gParticellaInput.value = paramParticella;
+      }
+      setTimeout(() => {
+        catastralSearchBtn?.click();
+      }, 250);
+    }
+  })();
 
   // ============================================================================
   // 6. RICERCA INDIRIZZO / CONTRADA (Nominatim OpenStreetMap)

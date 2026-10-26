@@ -4,7 +4,7 @@
   <!-- Home Page dello Studio Tecnico -->
   <url>
     <loc>https://www.studiotecnicogiuratoiacono.it/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -21,7 +21,7 @@
   <!-- Visualizzatore Cartografico WebGIS Professionale -->
   <url>
     <loc>https://www.studiotecnicogiuratoiacono.it/mappa.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -34,7 +34,7 @@
   <!-- Pagina Utility QR Code WebGIS -->
   <url>
     <loc>https://www.studiotecnicogiuratoiacono.it/qr-mappa.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
