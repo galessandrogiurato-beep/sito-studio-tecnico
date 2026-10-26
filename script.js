@@ -750,21 +750,24 @@
       if (info.prov !== provCode || info.aliasOnly) return;
       const opt = document.createElement("option");
       opt.value = cod;
-      opt.textContent = `${info.shortName} - ${cod}`;
+      opt.textContent = `${info.shortName} (${info.prov}) - ${cod}`;
       if (cod === defaultCod) opt.selected = true;
       comuneSelect.appendChild(opt);
     });
   }
 
-  provinciaSelect?.addEventListener("change", () => {
-    const prov = provinciaSelect.value || "SR";
-    populateComuniByProvincia(prov);
-    const selectedCod = comuneSelect?.value;
-    const comuneInfo = selectedCod ? comuniData[selectedCod] : null;
-    if (comuneInfo && !(gFoglioInput?.value || "").trim()) {
-      map.setView([comuneInfo.lat, comuneInfo.lon], 14);
-    }
-  });
+  if (provinciaSelect) {
+    populateComuniByProvincia(provinciaSelect.value || "SR");
+    provinciaSelect.addEventListener("change", () => {
+      const prov = provinciaSelect.value || "SR";
+      populateComuniByProvincia(prov);
+      const selectedCod = comuneSelect?.value;
+      const comuneInfo = selectedCod ? comuniData[selectedCod] : null;
+      if (comuneInfo && !(gFoglioInput?.value || "").trim()) {
+        map.setView([comuneInfo.lat, comuneInfo.lon], 14);
+      }
+    });
+  }
 
   const localCadastralCache = {};
 
