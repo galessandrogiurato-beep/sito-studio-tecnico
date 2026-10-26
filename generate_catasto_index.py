@@ -6,7 +6,43 @@ url = "https://raw.githubusercontent.com/ondata/dati_catastali/main/S_0000_ITALI
 print("Reading parquet file from OnData...")
 df = pd.read_parquet(url)
 
-target_comuni = ["H574", "F943", "E366", "F258", "H163", "A522", "I535", "G211", "G953", "I754"]
+target_comuni = [
+    # Provincia di Siracusa (21 comuni)
+    "A494", # Augusta
+    "A522", # Avola
+    "B237", # Buccheri
+    "B287", # Buscemi
+    "B603", # Canicattini Bagni
+    "B787", # Carlentini
+    "C006", # Cassaro
+    "D540", # Ferla
+    "D636", # Floridia
+    "D768", # Francofonte
+    "E532", # Lentini
+    "F107", # Melilli
+    "F943", # Noto
+    "G211", # Pachino
+    "G267", # Palazzolo Acreide
+    "M257", # Portopalo di Capo Passero
+    "M279", # Priolo Gargallo
+    "H574", # Rosolini
+    "I754", # Siracusa
+    "I785", # Solarino
+    "I864", # Sortino
+    # Provincia di Ragusa (12 comuni)
+    "A014", # Acate
+    "C612", # Chiaramonte Gulfi
+    "C927", # Comiso
+    "E016", # Giarratana
+    "E366", # Ispica
+    "F258", # Modica
+    "F610", # Monterosso Almo
+    "G953", # Pozzallo
+    "H163", # Ragusa
+    "I178", # Santa Croce Camerina
+    "I535", # Scicli
+    "M088", # Vittoria
+]
 code_mapping = {"G224": "G211", "G923": "G953"}
 
 comune_col = "comune" if "comune" in df.columns else [c for c in df.columns if "comun" in c.lower()][0]
@@ -17,18 +53,19 @@ y_col = "y" if "y" in df.columns else [c for c in df.columns if c.lower() == 'y'
 
 os.makedirs("catasto", exist_ok=True)
 
+df[comune_col] = df[comune_col].astype(str).str.upper()
+df_sub = df[df[comune_col].isin(target_comuni)].copy()
+df_sub['lon'] = (df_sub[x_col] / 1000000.0).round(6)
+df_sub['lat'] = (df_sub[y_col] / 1000000.0).round(6)
+
 for comune in target_comuni:
-    sub = df[df[comune_col].astype(str).str.upper() == comune]
+    sub = df_sub[df_sub[comune_col] == comune]
     if sub.empty:
         print(f"Warning: No data found for comune {comune}")
         continue
     
     fogli_dict = {}
     particelle_dict = {}
-    
-    sub = sub.copy()
-    sub['lon'] = sub[x_col] / 1000000.0
-    sub['lat'] = sub[y_col] / 1000000.0
     
     for foglio_raw, group in sub.groupby(foglio_col):
         foglio_clean = str(foglio_raw).strip().lstrip('0')
@@ -40,13 +77,11 @@ for comune in target_comuni:
         fogli_dict[foglio_clean] = [mean_lat, mean_lon]
         
         part_map = {}
-        for _, row in group.iterrows():
-            part_raw = str(row[particella_col]).strip().lstrip('0')
-            if not part_raw or part_raw.lower() == 'nan':
+        for p_raw, lat_p, lon_p in zip(group[particella_col], group['lat'], group['lon']):
+            part_clean = str(p_raw).strip().lstrip('0')
+            if not part_clean or part_clean.lower() == 'nan':
                 continue
-            lat_p = round(float(row['lat']), 6)
-            lon_p = round(float(row['lon']), 6)
-            part_map[part_raw] = [lat_p, lon_p]
+            part_map[part_clean] = [float(lat_p), float(lon_p)]
             
         if part_map:
             if foglio_clean not in particelle_dict:
@@ -67,7 +102,9 @@ for comune in target_comuni:
     with open(js_path, "w", encoding="utf-8") as f:
         f.write(js_content)
         
-    print(f"Saved {comune}.json & {comune}.js ({len(fogli_dict)} fogli, {sum(len(v) for v in particelle_dict.values())} particelle)")
+    c_lat = round(float(sub['lat'].mean()), 5)
+    c_lon = round(float(sub['lon'].mean()), 5)
+    print(f"Saved {comune}.json & {comune}.js ({len(fogli_dict)} fogli, {sum(len(v) for v in particelle_dict.values())} particelle) center=[{c_lat}, {c_lon}]")
 
 # Also save aliases for G224 -> G211 and G923 -> G953
 for alias, real in code_mapping.items():
@@ -88,13 +125,5 @@ for alias, real in code_mapping.items():
         with open(alias_js, "w", encoding="utf-8") as wf:
             wf.write(content_js)
         print(f"Created alias {alias} from {real}")
-
-# Print exact coordinates for H574 Foglio 29 Particella 299
-h574_path = os.path.join("catasto", "H574.json")
-if os.path.exists(h574_path):
-    with open(h574_path, "r", encoding="utf-8") as f:
-        h574_data = json.load(f)
-    coords_299 = h574_data.get("particelle", {}).get("29", {}).get("299")
-    print(f"\n>>> VERIFICA H574 (Rosolini) Foglio 29 Particella 299: {coords_299}")
 
 print("Cadastral index generation & JS export complete!")

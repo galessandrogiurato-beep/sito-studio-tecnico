@@ -618,9 +618,10 @@
       const codCom = code.substring(0, 4);
       const foglioNum = parseInt(code.substring(5, 9), 10) || code.substring(5, 9);
       const partNum = code.split(".")[1] || (labelMatch ? labelMatch[1].trim() : "-");
+      const knownComune = comuniData[codCom]?.name ? `${comuniData[codCom].name} (${codCom})` : `Codice Catastale ${codCom}`;
       return {
         tipo: "Particella Catastale",
-        comune: `Codice Catastale ${codCom}`,
+        comune: knownComune,
         codComune: codCom,
         foglio: foglioNum,
         particella: partNum,
@@ -699,16 +700,43 @@
   const catastralSearchStatus = document.getElementById("catastralSearchStatus");
 
   const comuniData = {
-    H574: { name: "Rosolini (SR)", lat: 36.81925, lon: 14.94785 },
+    // Provincia di Siracusa (21 comuni)
+    A494: { name: "Augusta (SR)", lat: 37.23050, lon: 15.22080 },
+    A522: { name: "Avola (SR)", lat: 36.90820, lon: 15.13550 },
+    B237: { name: "Buccheri (SR)", lat: 37.12520, lon: 14.85160 },
+    B287: { name: "Buscemi (SR)", lat: 37.08580, lon: 14.88560 },
+    B603: { name: "Canicattini Bagni (SR)", lat: 37.03360, lon: 15.06310 },
+    B787: { name: "Carlentini (SR)", lat: 37.27580, lon: 15.01550 },
+    C006: { name: "Cassaro (SR)", lat: 37.10660, lon: 14.94810 },
+    D540: { name: "Ferla (SR)", lat: 37.11890, lon: 14.94080 },
+    D636: { name: "Floridia (SR)", lat: 37.08310, lon: 15.15250 },
+    D768: { name: "Francofonte (SR)", lat: 37.22860, lon: 14.87920 },
+    E532: { name: "Lentini (SR)", lat: 37.28470, lon: 14.99940 },
+    F107: { name: "Melilli (SR)", lat: 37.17940, lon: 15.12640 },
     F943: { name: "Noto (SR)", lat: 36.89110, lon: 15.07040 },
+    G211: { name: "Pachino (SR)", lat: 36.71800, lon: 15.09060 },
+    G224: { name: "Pachino (SR)", lat: 36.71800, lon: 15.09060 },
+    G267: { name: "Palazzolo Acreide (SR)", lat: 37.06190, lon: 14.90330 },
+    M257: { name: "Portopalo di Capo Passero (SR)", lat: 36.68580, lon: 15.13690 },
+    M279: { name: "Priolo Gargallo (SR)", lat: 37.15830, lon: 15.18560 },
+    H574: { name: "Rosolini (SR)", lat: 36.81925, lon: 14.94785 },
+    I754: { name: "Siracusa (SR)", lat: 37.06630, lon: 15.28560 },
+    I785: { name: "Solarino (SR)", lat: 37.10140, lon: 15.12110 },
+    I864: { name: "Sortino (SR)", lat: 37.15670, lon: 15.02750 },
+    // Provincia di Ragusa (12 comuni)
+    A014: { name: "Acate (RG)", lat: 37.02530, lon: 14.49280 },
+    C612: { name: "Chiaramonte Gulfi (RG)", lat: 37.03110, lon: 14.70190 },
+    C927: { name: "Comiso (RG)", lat: 36.94610, lon: 14.60470 },
+    E016: { name: "Giarratana (RG)", lat: 37.04830, lon: 14.79420 },
     E366: { name: "Ispica (RG)", lat: 36.78520, lon: 14.90680 },
     F258: { name: "Modica (RG)", lat: 36.86040, lon: 14.76060 },
-    H163: { name: "Ragusa (RG)", lat: 36.92550, lon: 14.72550 },
-    A522: { name: "Avola (SR)", lat: 36.90820, lon: 15.13550 },
-    I535: { name: "Scicli (RG)", lat: 36.79250, lon: 14.70680 },
-    G224: { name: "Pachino (SR)", lat: 36.71800, lon: 15.09060 },
+    F610: { name: "Monterosso Almo (RG)", lat: 37.08970, lon: 14.76390 },
+    G953: { name: "Pozzallo (RG)", lat: 36.73030, lon: 14.84680 },
     G923: { name: "Pozzallo (RG)", lat: 36.73030, lon: 14.84680 },
-    I754: { name: "Siracusa (SR)", lat: 37.06630, lon: 15.28560 }
+    H163: { name: "Ragusa (RG)", lat: 36.92550, lon: 14.72550 },
+    I178: { name: "Santa Croce Camerina (RG)", lat: 36.82750, lon: 14.52390 },
+    I535: { name: "Scicli (RG)", lat: 36.79250, lon: 14.70680 },
+    M088: { name: "Vittoria (RG)", lat: 36.95310, lon: 14.53220 }
   };
 
   const localCadastralCache = {};
@@ -793,6 +821,14 @@
 
     return null;
   }
+
+  comuneSelect?.addEventListener("change", () => {
+    const codComune = comuneSelect.value;
+    const comuneInfo = comuniData[codComune];
+    if (comuneInfo && !(gFoglioInput?.value || "").trim()) {
+      map.setView([comuneInfo.lat, comuneInfo.lon], 15);
+    }
+  });
 
   catastralSearchBtn?.addEventListener("click", async () => {
     const codComune = comuneSelect?.value || "H574";
