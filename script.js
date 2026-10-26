@@ -691,8 +691,9 @@
   });
 
   // ============================================================================
-  // 5. RICERCA CATASTALE REALE PER COMUNE, FOGLIO E PARTICELLA (Con supporto file:// e hyparquet)
+  // 5. RICERCA CATASTALE REALE PER PROVINCIA, COMUNE, FOGLIO E PARTICELLA
   // ============================================================================
+  const provinciaSelect = document.getElementById("gisProvinciaSelect");
   const comuneSelect = document.getElementById("gisComuneSelect");
   const gFoglioInput = document.getElementById("gisFoglioInput");
   const gParticellaInput = document.getElementById("gisParticellaInput");
@@ -701,43 +702,69 @@
 
   const comuniData = {
     // Provincia di Siracusa (21 comuni)
-    A494: { name: "Augusta (SR)", lat: 37.23050, lon: 15.22080 },
-    A522: { name: "Avola (SR)", lat: 36.90820, lon: 15.13550 },
-    B237: { name: "Buccheri (SR)", lat: 37.12520, lon: 14.85160 },
-    B287: { name: "Buscemi (SR)", lat: 37.08580, lon: 14.88560 },
-    B603: { name: "Canicattini Bagni (SR)", lat: 37.03360, lon: 15.06310 },
-    B787: { name: "Carlentini (SR)", lat: 37.27580, lon: 15.01550 },
-    C006: { name: "Cassaro (SR)", lat: 37.10660, lon: 14.94810 },
-    D540: { name: "Ferla (SR)", lat: 37.11890, lon: 14.94080 },
-    D636: { name: "Floridia (SR)", lat: 37.08310, lon: 15.15250 },
-    D768: { name: "Francofonte (SR)", lat: 37.22860, lon: 14.87920 },
-    E532: { name: "Lentini (SR)", lat: 37.28470, lon: 14.99940 },
-    F107: { name: "Melilli (SR)", lat: 37.17940, lon: 15.12640 },
-    F943: { name: "Noto (SR)", lat: 36.89110, lon: 15.07040 },
-    G211: { name: "Pachino (SR)", lat: 36.71800, lon: 15.09060 },
-    G224: { name: "Pachino (SR)", lat: 36.71800, lon: 15.09060 },
-    G267: { name: "Palazzolo Acreide (SR)", lat: 37.06190, lon: 14.90330 },
-    M257: { name: "Portopalo di Capo Passero (SR)", lat: 36.68580, lon: 15.13690 },
-    M279: { name: "Priolo Gargallo (SR)", lat: 37.15830, lon: 15.18560 },
-    H574: { name: "Rosolini (SR)", lat: 36.81925, lon: 14.94785 },
-    I754: { name: "Siracusa (SR)", lat: 37.06630, lon: 15.28560 },
-    I785: { name: "Solarino (SR)", lat: 37.10140, lon: 15.12110 },
-    I864: { name: "Sortino (SR)", lat: 37.15670, lon: 15.02750 },
+    H574: { name: "Rosolini (SR)", shortName: "Rosolini", prov: "SR", lat: 36.81925, lon: 14.94785 },
+    A494: { name: "Augusta (SR)", shortName: "Augusta", prov: "SR", lat: 37.23050, lon: 15.22080 },
+    A522: { name: "Avola (SR)", shortName: "Avola", prov: "SR", lat: 36.90820, lon: 15.13550 },
+    B237: { name: "Buccheri (SR)", shortName: "Buccheri", prov: "SR", lat: 37.12520, lon: 14.85160 },
+    B287: { name: "Buscemi (SR)", shortName: "Buscemi", prov: "SR", lat: 37.08580, lon: 14.88560 },
+    B603: { name: "Canicattini Bagni (SR)", shortName: "Canicattini Bagni", prov: "SR", lat: 37.03360, lon: 15.06310 },
+    B787: { name: "Carlentini (SR)", shortName: "Carlentini", prov: "SR", lat: 37.27580, lon: 15.01550 },
+    C006: { name: "Cassaro (SR)", shortName: "Cassaro", prov: "SR", lat: 37.10660, lon: 14.94810 },
+    D540: { name: "Ferla (SR)", shortName: "Ferla", prov: "SR", lat: 37.11890, lon: 14.94080 },
+    D636: { name: "Floridia (SR)", shortName: "Floridia", prov: "SR", lat: 37.08310, lon: 15.15250 },
+    D768: { name: "Francofonte (SR)", shortName: "Francofonte", prov: "SR", lat: 37.22860, lon: 14.87920 },
+    E532: { name: "Lentini (SR)", shortName: "Lentini", prov: "SR", lat: 37.28470, lon: 14.99940 },
+    F107: { name: "Melilli (SR)", shortName: "Melilli", prov: "SR", lat: 37.17940, lon: 15.12640 },
+    F943: { name: "Noto (SR)", shortName: "Noto", prov: "SR", lat: 36.89110, lon: 15.07040 },
+    G211: { name: "Pachino (SR)", shortName: "Pachino", prov: "SR", lat: 36.71800, lon: 15.09060 },
+    G224: { name: "Pachino (SR)", shortName: "Pachino", prov: "SR", lat: 36.71800, lon: 15.09060, aliasOnly: true },
+    G267: { name: "Palazzolo Acreide (SR)", shortName: "Palazzolo Acreide", prov: "SR", lat: 37.06190, lon: 14.90330 },
+    M257: { name: "Portopalo di Capo Passero (SR)", shortName: "Portopalo di Capo Passero", prov: "SR", lat: 36.68580, lon: 15.13690 },
+    M279: { name: "Priolo Gargallo (SR)", shortName: "Priolo Gargallo", prov: "SR", lat: 37.15830, lon: 15.18560 },
+    I754: { name: "Siracusa (SR)", shortName: "Siracusa", prov: "SR", lat: 37.06630, lon: 15.28560 },
+    I785: { name: "Solarino (SR)", shortName: "Solarino", prov: "SR", lat: 37.10140, lon: 15.12110 },
+    I864: { name: "Sortino (SR)", shortName: "Sortino", prov: "SR", lat: 37.15670, lon: 15.02750 },
     // Provincia di Ragusa (12 comuni)
-    A014: { name: "Acate (RG)", lat: 37.02530, lon: 14.49280 },
-    C612: { name: "Chiaramonte Gulfi (RG)", lat: 37.03110, lon: 14.70190 },
-    C927: { name: "Comiso (RG)", lat: 36.94610, lon: 14.60470 },
-    E016: { name: "Giarratana (RG)", lat: 37.04830, lon: 14.79420 },
-    E366: { name: "Ispica (RG)", lat: 36.78520, lon: 14.90680 },
-    F258: { name: "Modica (RG)", lat: 36.86040, lon: 14.76060 },
-    F610: { name: "Monterosso Almo (RG)", lat: 37.08970, lon: 14.76390 },
-    G953: { name: "Pozzallo (RG)", lat: 36.73030, lon: 14.84680 },
-    G923: { name: "Pozzallo (RG)", lat: 36.73030, lon: 14.84680 },
-    H163: { name: "Ragusa (RG)", lat: 36.92550, lon: 14.72550 },
-    I178: { name: "Santa Croce Camerina (RG)", lat: 36.82750, lon: 14.52390 },
-    I535: { name: "Scicli (RG)", lat: 36.79250, lon: 14.70680 },
-    M088: { name: "Vittoria (RG)", lat: 36.95310, lon: 14.53220 }
+    A014: { name: "Acate (RG)", shortName: "Acate", prov: "RG", lat: 37.02530, lon: 14.49280 },
+    C612: { name: "Chiaramonte Gulfi (RG)", shortName: "Chiaramonte Gulfi", prov: "RG", lat: 37.03110, lon: 14.70190 },
+    C927: { name: "Comiso (RG)", shortName: "Comiso", prov: "RG", lat: 36.94610, lon: 14.60470 },
+    E016: { name: "Giarratana (RG)", shortName: "Giarratana", prov: "RG", lat: 37.04830, lon: 14.79420 },
+    E366: { name: "Ispica (RG)", shortName: "Ispica", prov: "RG", lat: 36.78520, lon: 14.90680 },
+    F258: { name: "Modica (RG)", shortName: "Modica", prov: "RG", lat: 36.86040, lon: 14.76060 },
+    F610: { name: "Monterosso Almo (RG)", shortName: "Monterosso Almo", prov: "RG", lat: 37.08970, lon: 14.76390 },
+    G953: { name: "Pozzallo (RG)", shortName: "Pozzallo", prov: "RG", lat: 36.73030, lon: 14.84680 },
+    G923: { name: "Pozzallo (RG)", shortName: "Pozzallo", prov: "RG", lat: 36.73030, lon: 14.84680, aliasOnly: true },
+    H163: { name: "Ragusa (RG)", shortName: "Ragusa", prov: "RG", lat: 36.92550, lon: 14.72550 },
+    I178: { name: "Santa Croce Camerina (RG)", shortName: "Santa Croce Camerina", prov: "RG", lat: 36.82750, lon: 14.52390 },
+    I535: { name: "Scicli (RG)", shortName: "Scicli", prov: "RG", lat: 36.79250, lon: 14.70680 },
+    M088: { name: "Vittoria (RG)", shortName: "Vittoria", prov: "RG", lat: 36.95310, lon: 14.53220 }
   };
+
+  function populateComuniByProvincia(provCode) {
+    if (!comuneSelect) return;
+    comuneSelect.innerHTML = "";
+    const defaultByProv = { SR: "H574", RG: "E366" };
+    const defaultCod = defaultByProv[provCode] || "";
+
+    Object.entries(comuniData).forEach(([cod, info]) => {
+      if (info.prov !== provCode || info.aliasOnly) return;
+      const opt = document.createElement("option");
+      opt.value = cod;
+      opt.textContent = `${info.shortName} - ${cod}`;
+      if (cod === defaultCod) opt.selected = true;
+      comuneSelect.appendChild(opt);
+    });
+  }
+
+  provinciaSelect?.addEventListener("change", () => {
+    const prov = provinciaSelect.value || "SR";
+    populateComuniByProvincia(prov);
+    const selectedCod = comuneSelect?.value;
+    const comuneInfo = selectedCod ? comuniData[selectedCod] : null;
+    if (comuneInfo && !(gFoglioInput?.value || "").trim()) {
+      map.setView([comuneInfo.lat, comuneInfo.lon], 14);
+    }
+  });
 
   const localCadastralCache = {};
 
