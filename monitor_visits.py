@@ -15,16 +15,18 @@ def get_stats():
     total_match = re.search(r'class="hide js-total">([0-9\.,]+)<', html)
     total_visits = total_match.group(1) if total_match else "0"
 
-    # Pages
+    # Extract pages from table rows
     pages = []
-    page_rows = re.findall(r'<tr[^>]*id="([a-zA-Z0-9_\-\/\.\?&=#%]+)"[^>]*>.*?<span class="count"[^>]*>([0-9\.,]+)</span>', html, re.DOTALL)
-    for p, c in page_rows:
-        if p != "TOTAL":
-            pages.append({"path": p, "views": c})
+    # Match rows like <tr id="/" ... data-count="4"
+    for m in re.finditer(r'<tr\s+id="([^"]+)"[^>]*data-count="([0-9]+)"', html):
+        path = m.group(1).strip()
+        count = m.group(2).strip()
+        if not path.startswith("TOTAL") and not path.isdigit():
+            pages.append({"path": path, "views": int(count)})
 
     return {
         "connected": True,
-        "total_visits": total_visits,
+        "total_visits": int(total_visits) if total_visits.isdigit() else total_visits,
         "pages": pages
     }
 
