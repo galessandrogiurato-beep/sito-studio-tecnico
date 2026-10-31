@@ -296,6 +296,405 @@
     window.open(buildWhatsAppUrl(msg), "_blank", "noopener,noreferrer");
   });
 
+
+  // ============================================================================
+  // CALCOLATORI & SIMULATORI INTERATTIVI (HOME PAGE)
+  // ============================================================================
+  
+  // 1. Switcher Tab Calcolatori
+  window.switchToolTab = (tabKey) => {
+    const tabs = [
+      { key: "successione", btn: "tabBtnSuccessione", panel: "toolPanelSuccessione" },
+      { key: "rogito", btn: "tabBtnRogito", panel: "toolPanelRogito" },
+      { key: "ristruttura", btn: "tabBtnRistruttura", panel: "toolPanelRistruttura" },
+    ];
+
+    tabs.forEach(({ key, btn, panel }) => {
+      const bEl = document.getElementById(btn);
+      const pEl = document.getElementById(panel);
+      const isActive = key === tabKey;
+      if (bEl) {
+        bEl.classList.toggle("active", isActive);
+        bEl.setAttribute("aria-selected", String(isActive));
+      }
+      if (pEl) {
+        pEl.classList.toggle("active", isActive);
+      }
+    });
+  };
+
+  // 2. Calcolo Imposte Successione e Voltura Catastale
+  const calcSuccessione = () => {
+    const renditaInput = document.getElementById("calcRenditaInput");
+    const tipoSelect = document.getElementById("calcTipoImmobile");
+    const parentelaSelect = document.getElementById("calcGradoParentela");
+
+    const rendita = parseFloat(renditaInput?.value || "0") || 0;
+    const tipo = tipoSelect?.value || "prima_casa";
+    const parentela = parentelaSelect?.value || "linea_retta";
+
+    // Calcolo valore catastale rivalutato
+    let moltiplicatore = 110; // Prima casa
+    let coeffRivalutazione = 1.05; // Fabbricati 5%
+    if (tipo === "seconda_casa") {
+      moltiplicatore = 120;
+    } else if (tipo === "commerciale") {
+      moltiplicatore = 60;
+    } else if (tipo === "terreno") {
+      moltiplicatore = 135;
+      coeffRivalutazione = 1.25; // Reddito dominicale 25%
+    }
+
+    const valoreCatastale = Math.round(rendita * coeffRivalutazione * moltiplicatore);
+
+    // Imposte Ipotecaria e Catastale
+    let impIpotecaria = 200;
+    let impCatastale = 200;
+
+    if (tipo !== "prima_casa") {
+      impIpotecaria = Math.max(200, Math.round(valoreCatastale * 0.02));
+      impCatastale = Math.max(200, Math.round(valoreCatastale * 0.01));
+    }
+
+    const tassaIpotecariaTributi = 67; // 35€ tassa ipotecaria + 32€ tributi speciali
+    const bollo = 64; // Bollo forfettario
+    const dirittiVoltura = 71; // 55€ tributo speciale voltura + 16€ bollo
+
+    const totale = impIpotecaria + impCatastale + tassaIpotecariaTributi + bollo + dirittiVoltura;
+
+    const fmtEuro = (n) => "€ " + n.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+    const elVal = document.getElementById("resValoreCatastale");
+    const elIpo = document.getElementById("resImpostaIpotecaria");
+    const elCat = document.getElementById("resImpostaCatastale");
+    const elTot = document.getElementById("resTotaleImposte");
+
+    if (elVal) elVal.textContent = fmtEuro(valoreCatastale);
+    if (elIpo) elIpo.textContent = fmtEuro(impIpotecaria);
+    if (elCat) elCat.textContent = fmtEuro(impCatastale);
+    if (elTot) elTot.textContent = fmtEuro(totale);
+
+    // Aggiorna link WhatsApp con il riepilogo calcolato
+    const ctaBtn = document.getElementById("btnSuccessioneWhatsAppCta");
+    if (ctaBtn) {
+      const msg = [
+        "Buongiorno Studio Giurato & Iacono, ho utilizzato il vostro calcolatore online.",
+        `Rendita Catastale: € ${rendita}`,
+        `Tipologia: ${tipo === 'prima_casa' ? 'Prima Casa' : 'Seconda Casa / Terreno'}`,
+        `Valore Catastale Stimato: ${fmtEuro(valoreCatastale)}`,
+        `Imposte Statali Calcolate: ${fmtEuro(totale)}`,
+        "Vorrei ricevere assistenza per la compilazione della Dichiarazione di Successione e della Voltura Catastale."
+      ].join("\n");
+      ctaBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+  };
+
+  document.getElementById("btnCalcolaSuccessione")?.addEventListener("click", calcSuccessione);
+  document.getElementById("calcRenditaInput")?.addEventListener("input", calcSuccessione);
+  document.getElementById("calcTipoImmobile")?.addEventListener("change", calcSuccessione);
+  document.getElementById("calcGradoParentela")?.addEventListener("change", calcSuccessione);
+
+  // 3. Checklist Rogito Notarile
+  window.calcRogitoScore = () => {
+    const q1 = parseInt(document.querySelector('input[name="checkPlanimetria"]:checked')?.value || "0", 10);
+    const q2 = parseInt(document.querySelector('input[name="checkApe"]:checked')?.value || "0", 10);
+    const q3 = parseInt(document.querySelector('input[name="checkPertinenze"]:checked')?.value || "0", 10);
+    const q4 = parseInt(document.querySelector('input[name="checkLicenza"]:checked')?.value || "0", 10);
+
+    const score = q1 + q2 + q3 + q4;
+
+    const box = document.getElementById("checklistReportBox");
+    const icon = document.getElementById("checklistReportIcon");
+    const title = document.getElementById("checklistReportTitle");
+    const text = document.getElementById("checklistReportText");
+    const waBtn = document.getElementById("checklistWhatsAppBtn");
+    if (!box) return;
+
+    box.className = "checklist-report-card";
+
+    let msg = "";
+    if (score === 0) {
+      box.classList.add("safe");
+      if (icon) icon.textContent = "🟢";
+      if (title) title.textContent = "Immobile in Condizione di Piena Conformità Presunta";
+      if (text) text.textContent = "Dalle risposte fornite non emergono difformità. Per massima sicurezza e per tutelare l'acquirente prima della stipula del preliminare, consigliamo di verificare la corrispondenza con il titolo edilizio comunale originario.";
+      msg = "Buongiorno, ho eseguito la checklist rogito sul vostro sito (esito: Conforme). Vorrei richiedere una verifica documentale prima dell'atto.";
+    } else if (score <= 4) {
+      box.classList.add("warning");
+      if (icon) icon.textContent = "🟡";
+      if (title) title.textContent = "Attenzione: Rilevate Difformità Minori Sanabili";
+      if (text) text.textContent = "Sono presenti lievi difformità (es. tramezze spostate, porte interne modificate o APE mancante). È necessario redigere una variazione catastale DOCFA o l'Attestato APE per non rischiare rinvii o contestazioni dal perito della banca o dal notaio.";
+      msg = "Buongiorno, ho eseguito la checklist rogito (esito: Difformità Minori). Avrei bisogno di una consulenza per regolarizzare la planimetria / redigere l'APE prima dell'atto.";
+    } else {
+      box.classList.add("danger");
+      if (icon) icon.textContent = "🔴";
+      if (title) title.textContent = "Rischio Elevato: Blocco del Rogito o Nullità dell'Atto";
+      if (text) text.textContent = "Attenzione: emergono discrepanze significative (es. verande chiuse non autorizzate, cambi di destinazione d'uso, o difformità planimetriche pesanti). La legge prevede la nullità degli atti di compravendita in caso di difformità sostanziali. È fondamentale un sopralluogo tecnico per verificare la sanabilità con il Decreto Salva Casa prima della vendita.";
+      msg = "Buongiorno Studio Giurato & Iacono, ho eseguito la checklist sul vostro sito ed è emerso un RISCHIO ELEVATO per difformità edilizie/catastali. Vorrei fissare un sopralluogo urgente per sanare la situazione.";
+    }
+
+    if (waBtn) {
+      waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+  };
+
+  // 4. Simulatore Ristrutturazione & Pratiche
+  window.calcRistrutturaEst = () => {
+    const range = document.getElementById("rangeMqInput");
+    const livello = document.getElementById("selectLivelloOpere");
+    const mq = parseInt(range?.value || "90", 10);
+    const tipo = livello?.value || "medium";
+
+    const lblMq = document.getElementById("lblMqVal");
+    const resMq = document.getElementById("resMqDisplay");
+    const resCosto = document.getElementById("resCostoMqDisplay");
+    const resTot = document.getElementById("resTotaleOpereDisplay");
+    const listPratiche = document.getElementById("listPraticheNecessarie");
+
+    if (lblMq) lblMq.textContent = `${mq} m²`;
+    if (resMq) resMq.textContent = `${mq} m²`;
+
+    let minMq = 300, maxMq = 450;
+    let pratiche = [];
+
+    if (tipo === "light") {
+      minMq = 250; maxMq = 400;
+      if (resCosto) resCosto.textContent = "~ € 300 – 400 / m²";
+      pratiche = [
+        "Attività Edilizia Libera (nessun titolo abilitativo per opere ordinarie)",
+        "Dichiarazione di conformità impianti (DM 37/08)",
+        "Aggiornamento APE (se vengono sostituiti infissi o climatizzatori)"
+      ];
+    } else if (tipo === "medium") {
+      minMq = 500; maxMq = 750;
+      if (resCosto) resCosto.textContent = "~ € 550 – 750 / m²";
+      pratiche = [
+        "Pratica Edilizia Comunale (CILA asseverata per manutenzione straordinaria)",
+        "Piano Operativo di Sicurezza (PSC e nomina CSE ai sensi del D.Lgs. 81/2008)",
+        "Variazione Catastale DOCFA (aggiornamento planimetria catastale)",
+        "Attestato di Prestazione Energetica (APE) post-intervento",
+        "Detrazioni Fiscali ENEA (se previste)"
+      ];
+    } else {
+      minMq = 850; maxMq = 1350;
+      if (resCosto) resCosto.textContent = "~ € 900 – 1.300 / m²";
+      pratiche = [
+        "Pratica Edilizia (CILA o SCIA per opere strutturali e impianti)",
+        "Autorizzazione Paesaggistica Semplificata (se immobile in area con vincolo paesaggistico)",
+        "Piano di Sicurezza e Coordinamento Cantieri (CSP/CSE)",
+        "Variazione Catastale DOCFA per nuova ridistribuzione vani",
+        "Nuovo APE e Segnalazione Certificata di Agibilità (SCA)",
+        "Computo Metrico Estimativo dettagliato e Direzione Lavori"
+      ];
+    }
+
+    const minTot = mq * minMq;
+    const maxTot = mq * maxMq;
+    const fmtK = (n) => "€ " + Math.round(n).toLocaleString("it-IT");
+
+    if (resTot) resTot.textContent = `${fmtK(minTot)} – ${fmtK(maxTot)}`;
+    if (listPratiche) {
+      listPratiche.innerHTML = pratiche.map((p) => `<li>${p}</li>`).join("");
+    }
+  };
+
+  // ============================================================================
+  // BLOG TECNICO & MODALE GUIDE ARTICOLI (PUNTO 4)
+  // ============================================================================
+  const ARTICLES_DATABASE = {
+    "salva-casa": {
+      badge: "Urbanistica & Sanatorie",
+      title: "Decreto Salva Casa 2024 (L. 105/2024) in Sicilia: Tolleranze, Tramezze e Sanabilità",
+      meta: "A cura del Geom. Alessandro Giurato · Studio Tecnico Associato Giurato & Iacono",
+      content: `
+        <p>Il Decreto-Legge 29 maggio 2024, n. 69 (convertito con modificazioni nella <strong>Legge 24 luglio 2024, n. 105</strong>, noto come <em>Salva Casa</em>) ha introdotto rilevanti novità per la regolarizzazione delle cosiddette "piccole difformità" edilizie che da decenni bloccano compravendite, rogiti e richieste di mutuo in tutta la Sicilia.</p>
+        
+        <h4>1. Le Nuove Tolleranze Costruttive ed Esecutive</h4>
+        <p>Una delle novità più significative riguarda l'ampliamento delle tolleranze costruttive per gli interventi realizzati entro il 24 maggio 2024. Il mancato rispetto dell'altezza, dei distacchi, della cubatura o della superficie coperta non costituisce più violazione edilizia se contenuto entro percentuali parametrate alla superficie utile:</p>
+        <ul>
+          <li><strong>5%</strong> per unità immobiliari con superficie utile inferiore a 100 m²;</li>
+          <li><strong>4%</strong> per unità immobiliari tra 100 e 300 m²;</li>
+          <li><strong>3%</strong> per unità immobiliari tra 300 e 500 m²;</li>
+          <li><strong>2%</strong> per unità immobiliari superiori a 500 m².</li>
+        </ul>
+
+        <h4>2. Cosa si Può Sanare Subito (Difformità Interne e Tramezze)</h4>
+        <p>Rientrano tra le difformità sanabili con procedure semplificate:</p>
+        <ul>
+          <li><strong>Spostamento o abbattimento di tramezze non portanti:</strong> regolarizzabile tramite CILA in sanatoria con sanzione forfettaria ridotta;</li>
+          <li><strong>Minori aperture o spostamenti di porte e finestre:</strong> qualora non incidano sulla sicurezza strutturale dell'edificio;</li>
+          <li><strong>Errori materiali grafici</strong> presenti nei progetti originari depositati in Comune o nelle vecchie licenze edilizie.</li>
+        </ul>
+
+        <div class="article-highlight-box">
+          <strong>💡 Superamento della "Doppia Conformità":</strong><br>
+          Per le parziali difformità non è più necessario dimostrare che l'opera fosse conforme sia alla normativa dell'epoca di realizzazione sia a quella odierna. È sufficiente la conformità alla disciplina urbanistica vigente al momento della presentazione della domanda e a quella edilizia vigente all'epoca della realizzazione.
+        </div>
+
+        <h4>3. La Procedura con lo Studio Giurato &amp; Iacono</h4>
+        <p>Per usufruire delle agevolazioni del Salva Casa a Rosolini, Noto, Modica, Siracusa o Ragusa è indispensabile la relazione tecnica asseverata firmata da un geometra abilitato, accompagnata da:</p>
+        <ol>
+          <li>Accesso agli atti presso l'Ufficio Tecnico Comunale per il reperimento dei titoli edilizi originari;</li>
+          <li>Rilievo dello stato di fatto per la verifica millimetrica delle tolleranze;</li>
+          <li>Redazione della pratica edilizia (CILA o SCIA in sanatoria);</li>
+          <li>Aggiornamento della planimetria catastale telematica tramite procedura DOCFA.</li>
+        </ol>
+      `
+    },
+    "compravendita-catasto": {
+      badge: "Compravendite & Notariato",
+      title: "Compravendita Sicura: Perché la Planimetria Catastale non Basta e Cosa Controlla il Notaio",
+      meta: "A cura del Geom. Piernicolò Iacono · Studio Tecnico Associato Giurato & Iacono",
+      content: `
+        <p>Nel corso delle trattative di compravendita immobiliare a Rosolini e nel comprensorio elorino, si sente spesso ripetere la frase: <em>"L'immobile è in regola, la piantina del Catasto corrisponde perfettamente"</em>. Questo è uno degli errori più frequenti e rischiosi per chi vende e per chi acquista.</p>
+
+        <h4>1. Catasto vs Comune: Valore Fiscale vs Valore Giuridico</h4>
+        <p>In Italia il Catasto ha natura prettamente <strong>fiscale</strong> (serve all'Agenzia delle Entrate per calcolare IMU, imposte di registro e rendite), ma <strong>non è probatorio</strong> della regolarità edilizia:</p>
+        <ul>
+          <li>Un fabbricato può avere una planimetria catastale perfettamente corrispondente allo stato attuale, ma risultare totalmente o parzialmente abusivo per il Comune;</li>
+          <li>Viceversa, un immobile con licenza edilizia regolare può non essere mai stato accatastato correttamente.</li>
+        </ul>
+
+        <h4>2. Cosa Richiede la Legge nell'Atto di Vendita (Art. 29 L. 52/1985)</h4>
+        <p>All'atto del rogito notarile, il venditore è tenuto a rilasciare a pena di <strong>nullità dell'atto</strong> la dichiarazione di conformità dei dati catastali e delle planimetrie allo stato di fatto, nonché la conformità urbanistica (titolo abilitativo originario, licenza, concessione o sanatoria).</p>
+
+        <div class="article-highlight-box">
+          <strong>⚠️ Rischi per il Venditore e per l'Acquirente:</strong><br>
+          Rilasciare dichiarazioni non veritiere espone il venditore a responsabilità civile e penale per dichiarazione mendace. Inoltre, il perito della banca incaricato di valutare l'immobile per l'erogazione del mutuo bloccherà la pratica al minimo riscontro di difformità tra licenza, catasto e stato dei luoghi.
+        </div>
+
+        <h4>3. L'Attestazione di Stato Legittimo prima del Compromesso</h4>
+        <p>Prima di firmare una proposta irrevocabile d'acquisto o un preliminare con versamento di caparra, lo Studio Tecnico Giurato &amp; Iacono raccomanda sempre di far redigere la <strong>Relazione di Conformità Urbanistica e Catastale</strong>, corredata dall'Attestato APE: solo così la transazione sarà blindata e priva di contenziosi futuri.</p>
+      `
+    },
+    "piano-paesaggistico": {
+      badge: "Vincoli Paesaggistici & SITR",
+      title: "Piano Paesaggistico Regionale (SITR Sicilia): Guida a Vincoli, Fasce e Autorizzazioni",
+      meta: "A cura dello Studio Tecnico Associato Giurato & Iacono (Rosolini, SR)",
+      content: `
+        <p>Il territorio della Sicilia orientale, in particolare l'area del Val di Noto tra le province di Siracusa e Ragusa, è caratterizzato da uno straordinario patrimonio paesaggistico, agricolo e archeologico, regolamentato dal <strong>Piano Paesaggistico Regionale</strong> (Ambiti 14 e 15) e dal Codice dei Beni Culturali (D.Lgs. 42/2004).</p>
+
+        <h4>1. I Principali Vincoli Paesaggistici da Conoscere</h4>
+        <ul>
+          <li><strong>Fascia di rispetto fluviale (150 metri):</strong> vige il vincolo paesaggistico assoluto entro 150 metri dalle sponde di fiumi, torrenti e corsi d'acqua censiti (es. Cava Grande, Cava d'Ispica, fiumi Tellaro e Anapo);</li>
+          <li><strong>Beni isolati e centri storici:</strong> immobili e complessi rurali d'interesse storico-testimoniale (masserie, palmenti, muretti a secco tradizionali);</li>
+          <li><strong>Aree boschive e macchia mediterranea:</strong> sottoposte a rigorose limitazioni d'intervento;</li>
+          <li><strong>Fascia costiera (300 metri dalla battigia):</strong> regime di salvaguardia assoluto per la tutela del litorale.</li>
+        </ul>
+
+        <h4>2. Quando Serve l'Autorizzazione Paesaggistica?</h4>
+        <p>Qualsiasi intervento che alteri lo stato esteriore dei luoghi ricadenti in area vincolata necessita della preventiva Autorizzazione della <strong>Soprintendenza ai Beni Culturali e Ambientali</strong> competente (Siracusa o Ragusa):</p>
+        <ul>
+          <li><strong>Interventi Liberi (Allegato A, DPR 31/2017):</strong> opere interne, manutenzione ordinaria senza alterazione dei prospetti, eliminazione barriere architettoniche;</li>
+          <li><strong>Autorizzazione Paesaggistica Semplificata (Allegato B, DPR 31/2017):</strong> verande, tettoie, piccoli ampliamenti, pannelli solari, tinteggiature esterne con colori tradizionali (termini di rilascio entro 60 giorni);</li>
+          <li><strong>Procedura Ordinaria:</strong> nuove costruzioni, ristrutturazioni pesanti e lottizzazioni.</li>
+        </ul>
+
+        <div class="article-highlight-box">
+          <strong>🗺️ Verifica Istantanea con il nostro WebGIS:</strong><br>
+          Puoi verificare direttamente sulla mappa interattiva del nostro sito (<a href="mappa.html" style="color: var(--navy); font-weight:700;">WebGIS Catasto &amp; SITR</a>) se la tua particella ricade all'interno di fasce fluviali, boschi o vincoli del Piano Paesaggistico, attivando il layer "PP - Beni Paesaggistici".
+        </div>
+      `
+    },
+    "frazionamento-pregeo": {
+      badge: "Topografia & Catasto Terreni",
+      title: "Frazionamento Terreni e Accatastamenti: la Procedura Ufficiale PREGEO e DOCFA",
+      meta: "A cura del Geom. Alessandro Giurato · Studio Tecnico Associato Giurato & Iacono",
+      content: `
+        <p>Il frazionamento catastale è l'atto tecnico indispensabile per dividere un terreno agricolo o edificabile in più particelle autonome, operazione propedeutica a compravendite parziali, divisioni ereditarie tra eredi, donazioni o espropri.</p>
+
+        <h4>1. Il Rilievo Strumentale sul Campo con GPS GNSS</h4>
+        <p>La procedura ha inizio con il sopralluogo e il rilievo topografico ad alta precisione eseguito con strumentazione satellitare <strong>GNSS multifrequenza in modalità RTK</strong>:</p>
+        <ul>
+          <li>Vengono materializzati i picchetti di confine con precisione centimetrica;</li>
+          <li>Viene rilevata la posizione planimetrica dei confini di possesso, fabbricati e recinzioni;</li>
+          <li>Vengono battuti almeno <strong>3 Punti Fiduciali (PF)</strong> dell'Agenzia delle Entrate per collegare il rilievo alla rete geodetica nazionale.</li>
+        </ul>
+
+        <h4>2. La Maglia Fiduciaria e l'Archivio DIS dell'Agenzia delle Entrate</h4>
+        <p>Il software ministeriale <strong>PREGEO</strong> (Pretrattamento Atti Geometrici) calcola la posizione delle nuove linee dividenti mediante una roto-traslazione e verifica che le mutue distanze tra i PF misurati rientrino nelle tolleranze previste dalla Tabella Attuale dei Punti Fiduciali (TAF) e dall'archivio delle distanze storiche (DIS).</p>
+
+        <div class="article-highlight-box">
+          <strong>📐 Strumento Topografico Integrato nel nostro Sito:</strong><br>
+          Nel nostro WebGIS con 142.838 PF della Sicilia è possibile cliccare su qualsiasi terreno per generare automaticamente la triangolazione con i 3 PF ottimali e scaricare il <strong>Libretto Pregeo (.DAT)</strong> precompilato.
+        </div>
+
+        <h4>3. Dalla Firma delle Parti all'Approvazione Telematica</h4>
+        <p>Una volta redatto il tipo di frazionamento e il modello censuario:</p>
+        <ol>
+          <li>Il documento viene sottoscritto da tutti i comproprietari intestatari del terreno;</li>
+          <li>Viene depositato presso il Comune di competenza ai sensi dell'art. 30 D.P.R. 380/2001 (antilottizzazione abusiva);</li>
+          <li>Viene trasmesso telematicamente con firma digitale all'Agenzia delle Entrate (Ufficio del Territorio di Siracusa o Ragusa) che assegna i nuovi numeri di particella definitivi.</li>
+        </ol>
+      `
+    }
+  };
+
+  window.openArticleModal = (slug) => {
+    const article = ARTICLES_DATABASE[slug];
+    if (!article) return;
+
+    const modal = document.getElementById("articleModal");
+    const badge = document.getElementById("articleModalBadge");
+    const title = document.getElementById("articleModalTitle");
+    const meta = document.getElementById("articleModalMeta");
+    const body = document.getElementById("articleModalBody");
+
+    if (badge) badge.textContent = article.badge;
+    if (title) title.textContent = article.title;
+    if (meta) meta.textContent = article.meta;
+    if (body) {
+      body.innerHTML = `
+        ${article.content}
+        <div style="margin-top: 2rem; padding: 1.2rem; background: var(--paper); border: 1.5px solid var(--gold); border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+          <div>
+            <strong style="color: var(--navy); font-size: 1.05rem;">Hai bisogno di chiarimenti o di una pratica su questo tema?</strong>
+            <p style="margin: 0.2rem 0 0; font-size: 0.85rem; color: var(--muted);">I Geometri Alessandro Giurato e Piernicolò Iacono sono a tua disposizione per una consulenza a Rosolini e dintorni.</p>
+          </div>
+          <a class="btn btn-gold" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Buongiorno, ho letto la vostra guida su ' + article.title + ' e vorrei richiedere informazioni.')}" target="_blank" rel="noopener noreferrer" style="font-size: 0.85rem; padding: 0.55rem 1.1rem; font-weight: 700;">
+            Richiedi Consulenza WhatsApp ↗
+          </a>
+        </div>
+      `;
+    }
+
+    if (modal) {
+      if (typeof modal.showModal === "function") {
+        modal.showModal();
+      } else {
+        modal.setAttribute("open", "true");
+        modal.style.display = "block";
+      }
+    }
+  };
+
+  window.closeArticleModal = () => {
+    const modal = document.getElementById("articleModal");
+    if (modal) {
+      if (typeof modal.close === "function") {
+        modal.close();
+      } else {
+        modal.removeAttribute("open");
+        modal.style.display = "none";
+      }
+    }
+  };
+
+  document.getElementById("articleModal")?.addEventListener("click", (e) => {
+    const modal = document.getElementById("articleModal");
+    if (!modal) return;
+    const rect = modal.getBoundingClientRect();
+    const isInDialog = (
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width
+    );
+    if (!isInDialog) {
+      window.closeArticleModal();
+    }
+  });
+
   // ============================================================================
   // MOTORE WEBGIS PROFESSIONALE (Stile Geomappe.org - Catasto AdE + SITR Sicilia)
   // ============================================================================
@@ -970,6 +1369,9 @@
           </button>
           <button type="button" class="btn btn-ghost" onclick="window.exportTriangulationDXF()" style="width: 100%; padding: 5px 8px; font-size: 0.76rem; border-color: #cbd5e1; color: #002b49; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;">
             📐 Esporta Perimetro e PF in CAD (.DXF)
+          </button>
+          <button type="button" class="btn btn-ghost" onclick="window.exportPregeoTriangulation('${info.comune.replace(/'/g, "\\'")}', '${info.foglio}', '${info.particella}', [${lat}, ${lng}])" style="width: 100%; padding: 5px 8px; font-size: 0.76rem; border-color: #fde047; color: #854d0e; background: #fefce8; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 4px;">
+            📥 Scarica Libretto Pregeo (.DAT)
           </button>
         </div>
       </div>
@@ -1707,12 +2109,54 @@
             const div = document.createElement("div");
             div.className = "search-result-item";
             div.textContent = item.display_name;
-            div.addEventListener("click", () => {
+            div.addEventListener("click", async () => {
               const lat = parseFloat(item.lat);
               const lon = parseFloat(item.lon);
               map.setView([lat, lon], 18);
               if (searchMarker) map.removeLayer(searchMarker);
-              searchMarker = L.marker([lat, lon]).addTo(map).bindPopup(`<strong>📍 ${item.display_name}</strong>`).openPopup();
+
+              // Auto-identifica il comune corrispondente tra i 391 della Sicilia
+              let bestComCod = null;
+              if (window.PF_INDEX) {
+                let minDist = 999;
+                for (const [code, cInfo] of Object.entries(window.PF_INDEX)) {
+                  const [minLa, minLo, maxLa, maxLo] = cInfo.bbox || [0,0,0,0];
+                  if (lat >= minLa && lat <= maxLa && lon >= minLo && lon <= maxLo) {
+                    bestComCod = code;
+                    break;
+                  }
+                  const cLa = (minLa + maxLa) / 2, cLo = (minLo + maxLo) / 2;
+                  const d = Math.hypot(lat - cLa, lon - cLo);
+                  if (d < minDist) {
+                    minDist = d;
+                    bestComCod = code;
+                  }
+                }
+              }
+
+              if (bestComCod) {
+                const comObj = window.PF_INDEX[bestComCod];
+                if (provinciaSelect && comObj?.prov) {
+                  provinciaSelect.value = comObj.prov;
+                  if (typeof populateComuniByProvincia === "function") {
+                    populateComuniByProvincia(comObj.prov);
+                  }
+                }
+                if (comuneSelect) comuneSelect.value = bestComCod;
+                await loadPuntiFiduciali(bestComCod);
+                updateTopographyView();
+              }
+
+              const popupHtml = `
+                <div style="font-size: 0.85rem; line-height: 1.4; max-width: 270px;">
+                  <strong style="color: #0b1c2d;">📍 ${item.display_name}</strong>
+                  <div style="margin-top: 0.4rem; padding: 0.35rem; background: #f8fafc; border-radius: 6px; font-size: 0.76rem; color: #475569;">
+                    🏛️ Comune: <strong>${bestComCod ? (window.PF_INDEX[bestComCod]?.name || bestComCod) : 'Sicilia'}</strong><br>
+                    💡 <em>I numeri delle particelle catastali sono visibili sulla mappa a questo zoom. Clicca su qualsiasi terreno o edificio per aprire la scheda e triangolare con i 3 PF.</em>
+                  </div>
+                </div>
+              `;
+              searchMarker = L.marker([lat, lon]).addTo(map).bindPopup(popupHtml).openPopup();
               gisSearchResults.innerHTML = "";
             });
             gisSearchResults.appendChild(div);

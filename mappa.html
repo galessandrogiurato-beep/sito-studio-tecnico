@@ -160,6 +160,13 @@
               <input type="text" id="gisSearchInput" placeholder="Es. Corso Savoia 46, Rosolini..." autocomplete="off">
               <button class="btn btn-gold" id="gisSearchBtn" type="button">Vai</button>
             </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 4px; margin-top: 0.4rem;">
+              <button type="button" class="quick-chip" onclick="document.getElementById('gisSearchInput').value='Corso Savoia 46, Rosolini'; document.getElementById('gisSearchBtn').click();" style="font-size: 0.68rem; padding: 2px 7px; border-radius: 999px; background: #e2e8f0; border: none; cursor: pointer; color: var(--navy); font-weight: 600;">📍 Studio Rosolini</button>
+              <button type="button" class="quick-chip" onclick="document.getElementById('gisSearchInput').value='Corso Vittorio Emanuele, Noto'; document.getElementById('gisSearchBtn').click();" style="font-size: 0.68rem; padding: 2px 7px; border-radius: 999px; background: #e2e8f0; border: none; cursor: pointer; color: var(--navy); font-weight: 600;">Noto</button>
+              <button type="button" class="quick-chip" onclick="document.getElementById('gisSearchInput').value='Corso Umberto I, Modica'; document.getElementById('gisSearchBtn').click();" style="font-size: 0.68rem; padding: 2px 7px; border-radius: 999px; background: #e2e8f0; border: none; cursor: pointer; color: var(--navy); font-weight: 600;">Modica</button>
+              <button type="button" class="quick-chip" onclick="document.getElementById('gisSearchInput').value='Ortigia, Siracusa'; document.getElementById('gisSearchBtn').click();" style="font-size: 0.68rem; padding: 2px 7px; border-radius: 999px; background: #e2e8f0; border: none; cursor: pointer; color: var(--navy); font-weight: 600;">Ortigia (SR)</button>
+              <button type="button" class="quick-chip" onclick="document.getElementById('gisSearchInput').value='Via Etnea, Catania'; document.getElementById('gisSearchBtn').click();" style="font-size: 0.68rem; padding: 2px 7px; border-radius: 999px; background: #e2e8f0; border: none; cursor: pointer; color: var(--navy); font-weight: 600;">Catania</button>
+            </div>
             <div id="gisSearchResults" class="search-results-list"></div>
           </div>
 
