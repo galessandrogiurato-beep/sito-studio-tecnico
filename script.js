@@ -1416,6 +1416,7 @@
     "M088": { name: "Vittoria (RG)", shortName: "Vittoria", prov: "RG", lat: 36.94879, lon: 14.53801 },
     "M100": { name: "Vizzini (CT)", shortName: "Vizzini", prov: "CT", lat: 37.16103, lon: 14.74852 },
     "M139": { name: "Zafferana Etnea (CT)", shortName: "Zafferana Etnea", prov: "CT", lat: 37.69471, lon: 15.10338 },
+    "M432": { name: "Misiliscemi (TP)", shortName: "Misiliscemi", prov: "TP", lat: 37.9300, lon: 12.5600 },
   };
 
   function populateComuniByProvincia(provCode) {
@@ -2014,26 +2015,9 @@
 
   let fullLoadingStarted = false;
   const loadFullPFInBackground = () => {
-    if (fullLoadingStarted || (allPFData && allPFData.length >= 25000)) return;
-    fullLoadingStarted = true;
-    setTimeout(async () => {
-      if (window.location.protocol === "file:") {
-        await loadScriptAsync("data/punti_fiduciali.js?v=20261030-7");
-        if (window.ALL_PF_DATA) {
-          mergePFList(window.ALL_PF_DATA);
-          updateTopographyView();
-        }
-      } else {
-        try {
-          const res = await fetch("data/punti_fiduciali.json?v=20261030-7");
-          if (res.ok) {
-            const list = await res.json();
-            mergePFList(list);
-            updateTopographyView();
-          }
-        } catch (_) {}
-      }
-    }, 1000);
+    // Tutti i 391 comuni della Sicilia sono ora ottimizzati per-comune in data/pf/<COD>.js (~50KB ciascuno)
+    // Non occorre scaricare l'archivio globale monolitico da 50MB, garantendo reattività immediata.
+    return;
   };
 
   // Caricamento resiliente archivio PF (supporta file:///, http:///, per-comune rapido e archivio completo)
@@ -2359,6 +2343,26 @@
     const mapBounds = map.getBounds().pad(0.12);
     const selectedComune = comuneSelect?.value || "H574";
     const selectedFoglio = parseInt((gFoglioInput?.value || "").trim(), 10);
+
+    // Se l'utente esplora la mappa a zoom elevato, pre-carica i comuni visibili nel viewport da window.PF_INDEX
+    if (window.PF_INDEX && zoom >= 13) {
+      const bMinLa = mapBounds.getSouth(), bMaxLa = mapBounds.getNorth();
+      const bMinLo = mapBounds.getWest(), bMaxLo = mapBounds.getEast();
+      for (const [code, info] of Object.entries(window.PF_INDEX)) {
+        if (!info.bbox) continue;
+        const [cMinLa, cMinLo, cMaxLa, cMaxLo] = info.bbox;
+        if (bMaxLa >= cMinLa && bMinLa <= cMaxLa && bMaxLo >= cMinLo && bMinLo <= cMaxLo) {
+          if (!window.PF_DATA || !window.PF_DATA[code]) {
+            loadPuntiFiduciali(code).then(() => {
+              if (topoPFLayerGroup && map.hasLayer(topoPFLayerGroup)) {
+                updateTopographyView();
+              }
+            });
+            break;
+          }
+        }
+      }
+    }
 
     let filteredPF = [];
 

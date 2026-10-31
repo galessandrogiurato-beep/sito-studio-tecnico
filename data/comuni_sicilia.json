@@ -2728,5 +2728,12 @@
     "prov": "CT",
     "lat": 37.69471,
     "lon": 15.10338
+  },
+  "M432": {
+    "name": "Misiliscemi (TP)",
+    "shortName": "Misiliscemi",
+    "prov": "TP",
+    "lat": 37.93,
+    "lon": 12.56
   }
 }
