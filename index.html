@@ -568,75 +568,132 @@
       </div>
     </section>
 
-    <!-- Sezione Calcolatori e Simulatori Interattivi (PUNTO 1) -->
+    <!-- Sezione Calcolatori e Simulatori Interattivi -->
     <section class="section tools-section" id="calcolatori">
       <div class="container">
         <header class="section-head">
           <p class="eyebrow">Strumenti Gratuiti per Proprietari &amp; Tecnici</p>
           <h2>Calcolatori Catastali &amp; Simulatori</h2>
           <p class="section-intro">
-            Simula online in pochi secondi le imposte di successione e voltura catastale, verifica la conformità dell'immobile per il rogito o calcola il costo di una ristrutturazione con le pratiche necessarie.
+            Strumenti professionali interattivi sviluppati dallo Studio Tecnico Associato Giurato &amp; Iacono: calcola in pochi secondi le imposte di successione e voltura, verifica la conformità edilizia prima del rogito, stima i costi e le detrazioni fiscali del 50% per la ristrutturazione, misura la superficie commerciale (DPR 138/98) con valori OMI o scopri il risparmio energetico APE.
           </p>
         </header>
 
+        <!-- Barra di Navigazione Tab Simulatori -->
         <div class="tool-tabs-nav" role="tablist">
           <button type="button" class="tool-tab-btn active" role="tab" id="tabBtnSuccessione" aria-selected="true" onclick="window.switchToolTab('successione')">
-            🏛️ Calcolatore Imposte Voltura &amp; Successione
+            🏛️ Imposte Voltura &amp; Successione
           </button>
           <button type="button" class="tool-tab-btn" role="tab" id="tabBtnRogito" aria-selected="false" onclick="window.switchToolTab('rogito')">
-            ✅ Checklist "Casa in Regola prima del Rogito"
+            ✅ Checklist Rogito &amp; Conformità
           </button>
           <button type="button" class="tool-tab-btn" role="tab" id="tabBtnRistruttura" aria-selected="false" onclick="window.switchToolTab('ristruttura')">
-            🏠 Simulatore Ristrutturazione &amp; Pratiche
+            🏠 Ristrutturazione &amp; Bonus 50%
+          </button>
+          <button type="button" class="tool-tab-btn" role="tab" id="tabBtnSuperficie" aria-selected="false" onclick="window.switchToolTab('superficie')">
+            📐 Superficie DPR 138/98 &amp; OMI
+          </button>
+          <button type="button" class="tool-tab-btn" role="tab" id="tabBtnApe" aria-selected="false" onclick="window.switchToolTab('ape')">
+            ⚡ Risparmio Energetico APE
           </button>
         </div>
 
-        <!-- TAB 1: CALCOLATORE IMPOSTE SUCCESSIONE & VOLTURA -->
+        <!-- ========================================================================= -->
+        <!-- TAB 1: CALCOLATORE IMPOSTE SUCCESSIONE & VOLTURA CATASTALE -->
+        <!-- ========================================================================= -->
         <div class="tool-panel active" id="toolPanelSuccessione" role="tabpanel">
           <div class="calc-grid">
             <div class="calc-inputs-side">
-              <h3 style="font-size: 1.35rem; color: var(--navy); margin-bottom: 1rem;">Dati dell'Immobile in Successione</h3>
+              <h3 style="font-size: 1.3rem; color: var(--navy); margin-bottom: 0.8rem;">Dati dell'Asse Ereditario</h3>
               
               <div class="calc-input-group">
-                <label for="calcRenditaInput">Rendita Catastale (€ non rivalutata, da visura)</label>
-                <input type="number" id="calcRenditaInput" placeholder="Es. 450.00" value="450" step="any" min="1">
-                <small style="color: var(--muted); font-size: 0.78rem;">Trovi la rendita sulla visura catastale o puoi richiederla gratuitamente al nostro studio.</small>
+                <label for="calcRenditaInput">Rendita Catastale Immobile Principale (€ non rivalutata)</label>
+                <input type="number" id="calcRenditaInput" placeholder="Es. 450.00" value="450" step="any" min="0">
+                <small style="color: var(--muted); font-size: 0.78rem;">Dato desumibile da visura catastale recente o richiedibile al nostro studio.</small>
               </div>
 
               <div class="calc-input-group">
-                <label for="calcTipoImmobile">Destinazione dell'Immobile</label>
+                <label for="calcTipoImmobile">Destinazione dell'Immobile Principale</label>
                 <select id="calcTipoImmobile">
-                  <option value="prima_casa" selected>Abitazione Principale (Agevolazione "Prima Casa")</option>
-                  <option value="seconda_casa">Seconda Casa / Altri Fabbricati (Cat. A, C)</option>
-                  <option value="commerciale">Negozi / Uffici / Capannoni (Cat. B, C/1, D)</option>
-                  <option value="terreno">Terreno Agricolo o Edificabile</option>
+                  <option value="prima_casa" selected>Abitazione Principale (Agevolazione "Prima Casa" – Imposte ipocatastali fisse 200€)</option>
+                  <option value="seconda_casa">Seconda Casa / Altra Abitazione (Cat. A – Coeff. 120)</option>
+                  <option value="commerciale">Negozi / Uffici / Capannoni (Cat. C/1, A/10, D – Coeff. 60)</option>
+                  <option value="terreno">Terreno Agricolo o Edificabile (Reddito Dominicale x 135)</option>
+                </select>
+              </div>
+
+              <!-- Box Pertinenze Aggiuntive -->
+              <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 0.85rem; margin-bottom: 1.1rem;">
+                <span style="font-weight: 700; font-size: 0.88rem; color: var(--navy); display: block; margin-bottom: 0.4rem;">
+                  🚗 Pertinenze nell'Asse Ereditario (Opzionale):
+                </span>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                  <div>
+                    <label for="calcPertinenzaBox" style="font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; display: block;">Rendita Garage / Box (C/6) €</label>
+                    <input type="number" id="calcPertinenzaBox" placeholder="Es. 65.00" value="0" step="any" min="0" style="padding: 0.5rem 0.7rem; font-size: 0.85rem;">
+                  </div>
+                  <div>
+                    <label for="calcPertinenzaCantina" style="font-size: 0.78rem; font-weight: 600; color: var(--ink); margin-bottom: 0.2rem; display: block;">Rendita Cantina / Deposito (C/2) €</label>
+                    <input type="number" id="calcPertinenzaCantina" placeholder="Es. 35.00" value="0" step="any" min="0" style="padding: 0.5rem 0.7rem; font-size: 0.85rem;">
+                  </div>
+                </div>
+              </div>
+
+              <div class="calc-input-group">
+                <label for="calcGradoParentela">Grado di Parentela dell'Erede Richiedente</label>
+                <select id="calcGradoParentela">
+                  <option value="linea_retta" selected>Coniuge o Figli / Genitori (Franchigia erariale 1.000.000 € – Aliquota 4%)</option>
+                  <option value="fratelli">Fratelli o Sorelle (Franchigia erariale 100.000 € – Aliquota 6%)</option>
+                  <option value="altri_parenti">Altri Parenti fino al 4° grado / Affini entro 3° (Nessuna franchigia – Aliquota 6%)</option>
+                  <option value="estranei">Altri soggetti / Estranei (Nessuna franchigia – Aliquota 8%)</option>
                 </select>
               </div>
 
               <div class="calc-input-group">
-                <label for="calcGradoParentela">Grado di Parentela dell'Erede</label>
-                <select id="calcGradoParentela">
-                  <option value="linea_retta" selected>Coniuge o Figli / Genitori (Franchigia erariale 1.000.000 €)</option>
-                  <option value="fratelli">Fratelli o Sorelle (Franchigia 100.000 €)</option>
-                  <option value="altri_parenti">Altri Parenti fino al 4° grado / Affini</option>
-                  <option value="estranei">Altri soggetti / Non parenti</option>
+                <label for="calcQuotaEreditaria">Quota Ereditaria Devoluta</label>
+                <select id="calcQuotaEreditaria">
+                  <option value="1.0" selected>100% (Intera Proprietà / Erede Unico)</option>
+                  <option value="0.5">50% (1/2 Proprietà / Quota Coniuge o 2 Eredi)</option>
+                  <option value="0.3333">33.3% (1/3 Proprietà / 3 Eredi)</option>
+                  <option value="0.25">25% (1/4 Proprietà / 4 Eredi)</option>
+                  <option value="0.1666">16.6% (1/6 Proprietà)</option>
                 </select>
               </div>
 
-              <button class="btn btn-gold" type="button" id="btnCalcolaSuccessione" style="width: 100%; font-size: 0.92rem; padding: 0.7rem; font-weight: 700;">
-                Calcola Imposte Statali &amp; Diritti Voltura
-              </button>
+              <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+                <button class="btn btn-gold" type="button" id="btnCalcolaSuccessione" style="flex: 1; font-size: 0.92rem; padding: 0.75rem; font-weight: 700;">
+                  Calcola Imposte Statali &amp; Voltura
+                </button>
+                <button class="btn btn-outline" type="button" id="btnPrintSuccessione" onclick="window.printToolReport('successione')" style="padding: 0.75rem 1rem;" title="Stampa o Salva PDF Prospetto">
+                  🖨️ Stampa PDF
+                </button>
+              </div>
             </div>
 
             <div class="calc-results-side">
-              <div class="calc-result-box">
-                <h4 style="color: var(--gold-soft); font-size: 1.1rem; margin: 0 0 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
-                  Stima Imposte Erariali &amp; Voltura
-                </h4>
+              <div class="calc-result-box" id="successioneReportBox">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.6rem; margin-bottom: 0.9rem;">
+                  <h4 style="color: var(--gold-soft); font-size: 1.1rem; margin: 0;">
+                    Stima Imposte Erariali &amp; Voltura
+                  </h4>
+                  <span style="font-size: 0.72rem; background: rgba(201,162,39,0.25); color: var(--gold-soft); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(201,162,39,0.4);">Tariffario AdE Ufficiale</span>
+                </div>
 
                 <div class="calc-result-row">
-                  <span>Valore Catastale Fiscale:</span>
-                  <strong id="resValoreCatastale">€ 51.975,00</strong>
+                  <span>Valore Catastale Immobile Principale:</span>
+                  <strong id="resValorePrincipale">€ 51.975,00</strong>
+                </div>
+                <div class="calc-result-row" id="rowValorePertinenze" style="display: none;">
+                  <span>Valore Catastale Pertinenze (C/6, C/2):</span>
+                  <strong id="resValorePertinenze">€ 0,00</strong>
+                </div>
+                <div class="calc-result-row" style="background: rgba(255,255,255,0.06); padding: 0.5rem 0.4rem; border-radius: 6px;">
+                  <span>Valore Catastale Asse Complessivo:</span>
+                  <strong id="resValoreCatastaleTotale" style="color: var(--gold-soft); font-size: 1rem;">€ 51.975,00</strong>
+                </div>
+                <div class="calc-result-row">
+                  <span>Quota Imponibile Trasferita:</span>
+                  <strong id="resQuotaImponibile">€ 51.975,00 (100%)</strong>
                 </div>
                 <div class="calc-result-row">
                   <span>Imposta Ipotecaria (AdE):</span>
@@ -651,41 +708,50 @@
                   <strong>€ 67,00</strong>
                 </div>
                 <div class="calc-result-row">
-                  <span>Imposta di Bollo Telematico:</span>
+                  <span>Imposta di Bollo Telematico forfettario:</span>
                   <strong>€ 64,00</strong>
                 </div>
                 <div class="calc-result-row">
-                  <span>Diritti Voltura Catastale (Tributo + Bollo):</span>
+                  <span>Diritti Voltura Catastale (Tributo 55€ + Bollo 16€):</span>
                   <strong>€ 71,00</strong>
+                </div>
+                <div class="calc-result-row" id="rowImpostaSuccessione" style="display: none;">
+                  <span>Imposta di Successione Erariale (oltre franchigia):</span>
+                  <strong id="resImpostaSuccessione" style="color: #fca5a5;">€ 0,00</strong>
                 </div>
 
                 <div class="calc-result-row total-row">
-                  <span>Totale Imposte Statali:</span>
+                  <span>Totale Imposte Statali Fisse &amp; Proporzionali:</span>
                   <span id="resTotaleImposte">€ 602,00</span>
                 </div>
 
-                <div style="margin-top: 1.2rem; background: rgba(0,0,0,0.25); border-radius: 8px; padding: 0.8rem; font-size: 0.8rem; color: rgba(255,255,255,0.85); line-height: 1.4;">
-                  💡 <em>Nota di trasparenza:</em> L'importo sopra indicato corrisponde alle sole tasse ed imposte fisse dovute all'Agenzia delle Entrate per legge.
+                <div style="margin-top: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; color: rgba(255,255,255,0.85); line-height: 1.45;">
+                  💡 <em>Trasparenza Fiscale:</em> Il calcolo comprende tutte le tasse e imposte fisse o proporzionali dovute direttamente all'Agenzia delle Entrate per legge.
                 </div>
 
-                <a id="btnSuccessioneWhatsAppCta" href="https://wa.me/393516543517?text=Buongiorno%2C%20vorrei%20affidarvi%20la%20pratica%20di%20Successione%20e%20Voltura%20Catastale." target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="display: block; text-align: center; margin-top: 1rem; font-size: 0.85rem; padding: 0.65rem;">
-                  Richiedi la Pratica allo Studio Giurato &amp; Iacono ↗
-                </a>
+                <div style="margin-top: 1rem;">
+                  <a id="btnSuccessioneWhatsAppCta" href="https://wa.me/393516543517?text=Buongiorno%2C%20vorrei%20affidarvi%20la%20pratica%20di%20Successione%20e%20Voltura%20Catastale." target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="display: block; text-align: center; font-size: 0.88rem; padding: 0.65rem;">
+                    Richiedi la Pratica di Successione allo Studio ↗
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- ========================================================================= -->
         <!-- TAB 2: CHECKLIST CASA IN REGOLA PRIMA DEL ROGITO -->
+        <!-- ========================================================================= -->
         <div class="tool-panel" id="toolPanelRogito" role="tabpanel">
-          <div style="max-width: 48rem; margin-inline: auto;">
+          <div style="max-width: 52rem; margin-inline: auto;">
             <div style="text-align: center; margin-bottom: 1.5rem;">
-              <h3 style="color: var(--navy); margin-bottom: 0.4rem;">Checklist di Pre-Conformità Edilizia &amp; Catastale</h3>
-              <p style="color: var(--muted); font-size: 0.92rem;">
-                Rispondi alle 4 domande per scoprire se il tuo immobile è pronto per il rogito notarile o se rischi un blocco della compravendita per difformità edilizie o catastali.
+              <h3 style="color: var(--navy); margin-bottom: 0.4rem; font-size: 1.4rem;">Checklist di Pre-Conformità Edilizia &amp; Catastale per il Rogito</h3>
+              <p style="color: var(--muted); font-size: 0.92rem; max-width: 44rem; margin-inline: auto;">
+                Rispondi alle 6 domande diagnostiche per verificare se l'immobile è conforme per la compravendita notarile o se sono presenti difformità che rischiano di bloccare la stipula o la perizia della banca.
               </p>
             </div>
 
+            <!-- Domanda 1: Planimetria Catastale -->
             <div class="checklist-item">
               <div class="checklist-question">1. La planimetria catastale corrisponde esattamente allo stato attuale dell'immobile?</div>
               <div class="checklist-options">
@@ -695,17 +761,18 @@
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkPlanimetria" value="2" onchange="window.calcRogitoScore()">
-                  <span>Piccole modifiche a tramezze o porte</span>
+                  <span>Piccole modifiche a tramezze o porte interne</span>
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkPlanimetria" value="5" onchange="window.calcRogitoScore()">
-                  <span>Stanze spostate o muri abbattuti</span>
+                  <span>Stanze spostate, muri abbattuti o soppalchi</span>
                 </label>
               </div>
             </div>
 
+            <!-- Domanda 2: APE -->
             <div class="checklist-item">
-              <div class="checklist-question">2. È presente l'Attestato di Prestazione Energetica (APE) valido (max 10 anni)?</div>
+              <div class="checklist-question">2. È presente l'Attestato di Prestazione Energetica (APE) valido (max 10 anni con libretto)?</div>
               <div class="checklist-options">
                 <label class="checklist-option-label">
                   <input type="radio" name="checkApe" value="0" checked onchange="window.calcRogitoScore()">
@@ -713,39 +780,41 @@
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkApe" value="3" onchange="window.calcRogitoScore()">
-                  <span>No, mai redatto o scaduto</span>
+                  <span>No, mai redatto o scaduto da oltre 10 anni</span>
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkApe" value="2" onchange="window.calcRogitoScore()">
-                  <span>Non ne sono a conoscenza</span>
+                  <span>Non ne sono a conoscenza / Da verificare</span>
                 </label>
               </div>
             </div>
 
+            <!-- Domanda 3: Verande / Tettoie / Pertinenze -->
             <div class="checklist-item">
-              <div class="checklist-question">3. Sono presenti verande chiuse, tettoie, garage o sottotetti abitati?</div>
+              <div class="checklist-question">3. Sono presenti verande chiuse, tettoie fisse, balconi verandati o sottotetti/garage abitati?</div>
               <div class="checklist-options">
                 <label class="checklist-option-label">
                   <input type="radio" name="checkPertinenze" value="0" checked onchange="window.calcRogitoScore()">
-                  <span>Nessuna veranda o ampliamento</span>
+                  <span>Nessuna veranda chiusa o ampliamento</span>
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkPertinenze" value="1" onchange="window.calcRogitoScore()">
-                  <span>Veranda precaria o pergotenda</span>
+                  <span>Pergotenda amovibile / tenda sole</span>
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkPertinenze" value="5" onchange="window.calcRogitoScore()">
-                  <span>Veranda chiusa / Cambio uso (es. garage a taverna)</span>
+                  <span>Veranda chiusa a vetri / cambio d'uso garage-taverna</span>
                 </label>
               </div>
             </div>
 
+            <!-- Domanda 4: Licenza / Stato Legittimo -->
             <div class="checklist-item">
-              <div class="checklist-question">4. L'immobile dispone di licenza/concessione edilizia o è stato edificato prima del 1967?</div>
+              <div class="checklist-question">4. L'immobile dispone di titolo edilizio originario (Licenza, Concessione, Permesso di Costruire)?</div>
               <div class="checklist-options">
                 <label class="checklist-option-label">
                   <input type="radio" name="checkLicenza" value="0" checked onchange="window.calcRogitoScore()">
-                  <span>Sì, Licenza/Permesso regolare</span>
+                  <span>Sì, Licenza / Permesso regolare reperito</span>
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkLicenza" value="0" onchange="window.calcRogitoScore()">
@@ -753,49 +822,153 @@
                 </label>
                 <label class="checklist-option-label">
                   <input type="radio" name="checkLicenza" value="4" onchange="window.calcRogitoScore()">
-                  <span>Condono edilizio aperto o dubbio</span>
+                  <span>Condono edilizio aperto o titolo non reperito</span>
                 </label>
               </div>
             </div>
 
-            <div id="checklistReportBox" class="checklist-report-card safe">
-              <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
-                <span id="checklistReportIcon" style="font-size: 1.8rem;">🟢</span>
-                <h4 id="checklistReportTitle" style="margin: 0; font-size: 1.25rem;">Immobile in Buona Condizione di Conformità</h4>
+            <!-- Domanda 5: Agibilità / Abitabilità -->
+            <div class="checklist-item">
+              <div class="checklist-question">5. È presente il Certificato di Agibilità / Abitabilità o Segnalazione Certificata (SCA)?</div>
+              <div class="checklist-options">
+                <label class="checklist-option-label">
+                  <input type="radio" name="checkAgibilita" value="0" checked onchange="window.calcRogitoScore()">
+                  <span>Sì, Agibilità rilasciata o SCA depositata</span>
+                </label>
+                <label class="checklist-option-label">
+                  <input type="radio" name="checkAgibilita" value="2" onchange="window.calcRogitoScore()">
+                  <span>Fabbricato storico ante '67 privo di agibilità</span>
+                </label>
+                <label class="checklist-option-label">
+                  <input type="radio" name="checkAgibilita" value="3" onchange="window.calcRogitoScore()">
+                  <span>Mai richiesta o non presente agli atti</span>
+                </label>
               </div>
+            </div>
+
+            <!-- Domanda 6: Impianti Tecnologici -->
+            <div class="checklist-item">
+              <div class="checklist-question">6. Sono disponibili le Dichiarazioni di Conformità degli impianti (DiCo ex DM 37/08)?</div>
+              <div class="checklist-options">
+                <label class="checklist-option-label">
+                  <input type="radio" name="checkImpianti" value="0" checked onchange="window.calcRogitoScore()">
+                  <span>Sì, certificati impianti presenti e regolari</span>
+                </label>
+                <label class="checklist-option-label">
+                  <input type="radio" name="checkImpianti" value="1" onchange="window.calcRogitoScore()">
+                  <span>Impianti funzionanti ma certificati parziali</span>
+                </label>
+                <label class="checklist-option-label">
+                  <input type="radio" name="checkImpianti" value="3" onchange="window.calcRogitoScore()">
+                  <span>Nessuna certificazione / Impianti datati</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Box Risultato Diagnostico Rogito -->
+            <div id="checklistReportBox" class="checklist-report-card safe">
+              <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                  <span id="checklistReportIcon" style="font-size: 1.8rem;">🟢</span>
+                  <h4 id="checklistReportTitle" style="margin: 0; font-size: 1.25rem;">Immobile in Buona Condizione di Conformità</h4>
+                </div>
+                <span id="checklistScoreBadge" style="font-size: 0.8rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 999px; background: rgba(0,0,0,0.08);">
+                  Punteggio Rischio: 0 / 23
+                </span>
+              </div>
+              
               <p id="checklistReportText" style="margin: 0 0 1rem; font-size: 0.92rem; line-height: 1.5;">
                 Dalle risposte fornite non emergono difformità gravi evidenti. Prima del rogito notarile consigliamo comunque una visura planimetrica aggiornata e il controllo dello stato legittimo.
               </p>
-              <a id="checklistWhatsAppBtn" href="https://wa.me/393516543517?text=Buongiorno%2C%20vorrei%20richiedere%20un%20sopralluogo%20per%20la%20verifica%20di%20conformit%C3%A0%20prima%20del%20rogito." target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="display: inline-block; font-size: 0.86rem; padding: 0.6rem 1.2rem;">
-                Richiedi Sopralluogo di Conformità con i Geometri ↗
-              </a>
+
+              <!-- Piano di Azione Tecnico Consigliato -->
+              <div id="checklistActionPlan" style="background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; padding: 0.85rem; margin-bottom: 1.2rem;">
+                <strong style="display: block; font-size: 0.88rem; color: var(--navy); margin-bottom: 0.4rem;">
+                  📋 Piano di Azione Consigliato dallo Studio Giurato &amp; Iacono:
+                </strong>
+                <ul id="checklistActionList" style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; line-height: 1.55;">
+                  <li>Verifica visura catastale storica e planimetria rasterizzata di confronto.</li>
+                  <li>Sopralluogo metrico di conferma quote con distanziometro laser.</li>
+                </ul>
+              </div>
+
+              <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <a id="checklistWhatsAppBtn" href="https://wa.me/393516543517?text=Buongiorno%2C%20vorrei%20richiedere%20un%20sopralluogo%20per%20la%20verifica%20di%20conformit%C3%A0%20prima%20del%20rogito." target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="font-size: 0.86rem; padding: 0.65rem 1.2rem;">
+                  Richiedi Sopralluogo di Conformità con i Geometri ↗
+                </a>
+                <button type="button" class="btn btn-outline" onclick="window.printToolReport('rogito')" style="font-size: 0.86rem; padding: 0.65rem 1rem;">
+                  🖨️ Stampa Report Pre-Rogito
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- TAB 3: SIMULATORE RISTRUTTURAZIONE & PRATICHE -->
+        <!-- ========================================================================= -->
+        <!-- TAB 3: SIMULATORE RISTRUTTURAZIONE & BONUS FISCALE 50% -->
+        <!-- ========================================================================= -->
         <div class="tool-panel" id="toolPanelRistruttura" role="tabpanel">
           <div class="calc-grid">
             <div class="calc-inputs-side">
-              <h3 style="font-size: 1.35rem; color: var(--navy); margin-bottom: 1rem;">Parametri Intervento Edilizio</h3>
+              <h3 style="font-size: 1.3rem; color: var(--navy); margin-bottom: 1rem;">Parametri Intervento Edilizio &amp; Bonus</h3>
 
               <div class="calc-input-group">
-                <label for="rangeMqInput">Superficie dell'Immobile: <strong id="lblMqVal" style="color: var(--gold); font-size: 1.1rem;">90 m²</strong></label>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <label for="rangeMqInput" style="margin: 0;">Superficie dell'Immobile:</label>
+                  <strong id="lblMqVal" style="color: var(--gold); font-size: 1.15rem; font-weight: 700;">90 m²</strong>
+                </div>
                 <input type="range" id="rangeMqInput" min="30" max="300" step="5" value="90" oninput="window.calcRistrutturaEst()">
               </div>
 
               <div class="calc-input-group">
-                <label for="selectLivelloOpere">Entità dei Lavori</label>
+                <label for="selectLivelloOpere">Entità dei Lavori di Ristrutturazione</label>
                 <select id="selectLivelloOpere" onchange="window.calcRistrutturaEst()">
-                  <option value="light">Rinfresco / Manutenzione Ordinaria (Pitture, rivestimenti, piccole riparazioni)</option>
-                  <option value="medium" selected>Ristrutturazione Media (Rifacimento bagni/cucina, pavimentazioni, porte)</option>
-                  <option value="full">Ristrutturazione Integrale (Nuovi impianti idrici/elettrici, infissi termici, tramezze)</option>
+                  <option value="light">Rinfresco / Manutenzione Ordinaria (Pitture, sanitari, piccole opere – ~350 €/m²)</option>
+                  <option value="medium" selected>Ristrutturazione Media (Rifacimento bagni/cucina, pavimenti, impianti, porte – ~680 €/m²)</option>
+                  <option value="full">Ristrutturazione Integrale (Nuovi impianti integrali, tramezze, infissi termici, massetti – ~1.100 €/m²)</option>
                 </select>
               </div>
 
-              <div style="background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; padding: 1rem; margin-top: 1rem;">
-                <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem; color: var(--navy);">📋 Pratiche Tecniche Obbligatorie per Legge:</h4>
-                <ul id="listPraticheNecessarie" style="margin: 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--muted); line-height: 1.6;">
+              <!-- Extra Personalizzati -->
+              <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 0.85rem; margin-bottom: 1.1rem;">
+                <span style="font-weight: 700; font-size: 0.88rem; color: var(--navy); display: block; margin-bottom: 0.4rem;">
+                  🛠️ Interventi Specifici Aggiuntivi:
+                </span>
+                
+                <div class="calc-input-group" style="margin-bottom: 0.6rem;">
+                  <label for="selectNumBagni" style="font-size: 0.8rem; margin-bottom: 0.2rem;">N° Bagni completi da ristrutturare da zero</label>
+                  <select id="selectNumBagni" onchange="window.calcRistrutturaEst()" style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">
+                    <option value="0">Nessun bagno da rifare (incluso nel m² base)</option>
+                    <option value="1" selected>1 Bagno Completo (+ € 4.500)</option>
+                    <option value="2">2 Bagni Completi (+ € 8.500)</option>
+                    <option value="3">3 Bagni Completi (+ € 12.500)</option>
+                  </select>
+                </div>
+
+                <div class="calc-input-group" style="margin-bottom: 0.6rem;">
+                  <label for="selectMqInfissi" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Superficie Infissi a Taglio Termico da sostituire</label>
+                  <select id="selectMqInfissi" onchange="window.calcRistrutturaEst()" style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">
+                    <option value="0">Nessuna sostituzione infissi</option>
+                    <option value="12" selected>Piccolo appartamento (~12 m² infissi – + € 4.800)</option>
+                    <option value="20">Medio appartamento (~20 m² infissi – + € 8.000)</option>
+                    <option value="32">Grande appartamento / Villa (~32 m² infissi – + € 12.800)</option>
+                  </select>
+                </div>
+
+                <div class="calc-input-group" style="margin-bottom: 0;">
+                  <label for="selectClima" style="font-size: 0.8rem; margin-bottom: 0.2rem;">Impianto Climatizzazione / Riscaldamento</label>
+                  <select id="selectClima" onchange="window.calcRistrutturaEst()" style="padding: 0.45rem 0.65rem; font-size: 0.85rem;">
+                    <option value="none">Nessun nuovo impianto</option>
+                    <option value="multisplit" selected>Climatizzazione Inverter Multi-Split (+ € 3.500)</option>
+                    <option value="pompa_calore">Pompa di Calore Idronica ad Alta Efficienza (+ € 8.500)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Quadro Pratiche Tecniche Obbligatorie -->
+              <div style="background: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; padding: 0.9rem;">
+                <h4 style="margin: 0 0 0.4rem; font-size: 0.9rem; color: var(--navy);">📋 Pratiche Tecniche Obbligatorie per Legge &amp; Bonus:</h4>
+                <ul id="listPraticheNecessarie" style="margin: 0; padding-left: 1.2rem; font-size: 0.82rem; color: var(--muted); line-height: 1.55;">
                   <li>Pratica Edilizia Comunale (CILA asseverata con progetto)</li>
                   <li>Piano Operativo di Sicurezza Cantieri (PSC - D.Lgs. 81/2008)</li>
                   <li>Variazione Catastale DOCFA per nuova planimetria</li>
@@ -806,36 +979,364 @@
 
             <div class="calc-results-side">
               <div class="calc-result-box">
-                <h4 style="color: var(--gold-soft); font-size: 1.1rem; margin: 0 0 1rem; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.5rem;">
-                  Stima Forchetta Costi Lavori
-                </h4>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.6rem; margin-bottom: 0.9rem;">
+                  <h4 style="color: var(--gold-soft); font-size: 1.1rem; margin: 0;">
+                    Stima Costi &amp; Detrazioni Fiscali 50%
+                  </h4>
+                  <span style="font-size: 0.72rem; background: rgba(201,162,39,0.25); color: var(--gold-soft); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(201,162,39,0.4);">Bonus Casa 2025</span>
+                </div>
 
                 <div class="calc-result-row">
-                  <span>Superficie Considerata:</span>
+                  <span>Superficie Calcolata:</span>
                   <strong id="resMqDisplay">90 m²</strong>
                 </div>
                 <div class="calc-result-row">
-                  <span>Costo Opere Medio al m²:</span>
-                  <strong id="resCostoMqDisplay">~ € 650 / m²</strong>
+                  <span>Costo Opere Medio Stimato:</span>
+                  <strong id="resCostoMqDisplay">~ € 680 / m²</strong>
                 </div>
+                <div class="calc-result-row">
+                  <span>Extra (Bagni, Infissi, Clima):</span>
+                  <strong id="resExtraDisplay">€ 12.800</strong>
+                </div>
+                <div class="calc-result-row" style="background: rgba(255,255,255,0.06); padding: 0.5rem 0.4rem; border-radius: 6px;">
+                  <span>Spesa Totale Stimata Lavori:</span>
+                  <strong id="resTotaleOpereDisplay" style="color: #ffffff; font-size: 1.05rem;">€ 68.000 – € 82.000</strong>
+                </div>
+
+                <!-- Quadro Detrazione Fiscale 50% -->
+                <div style="margin-top: 0.8rem; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 0.8rem;">
+                  <div class="calc-result-row" style="color: #86efac;">
+                    <span>Detrazione Fiscale IRPEF 50%:</span>
+                    <strong id="resDetrazioneTotale">- € 37.500,00</strong>
+                  </div>
+                  <div class="calc-result-row" style="font-size: 0.82rem; color: rgba(255,255,255,0.8);">
+                    <span>Rimborso Annuo sul 730 (per 10 anni):</span>
+                    <strong id="resRataAnnua" style="color: #86efac;">€ 3.750,00 / anno</strong>
+                  </div>
+                </div>
+
                 <div class="calc-result-row total-row">
-                  <span>Stima Opere di Ristrutturazione:</span>
-                  <span id="resTotaleOpereDisplay">€ 45.000 – € 65.000</span>
+                  <span>Costo Reale Netto a Tuo Carico:</span>
+                  <span id="resCostoNettoEffettivo">€ 37.500</span>
                 </div>
 
-                <div style="margin-top: 1.2rem; background: rgba(0,0,0,0.25); border-radius: 8px; padding: 0.8rem; font-size: 0.8rem; color: rgba(255,255,255,0.85); line-height: 1.4;">
-                  💡 <em>Supporto Tecnico Studio Giurato &amp; Iacono:</em> Redigiamo il <strong>Computo Metrico Estimativo</strong> dettagliato voce per voce per permetterti di confrontare i preventivi delle imprese senza sorprese.
+                <div style="margin-top: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; color: rgba(255,255,255,0.85); line-height: 1.45;">
+                  💡 <em>Supporto Tecnico Studio Giurato &amp; Iacono:</em> Redigiamo il <strong>Computo Metrico Estimativo</strong> dettagliato voce per voce per consentirti di confrontare i preventivi delle imprese edili senza sorprese e accedere senza rischi alle detrazioni fiscali.
                 </div>
 
-                <a href="#contatti" class="btn btn-gold" style="display: block; text-align: center; margin-top: 1rem; font-size: 0.85rem; padding: 0.65rem;">
-                  Richiedi Progetto 3D &amp; Computo Metrico ↗
-                </a>
+                <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+                  <a href="#contatti" class="btn btn-gold" style="flex: 1; text-align: center; font-size: 0.85rem; padding: 0.65rem;">
+                    Richiedi Progetto 3D &amp; Computo ↗
+                  </a>
+                  <button type="button" class="btn btn-outline" onclick="window.printToolReport('ristruttura')" style="padding: 0.65rem 0.9rem;" title="Stampa o Salva PDF Prospetto">
+                    🖨️ Stampa
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 4: CALCOLATORE SUPERFICIE COMMERCIALE (DPR 138/98) & STIMA OMI -->
+        <!-- ========================================================================= -->
+        <div class="tool-panel" id="toolPanelSuperficie" role="tabpanel">
+          <div class="calc-grid">
+            <div class="calc-inputs-side">
+              <h3 style="font-size: 1.3rem; color: var(--navy); margin-bottom: 0.8rem;">Dati Metrici dell'Immobile (D.P.R. 138/1998)</h3>
+              <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem;">
+                Inserisci le superfici reali dell'immobile per calcolare i <strong>Metri Quadri Commerciali Ufficiali</strong> secondo i coefficienti normativi dell'Allegato C al DPR 138/98 (standard notarile, catastale e bancario ABI).
+              </p>
+
+              <div class="calc-input-group">
+                <label for="dprSupCoperta">1. Superficie Coperta Calpestabile + Muri (100%) [m²]</label>
+                <input type="number" id="dprSupCoperta" value="95" min="10" step="1" oninput="window.calcSuperficieCommerciale()">
+                <small style="color: var(--muted); font-size: 0.78rem;">Include vani principali, accessori interni e murature perimetrali.</small>
+              </div>
+
+              <div class="calc-input-group">
+                <label for="dprSupBalconi">2. Balconi e Terrazzi Scoperti comunicanti [m²]</label>
+                <input type="number" id="dprSupBalconi" value="15" min="0" step="1" oninput="window.calcSuperficieCommerciale()">
+                <small style="color: var(--muted); font-size: 0.78rem;">Computati al 30% fino a 25 m², al 10% per l'eccedenza.</small>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                <div class="calc-input-group">
+                  <label for="dprSupVerande">3. Verande Chiuse / Logge (60%) [m²]</label>
+                  <input type="number" id="dprSupVerande" value="0" min="0" step="1" oninput="window.calcSuperficieCommerciale()">
+                </div>
+                <div class="calc-input-group">
+                  <label for="dprSupCantina">4. Cantina / Soffitta (25%-50%) [m²]</label>
+                  <input type="number" id="dprSupCantina" value="0" min="0" step="1" oninput="window.calcSuperficieCommerciale()">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                <div class="calc-input-group">
+                  <label for="dprSupGiardino">5. Giardino / Corte Esclusiva [m²]</label>
+                  <input type="number" id="dprSupGiardino" value="0" min="0" step="1" oninput="window.calcSuperficieCommerciale()">
+                  <small style="color: var(--muted); font-size: 0.76rem;">10% fino a sup. coperta, 2% oltre.</small>
+                </div>
+                <div class="calc-input-group">
+                  <label for="dprSupBox">6. Box Auto / Garage (50%) [m²]</label>
+                  <input type="number" id="dprSupBox" value="18" min="0" step="1" oninput="window.calcSuperficieCommerciale()">
+                  <small style="color: var(--muted); font-size: 0.76rem;">50% box chiuso, 35% posto auto.</small>
+                </div>
+              </div>
+
+              <!-- Selezione Zona OMI -->
+              <div class="calc-input-group" style="margin-top: 0.5rem; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 0.85rem;">
+                <label for="selectZonaOmi" style="font-weight: 700; color: var(--navy); margin-bottom: 0.3rem;">
+                  📍 Seleziona Comune / Zona OMI di Riferimento:
+                </label>
+                <select id="selectZonaOmi" onchange="window.calcSuperficieCommerciale()" style="font-size: 0.88rem;">
+                  <optgroup label="Comune di Rosolini (SR)">
+                    <option value="rosolini_centro" selected>Rosolini – Centro Storico &amp; Corso Savoia (€ 800 - 1.100 / m²)</option>
+                    <option value="rosolini_residenziale">Rosolini – Zona Residenziale &amp; Nuove Espansioni (€ 900 - 1.300 / m²)</option>
+                    <option value="rosolini_agro">Rosolini – Agro / Rurale (€ 500 - 800 / m²)</option>
+                  </optgroup>
+                  <optgroup label="Noto &amp; Marina (SR)">
+                    <option value="noto_centro">Noto – Centro Storico Barocco (€ 1.500 - 2.400 / m²)</option>
+                    <option value="noto_lido">Noto – Marina &amp; Lido di Noto (€ 1.700 - 2.600 / m²)</option>
+                  </optgroup>
+                  <optgroup label="Pachino &amp; Marzamemi (SR)">
+                    <option value="pachino_centro">Pachino – Centro (€ 750 - 1.100 / m²)</option>
+                    <option value="marzamemi">Marzamemi – Borgo Marinaro &amp; Mare (€ 1.400 - 2.300 / m²)</option>
+                  </optgroup>
+                  <optgroup label="Modica &amp; Pozzallo (RG)">
+                    <option value="modica_sorda">Modica – Quartiere Sorda Residenziale (€ 1.000 - 1.450 / m²)</option>
+                    <option value="modica_centro">Modica – Centro Storico (€ 850 - 1.250 / m²)</option>
+                    <option value="pozzallo">Pozzallo – Zona Mare &amp; Centro (€ 1.150 - 1.700 / m²)</option>
+                  </optgroup>
+                  <optgroup label="Siracusa &amp; Ragusa">
+                    <option value="siracusa_ortigia">Siracusa – Ortigia &amp; Umbertino (€ 2.000 - 3.400 / m²)</option>
+                    <option value="siracusa_citta">Siracusa – Città Residenziale (€ 1.150 - 1.700 / m²)</option>
+                    <option value="ragusa_citta">Ragusa – Centro Superiore &amp; Ibla (€ 900 - 1.450 / m²)</option>
+                  </optgroup>
+                  <option value="custom">Valore Personalizzato (€/m² a scelta)</option>
+                </select>
+
+                <div id="divCustomOmiPrice" style="display: none; margin-top: 0.6rem;">
+                  <label for="inputCustomOmiPrice" style="font-size: 0.78rem;">Prezzo Personalizzato al m² (€/m²):</label>
+                  <input type="number" id="inputCustomOmiPrice" value="1000" min="100" step="50" oninput="window.calcSuperficieCommerciale()" style="padding: 0.45rem 0.65rem;">
+                </div>
+              </div>
+            </div>
+
+            <div class="calc-results-side">
+              <div class="calc-result-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.6rem; margin-bottom: 0.9rem;">
+                  <h4 style="color: var(--gold-soft); font-size: 1.1rem; margin: 0;">
+                    Superficie Commerciale &amp; Valutazione
+                  </h4>
+                  <span style="font-size: 0.72rem; background: rgba(201,162,39,0.25); color: var(--gold-soft); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(201,162,39,0.4);">D.P.R. 138/98</span>
+                </div>
+
+                <!-- Breakdown Quote Calcolate -->
+                <div class="calc-result-row">
+                  <span>Sup. Principale Coperta (100%):</span>
+                  <strong id="resQuoteCoperta">95.00 m²</strong>
+                </div>
+                <div class="calc-result-row">
+                  <span>Quota Balconi / Terrazzi:</span>
+                  <strong id="resQuoteBalconi">4.50 m²</strong>
+                </div>
+                <div class="calc-result-row" id="rowQuoteVerande" style="display: none;">
+                  <span>Quota Verande Chiuse (60%):</span>
+                  <strong id="resQuoteVerande">0.00 m²</strong>
+                </div>
+                <div class="calc-result-row" id="rowQuoteCantina" style="display: none;">
+                  <span>Quota Cantina / Soffitta (25%):</span>
+                  <strong id="resQuoteCantina">0.00 m²</strong>
+                </div>
+                <div class="calc-result-row" id="rowQuoteGiardino" style="display: none;">
+                  <span>Quota Giardino / Corte Esclusiva:</span>
+                  <strong id="resQuoteGiardino">0.00 m²</strong>
+                </div>
+                <div class="calc-result-row">
+                  <span>Quota Box Auto (50%):</span>
+                  <strong id="resQuoteBox">9.00 m²</strong>
+                </div>
+
+                <div class="calc-result-row total-row" style="border-top: 2px dashed rgba(201,162,39,0.6); margin-top: 0.6rem; padding-top: 0.8rem;">
+                  <span>Superficie Commerciale Totale:</span>
+                  <span id="resSupCommercialeTotale">108.50 m²</span>
+                </div>
+
+                <!-- Valutazione Economica OMI -->
+                <div style="margin-top: 1rem; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 0.9rem;">
+                  <div style="font-size: 0.82rem; color: var(--gold-soft); font-weight: 700; margin-bottom: 0.4rem;">
+                    📊 Stima Valore Immobiliare di Mercato:
+                  </div>
+                  <div class="calc-result-row">
+                    <span>Quotazione Zona Considerata:</span>
+                    <strong id="resQuotazioneZona">~ € 950 / m²</strong>
+                  </div>
+                  <div class="calc-result-row" style="background: rgba(255,255,255,0.06); padding: 0.6rem 0.4rem; border-radius: 6px; margin-top: 0.3rem;">
+                    <span>Valore di Mercato Indicativo:</span>
+                    <strong id="resValoreMercatoTotale" style="color: var(--gold-soft); font-size: 1.15rem;">€ 90.000 – € 115.000</strong>
+                  </div>
+                </div>
+
+                <div style="margin-top: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; color: rgba(255,255,255,0.85); line-height: 1.45;">
+                  💡 <em>Valore Legale:</em> La superficie commerciale secondo il DPR 138/98 è lo standard peritale vincolante per banche, acquirenti e notai. Per una <strong>Perizia di Stima Giurata Asseverata</strong> contatta lo Studio.
+                </div>
+
+                <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+                  <a id="btnSuperficieWhatsAppCta" href="https://wa.me/393516543517?text=Buongiorno%2C%20vorrei%20richiedere%20una%20perizia%20di%20stima%20per%20un%20immobile." target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="flex: 1; text-align: center; font-size: 0.85rem; padding: 0.65rem;">
+                    Richiedi Perizia di Stima allo Studio ↗
+                  </a>
+                  <button type="button" class="btn btn-outline" onclick="window.printToolReport('superficie')" style="padding: 0.65rem 0.9rem;" title="Stampa o Salva PDF">
+                    🖨️ Stampa
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================================= -->
+        <!-- TAB 5: CALCOLATORE RISPARMIO ENERGETICO APE "CASE GREEN" -->
+        <!-- ========================================================================= -->
+        <div class="tool-panel" id="toolPanelApe" role="tabpanel">
+          <div class="calc-grid">
+            <div class="calc-inputs-side">
+              <h3 style="font-size: 1.3rem; color: var(--navy); margin-bottom: 0.8rem;">Efficienza Energetica APE &amp; Direttiva UE</h3>
+              <p style="font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem;">
+                Con la Direttiva Europea <em>EPBD "Case Green"</em>, riqualificare l'immobile aumenta il valore di mercato fino al +15% e abbatte le bollette. Seleziona gli interventi per stimare il salto di classe e il risparmio economico annuo.
+              </p>
+
+              <div class="calc-input-group">
+                <label for="selectClassePartenza">Classe Energetica Attuale dell'Immobile</label>
+                <select id="selectClassePartenza" onchange="window.calcRisparmioEnergetico()">
+                  <option value="G" selected>Classe G (La più diffusa – Consumi elevati oltre 160 kWh/m² anno)</option>
+                  <option value="F">Classe F (Fabbricati anni '70/'80 non coibentati)</option>
+                  <option value="E">Classe E (Abitazioni parzialmente ristrutturate)</option>
+                  <option value="D">Classe D (Impianti e serramenti discreti)</option>
+                  <option value="C">Classe C (Buone prestazioni termiche)</option>
+                  <option value="B">Classe B (Fabbricati recenti)</option>
+                  <option value="A1">Classe A1 (Alta efficienza)</option>
+                </select>
+              </div>
+
+              <div class="calc-input-group">
+                <label for="inputBollettaAnnua">Spesa Annua Attuale per Energia &amp; Gas (€ / anno)</label>
+                <input type="number" id="inputBollettaAnnua" value="2400" min="500" step="100" oninput="window.calcRisparmioEnergetico()">
+                <small style="color: var(--muted); font-size: 0.78rem;">Somma indicativa delle bollette elettriche e riscaldamento/climatizzazione.</small>
+              </div>
+
+              <!-- Checkbox Interventi di Efficienza -->
+              <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 0.9rem; margin-bottom: 1rem;">
+                <span style="font-weight: 700; font-size: 0.88rem; color: var(--navy); display: block; margin-bottom: 0.6rem;">
+                  🌱 Interventi di Efficientamento Previsti:
+                </span>
+
+                <label class="checklist-option-label" style="margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <input type="checkbox" id="chkInfissiTermici" checked onchange="window.calcRisparmioEnergetico()" style="margin-top: 0.2rem;">
+                  <span>
+                    <strong>Sostituzione Infissi Termici</strong> (Doppio/triplo vetro a taglio termico – Salto +1 classe, -15% dispersioni)
+                  </span>
+                </label>
+
+                <label class="checklist-option-label" style="margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <input type="checkbox" id="chkPompaCalore" checked onchange="window.calcRisparmioEnergetico()" style="margin-top: 0.2rem;">
+                  <span>
+                    <strong>Pompa di Calore Inverter A+++</strong> (Riscaldamento/raffrescamento ad alta efficienza – Salto +2 classi, -30% consumi)
+                  </span>
+                </label>
+
+                <label class="checklist-option-label" style="margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <input type="checkbox" id="chkCappotto" onchange="window.calcRisparmioEnergetico()" style="margin-top: 0.2rem;">
+                  <span>
+                    <strong>Isolamento a Cappotto o Tetto Ventilato</strong> (Coibentazione involucro esterno – Salto +2 classi, -35% dispersioni)
+                  </span>
+                </label>
+
+                <label class="checklist-option-label" style="margin-bottom: 0.5rem; display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <input type="checkbox" id="chkFotovoltaico" checked onchange="window.calcRisparmioEnergetico()" style="margin-top: 0.2rem;">
+                  <span>
+                    <strong>Impianto Fotovoltaico con Accumulo</strong> (Produzione energia pulita e autoconsumo – Salto +2 classi, -45% bolletta elettrica)
+                  </span>
+                </label>
+
+                <label class="checklist-option-label" style="margin-bottom: 0; display: flex; align-items: flex-start; gap: 0.5rem;">
+                  <input type="checkbox" id="chkSolareTermico" onchange="window.calcRisparmioEnergetico()" style="margin-top: 0.2rem;">
+                  <span>
+                    <strong>Scaldacqua a Pompa di Calore o Solare Termico</strong> (Acqua calda sanitaria green – Salto +1 classe, -10% consumi)
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div class="calc-results-side">
+              <div class="calc-result-box">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 0.6rem; margin-bottom: 0.9rem;">
+                  <h4 style="color: var(--gold-soft); font-size: 1.1rem; margin: 0;">
+                    Simulazione Salto APE &amp; Risparmio
+                  </h4>
+                  <span style="font-size: 0.72rem; background: rgba(34,197,94,0.25); color: #86efac; padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid rgba(34,197,94,0.4);">Direttiva EPBD</span>
+                </div>
+
+                <!-- Scala Energetica Grafica -->
+                <div style="background: rgba(255,255,255,0.06); border-radius: 10px; padding: 0.9rem; margin-bottom: 1rem; text-align: center;">
+                  <div style="font-size: 0.8rem; color: rgba(255,255,255,0.8); margin-bottom: 0.5rem;">Evoluzione della Classe Energetica:</div>
+                  <div style="display: flex; align-items: center; justify-content: center; gap: 0.8rem;">
+                    <span id="badgeClassePartenza" style="background: #ef4444; color: #fff; font-weight: 800; font-size: 1.1rem; padding: 0.35rem 0.85rem; border-radius: 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+                      Classe G
+                    </span>
+                    <span style="font-size: 1.4rem; color: var(--gold-soft);">➔</span>
+                    <span id="badgeClasseArrivo" style="background: #16a34a; color: #fff; font-weight: 800; font-size: 1.25rem; padding: 0.35rem 1rem; border-radius: 6px; box-shadow: 0 4px 12px rgba(22,163,74,0.5);">
+                      Classe A2
+                    </span>
+                  </div>
+                  <div id="lblSaltoClassi" style="margin-top: 0.5rem; font-size: 0.82rem; font-weight: 700; color: #86efac;">
+                    🚀 Salto di ben 5 Classi Energetiche!
+                  </div>
+                </div>
+
+                <div class="calc-result-row">
+                  <span>Risparmio Percentuale Stimato:</span>
+                  <strong id="resRisparmioPercentuale" style="color: #86efac; font-size: 1.1rem;">- 65%</strong>
+                </div>
+                <div class="calc-result-row">
+                  <span>Risparmio Economico Diretto:</span>
+                  <strong id="resRisparmioEuroAnno" style="color: #86efac; font-size: 1.15rem;">€ 1.560,00 / anno</strong>
+                </div>
+                <div class="calc-result-row">
+                  <span>Risparmio Cumulato in 10 Anni:</span>
+                  <strong id="resRisparmio10Anni" style="color: var(--gold-soft);">€ 15.600,00</strong>
+                </div>
+                <div class="calc-result-row">
+                  <span>Rivalutazione Immobile sul Mercato:</span>
+                  <strong id="resRivalutazioneMercato" style="color: #67e8f9;">+ 12% – + 15%</strong>
+                </div>
+
+                <div class="calc-result-row total-row">
+                  <span>Nuova Bolletta Stimata:</span>
+                  <span id="resNuovaBollettaAnnua">€ 840 / anno</span>
+                </div>
+
+                <div style="margin-top: 1rem; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; color: rgba(255,255,255,0.85); line-height: 1.45;">
+                  💡 <em>Certificazione Ufficiale:</em> Per asseverare il salto di classe e accedere a detrazioni fiscali o mutui green a tasso ridotto è obbligatorio redigere l'<strong>APE ufficiale con codice SIERT Sicilia</strong>.
+                </div>
+
+                <div style="display: flex; gap: 0.6rem; margin-top: 1rem;">
+                  <a id="btnApeWhatsAppCta" href="https://wa.me/393516543517?text=Buongiorno%2C%20vorrei%20richiedere%20un%20Attestato%20APE%20e%20una%20diagnosi%20energetica%20per%20il%20mio%20immobile." target="_blank" rel="noopener noreferrer" class="btn btn-gold" style="flex: 1; text-align: center; font-size: 0.85rem; padding: 0.65rem;">
+                    Richiedi APE in 24/48h allo Studio ↗
+                  </a>
+                  <button type="button" class="btn btn-outline" onclick="window.printToolReport('ape')" style="padding: 0.65rem 0.9rem;" title="Stampa o Salva PDF">
+                    🖨️ Stampa
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
+
+</section>
 
     <section class="section studio" id="studio">
       <div class="container studio-grid">

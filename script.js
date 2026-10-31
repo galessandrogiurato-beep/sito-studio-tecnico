@@ -298,15 +298,21 @@
 
 
   // ============================================================================
-  // CALCOLATORI & SIMULATORI INTERATTIVI (HOME PAGE)
+  // CALCOLATORI & SIMULATORI INTERATTIVI POTENZIATI (5 SUITE TECNICA)
   // ============================================================================
   
-  // 1. Switcher Tab Calcolatori
+  // Helper per formattazione euro italiana
+  const fmtEuro = (n) => "€ " + (n || 0).toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmtEuroRound = (n) => "€ " + Math.round(n || 0).toLocaleString("it-IT");
+
+  // 1. Switcher Tab Simulatori (5 Tab)
   window.switchToolTab = (tabKey) => {
     const tabs = [
       { key: "successione", btn: "tabBtnSuccessione", panel: "toolPanelSuccessione" },
       { key: "rogito", btn: "tabBtnRogito", panel: "toolPanelRogito" },
       { key: "ristruttura", btn: "tabBtnRistruttura", panel: "toolPanelRistruttura" },
+      { key: "superficie", btn: "tabBtnSuperficie", panel: "toolPanelSuperficie" },
+      { key: "ape", btn: "tabBtnApe", panel: "toolPanelApe" }
     ];
 
     tabs.forEach(({ key, btn, panel }) => {
@@ -323,19 +329,26 @@
     });
   };
 
-  // 2. Calcolo Imposte Successione e Voltura Catastale
+  // 2. Calcolo Imposte Successione e Voltura Catastale (Con Pertinenze & Franchigie)
   const calcSuccessione = () => {
     const renditaInput = document.getElementById("calcRenditaInput");
     const tipoSelect = document.getElementById("calcTipoImmobile");
+    const pertBoxInput = document.getElementById("calcPertinenzaBox");
+    const pertCantinaInput = document.getElementById("calcPertinenzaCantina");
     const parentelaSelect = document.getElementById("calcGradoParentela");
+    const quotaSelect = document.getElementById("calcQuotaEreditaria");
 
-    const rendita = parseFloat(renditaInput?.value || "0") || 0;
+    const renditaPrinc = parseFloat(renditaInput?.value || "0") || 0;
     const tipo = tipoSelect?.value || "prima_casa";
+    const renditaBox = parseFloat(pertBoxInput?.value || "0") || 0;
+    const renditaCantina = parseFloat(pertCantinaInput?.value || "0") || 0;
     const parentela = parentelaSelect?.value || "linea_retta";
+    const quota = parseFloat(quotaSelect?.value || "1.0") || 1.0;
 
-    // Calcolo valore catastale rivalutato
-    let moltiplicatore = 110; // Prima casa
+    // Coeff rivalutazione catastale
     let coeffRivalutazione = 1.05; // Fabbricati 5%
+    let moltiplicatore = 110; // Prima casa standard
+
     if (tipo === "seconda_casa") {
       moltiplicatore = 120;
     } else if (tipo === "commerciale") {
@@ -345,158 +358,522 @@
       coeffRivalutazione = 1.25; // Reddito dominicale 25%
     }
 
-    const valoreCatastale = Math.round(rendita * coeffRivalutazione * moltiplicatore);
+    const valPrinc = Math.round(renditaPrinc * coeffRivalutazione * moltiplicatore);
+
+    // Pertinenze C/6 (box) e C/2 (cantina/deposito)
+    const renditaPertTot = renditaBox + renditaCantina;
+    const multPert = (tipo === "prima_casa") ? 110 : 126;
+    const valPert = Math.round(renditaPertTot * 1.05 * multPert);
+
+    const valAsseComplessivo = valPrinc + valPert;
+    const valQuota = Math.round(valAsseComplessivo * quota);
 
     // Imposte Ipotecaria e Catastale
     let impIpotecaria = 200;
     let impCatastale = 200;
 
     if (tipo !== "prima_casa") {
-      impIpotecaria = Math.max(200, Math.round(valoreCatastale * 0.02));
-      impCatastale = Math.max(200, Math.round(valoreCatastale * 0.01));
+      impIpotecaria = Math.max(200, Math.round(valQuota * 0.02));
+      impCatastale = Math.max(200, Math.round(valQuota * 0.01));
     }
 
     const tassaIpotecariaTributi = 67; // 35€ tassa ipotecaria + 32€ tributi speciali
     const bollo = 64; // Bollo forfettario
     const dirittiVoltura = 71; // 55€ tributo speciale voltura + 16€ bollo
 
-    const totale = impIpotecaria + impCatastale + tassaIpotecariaTributi + bollo + dirittiVoltura;
+    // Franchigie e Imposta di Successione Erariale
+    let franchigia = 1000000; // Linea retta (figli/coniuge)
+    let aliquota = 0.04;
 
-    const fmtEuro = (n) => "€ " + n.toLocaleString("it-IT", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (parentela === "fratelli") {
+      franchigia = 100000;
+      aliquota = 0.06;
+    } else if (parentela === "altri_parenti") {
+      franchigia = 0;
+      aliquota = 0.06;
+    } else if (parentela === "estranei") {
+      franchigia = 0;
+      aliquota = 0.08;
+    }
 
-    const elVal = document.getElementById("resValoreCatastale");
+    const eccedenza = Math.max(0, valQuota - franchigia);
+    const impostaSuccessione = Math.round(eccedenza * aliquota);
+
+    const totale = impIpotecaria + impCatastale + tassaIpotecariaTributi + bollo + dirittiVoltura + impostaSuccessione;
+
+    // Aggiornamento DOM
+    const elValPrinc = document.getElementById("resValorePrincipale");
+    const elValPert = document.getElementById("resValorePertinenze");
+    const rowPert = document.getElementById("rowValorePertinenze");
+    const elValTot = document.getElementById("resValoreCatastaleTotale");
+    const elQuota = document.getElementById("resQuotaImponibile");
     const elIpo = document.getElementById("resImpostaIpotecaria");
     const elCat = document.getElementById("resImpostaCatastale");
+    const rowSucc = document.getElementById("rowImpostaSuccessione");
+    const elSucc = document.getElementById("resImpostaSuccessione");
     const elTot = document.getElementById("resTotaleImposte");
 
-    if (elVal) elVal.textContent = fmtEuro(valoreCatastale);
+    if (elValPrinc) elValPrinc.textContent = fmtEuro(valPrinc);
+    if (elValPert) elValPert.textContent = fmtEuro(valPert);
+    if (rowPert) rowPert.style.display = valPert > 0 ? "flex" : "none";
+    if (elValTot) elValTot.textContent = fmtEuro(valAsseComplessivo);
+
+    const percQuota = Math.round(quota * 100);
+    if (elQuota) elQuota.textContent = `${fmtEuro(valQuota)} (${percQuota}%)`;
+
     if (elIpo) elIpo.textContent = fmtEuro(impIpotecaria);
     if (elCat) elCat.textContent = fmtEuro(impCatastale);
+
+    if (rowSucc && elSucc) {
+      if (impostaSuccessione > 0) {
+        rowSucc.style.display = "flex";
+        elSucc.textContent = fmtEuro(impostaSuccessione);
+      } else {
+        rowSucc.style.display = "none";
+      }
+    }
+
     if (elTot) elTot.textContent = fmtEuro(totale);
 
     // Aggiorna link WhatsApp con il riepilogo calcolato
     const ctaBtn = document.getElementById("btnSuccessioneWhatsAppCta");
     if (ctaBtn) {
       const msg = [
-        "Buongiorno Studio Giurato & Iacono, ho utilizzato il vostro calcolatore online.",
-        `Rendita Catastale: € ${rendita}`,
-        `Tipologia: ${tipo === 'prima_casa' ? 'Prima Casa' : 'Seconda Casa / Terreno'}`,
-        `Valore Catastale Stimato: ${fmtEuro(valoreCatastale)}`,
-        `Imposte Statali Calcolate: ${fmtEuro(totale)}`,
-        "Vorrei ricevere assistenza per la compilazione della Dichiarazione di Successione e della Voltura Catastale."
+        "Buongiorno Studio Giurato & Iacono, ho utilizzato il vostro calcolatore di successione.",
+        `Valore Catastale Asse: ${fmtEuro(valAsseComplessivo)}`,
+        `Quota Ereditaria: ${percQuota}% (${fmtEuro(valQuota)})`,
+        `Agevolazione: ${tipo === 'prima_casa' ? 'Prima Casa (Fisse 200€)' : 'Ordinaria / Seconda Casa'}`,
+        `Imposte Statali Previste: ${fmtEuro(totale)}`,
+        "Vorrei affidarvi la predisposizione della Dichiarazione di Successione telematica e Voltura Catastale."
       ].join("\n");
       ctaBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
     }
   };
 
+  // Event listener Successione
   document.getElementById("btnCalcolaSuccessione")?.addEventListener("click", calcSuccessione);
   document.getElementById("calcRenditaInput")?.addEventListener("input", calcSuccessione);
   document.getElementById("calcTipoImmobile")?.addEventListener("change", calcSuccessione);
+  document.getElementById("calcPertinenzaBox")?.addEventListener("input", calcSuccessione);
+  document.getElementById("calcPertinenzaCantina")?.addEventListener("input", calcSuccessione);
   document.getElementById("calcGradoParentela")?.addEventListener("change", calcSuccessione);
+  document.getElementById("calcQuotaEreditaria")?.addEventListener("change", calcSuccessione);
 
-  // 3. Checklist Rogito Notarile
+  // 3. Checklist Conformità Rogito Notarile (6 Domande Diagnostiche & Piano d'Azione)
   window.calcRogitoScore = () => {
     const q1 = parseInt(document.querySelector('input[name="checkPlanimetria"]:checked')?.value || "0", 10);
     const q2 = parseInt(document.querySelector('input[name="checkApe"]:checked')?.value || "0", 10);
     const q3 = parseInt(document.querySelector('input[name="checkPertinenze"]:checked')?.value || "0", 10);
     const q4 = parseInt(document.querySelector('input[name="checkLicenza"]:checked')?.value || "0", 10);
+    const q5 = parseInt(document.querySelector('input[name="checkAgibilita"]:checked')?.value || "0", 10);
+    const q6 = parseInt(document.querySelector('input[name="checkImpianti"]:checked')?.value || "0", 10);
 
-    const score = q1 + q2 + q3 + q4;
+    const score = q1 + q2 + q3 + q4 + q5 + q6;
 
     const box = document.getElementById("checklistReportBox");
     const icon = document.getElementById("checklistReportIcon");
     const title = document.getElementById("checklistReportTitle");
+    const badge = document.getElementById("checklistScoreBadge");
     const text = document.getElementById("checklistReportText");
+    const actionList = document.getElementById("checklistActionList");
     const waBtn = document.getElementById("checklistWhatsAppBtn");
     if (!box) return;
 
     box.className = "checklist-report-card";
 
-    let msg = "";
-    if (score === 0) {
+    // Genera azioni consigliate personalizzate in base alle criticità
+    const actions = [];
+    if (q1 > 0) {
+      actions.push("<strong>Planimetria non allineata:</strong> Necessaria pratica DOCFA per variazione catastale con nuovo rilievo metrico per evitare il blocco del rogito notarile.");
+    }
+    if (q2 > 0) {
+      actions.push("<strong>APE mancante o scaduto:</strong> Obbligatorio per legge per il rogito. Lo studio rilascia l'Attestato APE con codice SIERT Sicilia in 24/48h.");
+    }
+    if (q3 > 0) {
+      actions.push("<strong>Verande / Pertinenze non dichiarate:</strong> Verifica della sanabilità con il Decreto Salva Casa (L. 105/2024) o ripristino per scongiurare nullità dell'atto.");
+    }
+    if (q4 > 0) {
+      actions.push("<strong>Titolo originario incerto / Condono pendente:</strong> Accesso agli atti presso l'Ufficio Tecnico Comunale per reperire il fascicolo edilizio e la conformità urbanistica.");
+    }
+    if (q5 > 0) {
+      actions.push("<strong>Agibilità / Abitabilità non reperita:</strong> Richiesta di attestazione al Comune o deposito di Segnalazione Certificata di Agibilità (SCA).");
+    }
+    if (q6 > 0) {
+      actions.push("<strong>Certificati Impianti:</strong> Redazione Dichiarazione di Rispondenza (DiRi ex DM 37/08) o inserimento clausola di garanzia nel rogito.");
+    }
+
+    if (actions.length === 0) {
+      actions.push("Verifica preventiva visura catastale storica e planimetria rasterizzata di confronto.");
+      actions.push("Sopralluogo metrico per conferma quote e redazione Relazione Tecnica Integrata (RTI).");
+    }
+
+    if (actionList) {
+      actionList.innerHTML = actions.map((a) => `<li>${a}</li>`).join("");
+    }
+
+    if (badge) badge.textContent = `Punteggio Rischio: ${score} / 25`;
+
+    let waMsg = "";
+    if (score <= 1) {
       box.classList.add("safe");
       if (icon) icon.textContent = "🟢";
       if (title) title.textContent = "Immobile in Condizione di Piena Conformità Presunta";
-      if (text) text.textContent = "Dalle risposte fornite non emergono difformità. Per massima sicurezza e per tutelare l'acquirente prima della stipula del preliminare, consigliamo di verificare la corrispondenza con il titolo edilizio comunale originario.";
-      msg = "Buongiorno, ho eseguito la checklist rogito sul vostro sito (esito: Conforme). Vorrei richiedere una verifica documentale prima dell'atto.";
-    } else if (score <= 4) {
+      if (text) text.textContent = "Dalle risposte fornite non emergono difformità gravi. Per garantire al 100% compratore e venditore prima del preliminare o del rogito notarile, consigliamo una Relazione Tecnica Integrata (RTI) redatta dai nostri geometri.";
+      waMsg = "Buongiorno Studio Giurato & Iacono, ho eseguito la checklist rogito sul vostro sito (esito: Conforme). Vorrei richiedere una verifica documentale prima dell'atto.";
+    } else if (score <= 6) {
       box.classList.add("warning");
       if (icon) icon.textContent = "🟡";
-      if (title) title.textContent = "Attenzione: Rilevate Difformità Minori Sanabili";
-      if (text) text.textContent = "Sono presenti lievi difformità (es. tramezze spostate, porte interne modificate o APE mancante). È necessario redigere una variazione catastale DOCFA o l'Attestato APE per non rischiare rinvii o contestazioni dal perito della banca o dal notaio.";
-      msg = "Buongiorno, ho eseguito la checklist rogito (esito: Difformità Minori). Avrei bisogno di una consulenza per regolarizzare la planimetria / redigere l'APE prima dell'atto.";
+      if (title) title.textContent = "Attenzione: Rilevate Difformità Sanabili / Documentazione Mancante";
+      if (text) text.textContent = "Sono emerse incongruenze (es. tramezze modificate, APE assente, o impianti privi di conformità). Tali elementi rischiano di sospendere la perizia della banca per il mutuo o bloccare l'atto notarile. È opportuno regolarizzare la documentazione prima della proposta di acquisto.";
+      waMsg = `Buongiorno, ho eseguito la checklist rogito con punteggio ${score}/25 (esito: Difformità Sanabili). Vorrei una consulenza per regolarizzare l'immobile prima del rogito.`;
     } else {
       box.classList.add("danger");
       if (icon) icon.textContent = "🔴";
       if (title) title.textContent = "Rischio Elevato: Blocco del Rogito o Nullità dell'Atto";
-      if (text) text.textContent = "Attenzione: emergono discrepanze significative (es. verande chiuse non autorizzate, cambi di destinazione d'uso, o difformità planimetriche pesanti). La legge prevede la nullità degli atti di compravendita in caso di difformità sostanziali. È fondamentale un sopralluogo tecnico per verificare la sanabilità con il Decreto Salva Casa prima della vendita.";
-      msg = "Buongiorno Studio Giurato & Iacono, ho eseguito la checklist sul vostro sito ed è emerso un RISCHIO ELEVATO per difformità edilizie/catastali. Vorrei fissare un sopralluogo urgente per sanare la situazione.";
+      if (text) text.textContent = "Attenzione: emergono discrepanze sostanziali (verande/ampliamenti non autorizzati, condoni non definiti o assenza di titolo edilizio). La legge italiana sancisce la nullità degli atti di compravendita in caso di abusi non sanati. È urgente un sopralluogo tecnico per verificare la sanabilità con il Salva Casa prima della vendita.";
+      waMsg = `Buongiorno Studio Giurato & Iacono, ho eseguito la checklist rogito ed è emerso un RISCHIO ELEVATO (${score}/25) per difformità edilizie/catastali. Vorrei fissare un sopralluogo per sanare la situazione.`;
     }
 
     if (waBtn) {
-      waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`;
     }
   };
 
-  // 4. Simulatore Ristrutturazione & Pratiche
+  // 4. Simulatore Ristrutturazione & Bonus Fiscale 50% (Bonus Casa 2025)
   window.calcRistrutturaEst = () => {
     const range = document.getElementById("rangeMqInput");
     const livello = document.getElementById("selectLivelloOpere");
+    const bagniSelect = document.getElementById("selectNumBagni");
+    const infissiSelect = document.getElementById("selectMqInfissi");
+    const climaSelect = document.getElementById("selectClima");
+
     const mq = parseInt(range?.value || "90", 10);
     const tipo = livello?.value || "medium";
+    const numBagni = parseInt(bagniSelect?.value || "1", 10);
+    const mqInfissi = parseInt(infissiSelect?.value || "12", 10);
+    const tipoClima = climaSelect?.value || "multisplit";
 
     const lblMq = document.getElementById("lblMqVal");
     const resMq = document.getElementById("resMqDisplay");
     const resCosto = document.getElementById("resCostoMqDisplay");
+    const resExtra = document.getElementById("resExtraDisplay");
     const resTot = document.getElementById("resTotaleOpereDisplay");
+    const resDetr = document.getElementById("resDetrazioneTotale");
+    const resRata = document.getElementById("resRataAnnua");
+    const resNetto = document.getElementById("resCostoNettoEffettivo");
     const listPratiche = document.getElementById("listPraticheNecessarie");
 
     if (lblMq) lblMq.textContent = `${mq} m²`;
     if (resMq) resMq.textContent = `${mq} m²`;
 
-    let minMq = 300, maxMq = 450;
+    // Costi base al m²
+    let minMq = 300, maxMq = 420;
     let pratiche = [];
 
     if (tipo === "light") {
-      minMq = 250; maxMq = 400;
-      if (resCosto) resCosto.textContent = "~ € 300 – 400 / m²";
+      minMq = 280; maxMq = 420;
+      if (resCosto) resCosto.textContent = "~ € 350 / m²";
       pratiche = [
-        "Attività Edilizia Libera (nessun titolo abilitativo per opere ordinarie)",
+        "Attività Edilizia Libera (opere interne ordinarie)",
         "Dichiarazione di conformità impianti (DM 37/08)",
-        "Aggiornamento APE (se vengono sostituiti infissi o climatizzatori)"
+        "Aggiornamento APE se sostituiti infissi o climatizzatori"
       ];
     } else if (tipo === "medium") {
-      minMq = 500; maxMq = 750;
-      if (resCosto) resCosto.textContent = "~ € 550 – 750 / m²";
+      minMq = 580; maxMq = 780;
+      if (resCosto) resCosto.textContent = "~ € 680 / m²";
       pratiche = [
         "Pratica Edilizia Comunale (CILA asseverata per manutenzione straordinaria)",
-        "Piano Operativo di Sicurezza (PSC e nomina CSE ai sensi del D.Lgs. 81/2008)",
-        "Variazione Catastale DOCFA (aggiornamento planimetria catastale)",
+        "Piano Operativo di Sicurezza Cantieri (PSC - D.Lgs. 81/2008)",
+        "Variazione Catastale DOCFA (nuova planimetria per ridistribuzione vani)",
         "Attestato di Prestazione Energetica (APE) post-intervento",
-        "Detrazioni Fiscali ENEA (se previste)"
+        "Comunicazione ENEA per accedere alle Detrazioni Fiscali"
       ];
     } else {
-      minMq = 850; maxMq = 1350;
-      if (resCosto) resCosto.textContent = "~ € 900 – 1.300 / m²";
+      minMq = 950; maxMq = 1350;
+      if (resCosto) resCosto.textContent = "~ € 1.150 / m²";
       pratiche = [
-        "Pratica Edilizia (CILA o SCIA per opere strutturali e impianti)",
-        "Autorizzazione Paesaggistica Semplificata (se immobile in area con vincolo paesaggistico)",
+        "Pratica Edilizia (CILA / SCIA per opere strutturali e impianti integrali)",
+        "Autorizzazione Paesaggistica (se presente vincolo paesaggistico o centro storico)",
         "Piano di Sicurezza e Coordinamento Cantieri (CSP/CSE)",
         "Variazione Catastale DOCFA per nuova ridistribuzione vani",
         "Nuovo APE e Segnalazione Certificata di Agibilità (SCA)",
-        "Computo Metrico Estimativo dettagliato e Direzione Lavori"
+        "Computo Metrico Estimativo e Direzione Lavori dello Studio"
       ];
     }
 
-    const minTot = mq * minMq;
-    const maxTot = mq * maxMq;
-    const fmtK = (n) => "€ " + Math.round(n).toLocaleString("it-IT");
+    // Costi Extra specifici
+    let costoBagni = numBagni === 1 ? 4500 : (numBagni === 2 ? 8500 : (numBagni >= 3 ? 12500 : 0));
+    let costoInfissi = mqInfissi === 12 ? 4800 : (mqInfissi === 20 ? 8000 : (mqInfissi >= 32 ? 12800 : 0));
+    let costoClima = tipoClima === "multisplit" ? 3500 : (tipoClima === "pompa_calore" ? 8500 : 0);
+    let totalExtra = costoBagni + costoInfissi + costoClima;
 
-    if (resTot) resTot.textContent = `${fmtK(minTot)} – ${fmtK(maxTot)}`;
+    if (resExtra) resExtra.textContent = fmtEuroRound(totalExtra);
+
+    const minTot = (mq * minMq) + totalExtra;
+    const maxTot = (mq * maxMq) + totalExtra;
+    const avgTot = (minTot + maxTot) / 2;
+
+    if (resTot) resTot.textContent = `${fmtEuroRound(minTot)} – ${fmtEuroRound(maxTot)}`;
+
+    // Calcolo Detrazione IRPEF 50% (Bonus Casa max 96.000 €)
+    const spesaAmmissibile = Math.min(avgTot, 96000);
+    const detrazioneTotale = Math.round(spesaAmmissibile * 0.50);
+    const rataAnnua = Math.round(detrazioneTotale / 10);
+    const costoNettoCommittente = Math.round(avgTot - detrazioneTotale);
+
+    if (resDetr) resDetr.textContent = `- ${fmtEuroRound(detrazioneTotale)}`;
+    if (resRata) resRata.textContent = `${fmtEuroRound(rataAnnua)} / anno (10 rate)`;
+    if (resNetto) resNetto.textContent = fmtEuroRound(costoNettoCommittente);
+
     if (listPratiche) {
       listPratiche.innerHTML = pratiche.map((p) => `<li>${p}</li>`).join("");
     }
   };
+
+  // 5. Calcolatore Superficie Commerciale DPR 138/1998 & Valutazione OMI
+  window.calcSuperficieCommerciale = () => {
+    const copertaInput = document.getElementById("dprSupCoperta");
+    const balconiInput = document.getElementById("dprSupBalconi");
+    const verandeInput = document.getElementById("dprSupVerande");
+    const cantinaInput = document.getElementById("dprSupCantina");
+    const giardinoInput = document.getElementById("dprSupGiardino");
+    const boxInput = document.getElementById("dprSupBox");
+    const zonaSelect = document.getElementById("selectZonaOmi");
+    const customDiv = document.getElementById("divCustomOmiPrice");
+    const customPriceInput = document.getElementById("inputCustomOmiPrice");
+
+    const supCoperta = parseFloat(copertaInput?.value || "0") || 0;
+    const supBalconi = parseFloat(balconiInput?.value || "0") || 0;
+    const supVerande = parseFloat(verandeInput?.value || "0") || 0;
+    const supCantina = parseFloat(cantinaInput?.value || "0") || 0;
+    const supGiardino = parseFloat(giardinoInput?.value || "0") || 0;
+    const supBox = parseFloat(boxInput?.value || "0") || 0;
+    const selectedZona = zonaSelect?.value || "rosolini_centro";
+
+    if (customDiv) {
+      customDiv.style.display = selectedZona === "custom" ? "block" : "none";
+    }
+
+    // Coefficienti D.P.R. 138/1998 Allegato C:
+    // 1. Superficie coperta: 100%
+    const qCoperta = supCoperta * 1.0;
+    // 2. Balconi / terrazzi: 30% fino a 25 m², 10% oltre
+    const qBalconi = (Math.min(supBalconi, 25) * 0.30) + (Math.max(0, supBalconi - 25) * 0.10);
+    // 3. Verande chiuse / logge: 60%
+    const qVerande = supVerande * 0.60;
+    // 4. Cantine e soffitte: 25%
+    const qCantina = supCantina * 0.25;
+    // 5. Giardino / corte: 10% fino alla superficie coperta, 2% oltre
+    const qGiardino = (Math.min(supGiardino, supCoperta) * 0.10) + (Math.max(0, supGiardino - supCoperta) * 0.02);
+    // 6. Box auto: 50%
+    const qBox = supBox * 0.50;
+
+    const supCommercialeTot = qCoperta + qBalconi + qVerande + qCantina + qGiardino + qBox;
+
+    // Aggiorna righe di riepilogo
+    const fmtMq = (n) => (n || 0).toFixed(2) + " m²";
+
+    const elQCop = document.getElementById("resQuoteCoperta");
+    const elQBal = document.getElementById("resQuoteBalconi");
+    const elQVer = document.getElementById("resQuoteVerande");
+    const rowVer = document.getElementById("rowQuoteVerande");
+    const elQCan = document.getElementById("resQuoteCantina");
+    const rowCan = document.getElementById("rowQuoteCantina");
+    const elQGia = document.getElementById("resQuoteGiardino");
+    const rowGia = document.getElementById("rowQuoteGiardino");
+    const elQBox = document.getElementById("resQuoteBox");
+    const elTotCom = document.getElementById("resSupCommercialeTotale");
+
+    if (elQCop) elQCop.textContent = fmtMq(qCoperta);
+    if (elQBal) elQBal.textContent = fmtMq(qBalconi);
+    if (elQVer) elQVer.textContent = fmtMq(qVerande);
+    if (rowVer) rowVer.style.display = qVerande > 0 ? "flex" : "none";
+    if (elQCan) elQCan.textContent = fmtMq(qCantina);
+    if (rowCan) rowCan.style.display = qCantina > 0 ? "flex" : "none";
+    if (elQGia) elQGia.textContent = fmtMq(qGiardino);
+    if (rowGia) rowGia.style.display = qGiardino > 0 ? "flex" : "none";
+    if (elQBox) elQBox.textContent = fmtMq(qBox);
+    if (elTotCom) elTotCom.textContent = fmtMq(supCommercialeTot);
+
+    // Valutazione economica OMI
+    const OMI_RATES = {
+      "rosolini_centro": { min: 800, avg: 950, max: 1100, label: "Rosolini Centro (~ € 950/m²)" },
+      "rosolini_residenziale": { min: 900, avg: 1100, max: 1300, label: "Rosolini Residenziale (~ € 1.100/m²)" },
+      "rosolini_agro": { min: 500, avg: 650, max: 800, label: "Rosolini Agro (~ € 650/m²)" },
+      "noto_centro": { min: 1500, avg: 1950, max: 2400, label: "Noto Barocco (~ € 1.950/m²)" },
+      "noto_lido": { min: 1700, avg: 2150, max: 2600, label: "Noto Marina & Lido (~ € 2.150/m²)" },
+      "pachino_centro": { min: 750, avg: 925, max: 1100, label: "Pachino Centro (~ € 925/m²)" },
+      "marzamemi": { min: 1400, avg: 1850, max: 2300, label: "Marzamemi Borgo (~ € 1.850/m²)" },
+      "modica_sorda": { min: 1000, avg: 1225, max: 1450, label: "Modica Sorda (~ € 1.225/m²)" },
+      "modica_centro": { min: 850, avg: 1050, max: 1250, label: "Modica Centro (~ € 1.050/m²)" },
+      "pozzallo": { min: 1150, avg: 1425, max: 1700, label: "Pozzallo Mare (~ € 1.425/m²)" },
+      "siracusa_ortigia": { min: 2000, avg: 2700, max: 3400, label: "Siracusa Ortigia (~ € 2.700/m²)" },
+      "siracusa_citta": { min: 1150, avg: 1425, max: 1700, label: "Siracusa Città (~ € 1.425/m²)" },
+      "ragusa_citta": { min: 900, avg: 1175, max: 1450, label: "Ragusa Superiore/Ibla (~ € 1.175/m²)" }
+    };
+
+    let rate = OMI_RATES[selectedZona];
+    if (selectedZona === "custom") {
+      const custP = parseFloat(customPriceInput?.value || "1000") || 1000;
+      rate = { min: custP * 0.85, avg: custP, max: custP * 1.15, label: `Personalizzato (~ € ${custP}/m²)` };
+    }
+
+    const valMin = Math.round(supCommercialeTot * rate.min);
+    const valMax = Math.round(supCommercialeTot * rate.max);
+
+    const elQuot = document.getElementById("resQuotazioneZona");
+    const elValMerc = document.getElementById("resValoreMercatoTotale");
+
+    if (elQuot) elQuot.textContent = rate.label;
+    if (elValMerc) elValMerc.textContent = `${fmtEuroRound(valMin)} – ${fmtEuroRound(valMax)}`;
+
+    // Aggiorna CTA WhatsApp
+    const waBtn = document.getElementById("btnSuperficieWhatsAppCta");
+    if (waBtn) {
+      const msg = [
+        "Buongiorno Studio Giurato & Iacono, ho calcolato la superficie commerciale del mio immobile:",
+        `Superficie Commerciale Calcolata: ${fmtMq(supCommercialeTot)} (D.P.R. 138/98)`,
+        `Zona Riferimento: ${rate.label}`,
+        `Stima di Mercato Indicativa: ${fmtEuroRound(valMin)} – ${fmtEuroRound(valMax)}`,
+        "Vorrei richiedere una Perizia di Stima Giurata Asseverata o una verifica di vendibilità."
+      ].join("\n");
+      waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+  };
+
+  // 6. Calcolatore Salto di Classe Energetica APE & Risparmio Bolletta (EPBD Case Green)
+  window.calcRisparmioEnergetico = () => {
+    const selClasse = document.getElementById("selectClassePartenza");
+    const inputBolletta = document.getElementById("inputBollettaAnnua");
+    const chkInfissi = document.getElementById("chkInfissiTermici");
+    const chkPompa = document.getElementById("chkPompaCalore");
+    const chkCappotto = document.getElementById("chkCappotto");
+    const chkFV = document.getElementById("chkFotovoltaico");
+    const chkSolare = document.getElementById("chkSolareTermico");
+
+    const classeIniziale = selClasse?.value || "G";
+    const bollettaAnnua = parseFloat(inputBolletta?.value || "2400") || 2400;
+
+    // Array classi energetiche in ordine crescente
+    const CLASSI = ["G", "F", "E", "D", "C", "B", "A1", "A2", "A3", "A4"];
+    const COLORI_CLASSI = {
+      "G": "#ef4444",
+      "F": "#f97316",
+      "E": "#f59e0b",
+      "D": "#eab308",
+      "C": "#84cc16",
+      "B": "#22c55e",
+      "A1": "#16a34a",
+      "A2": "#15803d",
+      "A3": "#166534",
+      "A4": "#14532d"
+    };
+
+    let idxIniziale = CLASSI.indexOf(classeIniziale);
+    if (idxIniziale === -1) idxIniziale = 0;
+
+    // Salto classi e percentuale risparmio in base alle opere selezionate
+    let saltoClassi = 0;
+    let percRisparmio = 0;
+
+    if (chkInfissi?.checked) {
+      saltoClassi += 1;
+      percRisparmio += 15;
+    }
+    if (chkPompa?.checked) {
+      saltoClassi += 2;
+      percRisparmio += 25;
+    }
+    if (chkCappotto?.checked) {
+      saltoClassi += 2;
+      percRisparmio += 25;
+    }
+    if (chkFV?.checked) {
+      saltoClassi += 2;
+      percRisparmio += 30;
+    }
+    if (chkSolare?.checked) {
+      saltoClassi += 1;
+      percRisparmio += 10;
+    }
+
+    // Normalizza risparmio (massimo 75% combinato)
+    const percEffettiva = Math.min(75, Math.max(0, Math.round(percRisparmio * 0.72)));
+    const idxArrivo = Math.min(CLASSI.length - 1, idxIniziale + saltoClassi);
+    const classeArrivo = CLASSI[idxArrivo];
+
+    const risparmioEuro = Math.round(bollettaAnnua * (percEffettiva / 100));
+    const risparmio10Anni = risparmioEuro * 10;
+    const nuovaBolletta = Math.round(bollettaAnnua - risparmioEuro);
+
+    // Aggiornamento DOM
+    const badgePart = document.getElementById("badgeClassePartenza");
+    const badgeArr = document.getElementById("badgeClasseArrivo");
+    const lblSalto = document.getElementById("lblSaltoClassi");
+    const elPerc = document.getElementById("resRisparmioPercentuale");
+    const elEuro = document.getElementById("resRisparmioEuroAnno");
+    const el10Anni = document.getElementById("resRisparmio10Anni");
+    const elRival = document.getElementById("resRivalutazioneMercato");
+    const elNuovaBoll = document.getElementById("resNuovaBollettaAnnua");
+
+    if (badgePart) {
+      badgePart.textContent = `Classe ${classeIniziale}`;
+      badgePart.style.background = COLORI_CLASSI[classeIniziale] || "#ef4444";
+    }
+
+    if (badgeArr) {
+      badgeArr.textContent = `Classe ${classeArrivo}`;
+      badgeArr.style.background = COLORI_CLASSI[classeArrivo] || "#16a34a";
+    }
+
+    if (lblSalto) {
+      const diff = idxArrivo - idxIniziale;
+      lblSalto.textContent = diff > 0 
+        ? `🚀 Salto di ben ${diff} Classi Energetiche!` 
+        : `Nessun salto di classe (seleziona gli interventi)`;
+    }
+
+    if (elPerc) elPerc.textContent = `- ${percEffettiva}%`;
+    if (elEuro) elEuro.textContent = `${fmtEuroRound(risparmioEuro)} / anno`;
+    if (el10Anni) el10Anni.textContent = fmtEuroRound(risparmio10Anni);
+
+    let rivalutazione = "+ 6% – + 8%";
+    if (idxArrivo >= 6) { // Classe A1 o superiore
+      rivalutazione = "+ 12% – + 15%";
+    } else if (idxArrivo >= 4) { // Classe C/B
+      rivalutazione = "+ 8% – + 10%";
+    }
+    if (elRival) elRival.textContent = rivalutazione;
+    if (elNuovaBoll) elNuovaBoll.textContent = `${fmtEuroRound(nuovaBolletta)} / anno`;
+
+    // Aggiorna CTA WhatsApp
+    const waBtn = document.getElementById("btnApeWhatsAppCta");
+    if (waBtn) {
+      const msg = [
+        "Buongiorno Studio Giurato & Iacono, ho simulato l'efficienza energetica della mia abitazione:",
+        `Da Classe ${classeIniziale} a Classe Prevista ${classeArrivo}`,
+        `Risparmio Energetico Stimato: -${percEffettiva}% (${fmtEuroRound(risparmioEuro)} all'anno)`,
+        "Vorrei richiedere la redazione dell'APE ufficiale con codice SIERT Sicilia o una diagnosi energetica."
+      ].join("\n");
+      waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+  };
+
+  // 7. Stampa Prospetto Ufficiale per Notai, Banche o Privati
+  window.printToolReport = (toolKey) => {
+    // Seleziona la tab richiesta prima di avviare la stampa
+    if (toolKey) {
+      window.switchToolTab(toolKey);
+    }
+    window.print();
+  };
+
+  // Inizializzazione automatica dei calcolatori al caricamento
+  calcSuccessione();
+  window.calcRogitoScore();
+  window.calcRistrutturaEst();
+  window.calcSuperficieCommerciale();
+  window.calcRisparmioEnergetico();
 
   // ============================================================================
   // BLOG TECNICO POTENZIATO & GUIDE INTERATTIVE (8 GUIDE COMPLETE)
