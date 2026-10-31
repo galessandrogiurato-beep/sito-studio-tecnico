@@ -499,18 +499,30 @@
   };
 
   // ============================================================================
-  // BLOG TECNICO & MODALE GUIDE ARTICOLI (PUNTO 4)
+  // BLOG TECNICO POTENZIATO & GUIDE INTERATTIVE (8 GUIDE COMPLETE)
   // ============================================================================
+  let currentArticleSlug = null;
+
   const ARTICLES_DATABASE = {
     "salva-casa": {
       badge: "Urbanistica & Sanatorie",
+      category: "urbanistica",
+      readingTime: "⏱️ 5 min",
+      author: "Geom. Alessandro Giurato",
       title: "Decreto Salva Casa 2024 (L. 105/2024) in Sicilia: Tolleranze, Tramezze e Sanabilità",
-      meta: "A cura del Geom. Alessandro Giurato · Studio Tecnico Associato Giurato & Iacono",
+      meta: "A cura del Geom. Alessandro Giurato · Studio Tecnico Associato Giurato & Iacono (Rosolini)",
+      toc: [
+        { id: "tolleranze", title: "1. Le Nuove Tolleranze Costruttive ed Esecutive" },
+        { id: "cosa-sanare", title: "2. Cosa si Può Sanare Subito (Tramezze e Spazi Interni)" },
+        { id: "doppia-conformita", title: "3. Il Superamento della Doppia Conformità" },
+        { id: "cambio-uso", title: "4. Cambi di Destinazione d'Uso Senza Opere" },
+        { id: "procedura", title: "5. La Procedura con lo Studio Giurato & Iacono" }
+      ],
       content: `
         <p>Il Decreto-Legge 29 maggio 2024, n. 69 (convertito con modificazioni nella <strong>Legge 24 luglio 2024, n. 105</strong>, noto come <em>Salva Casa</em>) ha introdotto rilevanti novità per la regolarizzazione delle cosiddette "piccole difformità" edilizie che da decenni bloccano compravendite, rogiti e richieste di mutuo in tutta la Sicilia.</p>
         
-        <h4>1. Le Nuove Tolleranze Costruttive ed Esecutive</h4>
-        <p>Una delle novità più significative riguarda l'ampliamento delle tolleranze costruttive per gli interventi realizzati entro il 24 maggio 2024. Il mancato rispetto dell'altezza, dei distacchi, della cubatura o della superficie coperta non costituisce più violazione edilizia se contenuto entro percentuali parametrate alla superficie utile:</p>
+        <h4 id="tolleranze">1. Le Nuove Tolleranze Costruttive ed Esecutive</h4>
+        <p>Una delle novità più significative riguarda l'ampliamento delle tolleranze costruttive per gli interventi realizzati entro il 24 maggio 2024. Il mancato rispetto dell'altezza, dei distacchi, della cubatura o della superficie coperta non costituisce più violazione edilizia se contenuto entro percentuali parametrate alla superficie utile dell'immobile:</p>
         <ul>
           <li><strong>5%</strong> per unità immobiliari con superficie utile inferiore a 100 m²;</li>
           <li><strong>4%</strong> per unità immobiliari tra 100 e 300 m²;</li>
@@ -518,71 +530,95 @@
           <li><strong>2%</strong> per unità immobiliari superiori a 500 m².</li>
         </ul>
 
-        <h4>2. Cosa si Può Sanare Subito (Difformità Interne e Tramezze)</h4>
-        <p>Rientrano tra le difformità sanabili con procedure semplificate:</p>
+        <h4 id="cosa-sanare">2. Cosa si Può Sanare Subito (Tramezze e Spazi Interni)</h4>
+        <p>Rientrano tra le difformità sanabili con procedure semplificate nei comuni siciliani:</p>
         <ul>
           <li><strong>Spostamento o abbattimento di tramezze non portanti:</strong> regolarizzabile tramite CILA in sanatoria con sanzione forfettaria ridotta;</li>
           <li><strong>Minori aperture o spostamenti di porte e finestre:</strong> qualora non incidano sulla sicurezza strutturale dell'edificio;</li>
-          <li><strong>Errori materiali grafici</strong> presenti nei progetti originari depositati in Comune o nelle vecchie licenze edilizie.</li>
+          <li><strong>Errori materiali grafici</strong> presenti nei progetti originari depositati in Comune o nelle vecchie licenze edilizie;</li>
+          <li><strong>Discrepanze tra autorizzato e realizzato</strong> rientranti nelle tolleranze geometriche.</li>
         </ul>
 
+        <h4 id="doppia-conformita">3. Il Superamento della Doppia Conformità</h4>
         <div class="article-highlight-box">
-          <strong>💡 Superamento della "Doppia Conformità":</strong><br>
-          Per le parziali difformità non è più necessario dimostrare che l'opera fosse conforme sia alla normativa dell'epoca di realizzazione sia a quella odierna. È sufficiente la conformità alla disciplina urbanistica vigente al momento della presentazione della domanda e a quella edilizia vigente all'epoca della realizzazione.
+          <strong>💡 Regola Semplificata per le Parziali Difformità:</strong><br>
+          In passato, per sanare un'opera era necessario dimostrare che fosse conforme sia alle norme urbanistiche dell'epoca di costruzione, sia a quelle attuali (doppia conformità). Con la Legge 105/2024, per le parziali difformità è sufficiente la conformità alla disciplina urbanistica vigente al momento della domanda e ai requisiti edilizi vigenti al momento della realizzazione dell'opera.
         </div>
 
-        <h4>3. La Procedura con lo Studio Giurato &amp; Iacono</h4>
-        <p>Per usufruire delle agevolazioni del Salva Casa a Rosolini, Noto, Modica, Siracusa o Ragusa è indispensabile la relazione tecnica asseverata firmata da un geometra abilitato, accompagnata da:</p>
+        <h4 id="cambio-uso">4. Cambi di Destinazione d'Uso Senza Opere</h4>
+        <p>È sempre consentito il mutamento della destinazione d'uso della singola unità immobiliare senza opere all'interno della stessa categoria funzionale (es. residenziale, turistico-ricettiva, commerciale), conformemente alle norme urbanistiche locali.</p>
+
+        <h4 id="procedura">5. La Procedura con lo Studio Giurato &amp; Iacono</h4>
+        <p>Per usufruire delle agevolazioni del Salva Casa a Rosolini, Noto, Modica, Siracusa o Ragusa è indispensabile la relazione tecnica asseverata firmata da un geometra abilitato:</p>
         <ol>
           <li>Accesso agli atti presso l'Ufficio Tecnico Comunale per il reperimento dei titoli edilizi originari;</li>
           <li>Rilievo dello stato di fatto per la verifica millimetrica delle tolleranze;</li>
-          <li>Redazione della pratica edilizia (CILA o SCIA in sanatoria);</li>
+          <li>Redazione della pratica edilizia (CILA o SCIA in sanatoria con oblazione di legge);</li>
           <li>Aggiornamento della planimetria catastale telematica tramite procedura DOCFA.</li>
         </ol>
       `
     },
     "compravendita-catasto": {
       badge: "Compravendite & Notariato",
+      category: "compravendite",
+      readingTime: "⏱️ 4 min",
+      author: "Geom. Piernicolò Iacono",
       title: "Compravendita Sicura: Perché la Planimetria Catastale non Basta e Cosa Controlla il Notaio",
-      meta: "A cura del Geom. Piernicolò Iacono · Studio Tecnico Associato Giurato & Iacono",
+      meta: "A cura del Geom. Piernicolò Iacono · Studio Tecnico Associato Giurato & Iacono (Rosolini)",
+      toc: [
+        { id: "catasto-comune", title: "1. Catasto vs Comune: Valore Fiscale vs Valore Giuridico" },
+        { id: "art29", title: "2. Cosa Prevede l'Art. 29 Comma 1-bis L. 52/1985" },
+        { id: "rischi", title: "3. I Rischi di Nullità dell'Atto e Blocco Mutuo" },
+        { id: "stato-legittimo", title: "4. L'Attestazione di Stato Legittimo prima del Compromesso" }
+      ],
       content: `
         <p>Nel corso delle trattative di compravendita immobiliare a Rosolini e nel comprensorio elorino, si sente spesso ripetere la frase: <em>"L'immobile è in regola, la piantina del Catasto corrisponde perfettamente"</em>. Questo è uno degli errori più frequenti e rischiosi per chi vende e per chi acquista.</p>
 
-        <h4>1. Catasto vs Comune: Valore Fiscale vs Valore Giuridico</h4>
+        <h4 id="catasto-comune">1. Catasto vs Comune: Valore Fiscale vs Valore Giuridico</h4>
         <p>In Italia il Catasto ha natura prettamente <strong>fiscale</strong> (serve all'Agenzia delle Entrate per calcolare IMU, imposte di registro e rendite), ma <strong>non è probatorio</strong> della regolarità edilizia:</p>
         <ul>
           <li>Un fabbricato può avere una planimetria catastale perfettamente corrispondente allo stato attuale, ma risultare totalmente o parzialmente abusivo per il Comune;</li>
-          <li>Viceversa, un immobile con licenza edilizia regolare può non essere mai stato accatastato correttamente.</li>
+          <li>Viceversa, un immobile con licenza edilizia regolare può non essere mai stato accatastato correttamente o presentare errori grafici di rappresentazione.</li>
         </ul>
 
-        <h4>2. Cosa Richiede la Legge nell'Atto di Vendita (Art. 29 L. 52/1985)</h4>
-        <p>All'atto del rogito notarile, il venditore è tenuto a rilasciare a pena di <strong>nullità dell'atto</strong> la dichiarazione di conformità dei dati catastali e delle planimetrie allo stato di fatto, nonché la conformità urbanistica (titolo abilitativo originario, licenza, concessione o sanatoria).</p>
+        <h4 id="art29">2. Cosa Prevede l'Art. 29 Comma 1-bis L. 52/1985</h4>
+        <p>All'atto del rogito notarile, il venditore è tenuto a rilasciare a pena di <strong>nullità assoluta dell'atto</strong> la dichiarazione di conformità dei dati catastali e delle planimetrie depositate allo stato di fatto, nonché la conformità urbanistica (titolo abilitativo originario, licenza, concessione o sanatoria).</p>
 
+        <h4 id="rischi">3. I Rischi di Nullità dell'Atto e Blocco Mutuo</h4>
         <div class="article-highlight-box">
-          <strong>⚠️ Rischi per il Venditore e per l'Acquirente:</strong><br>
-          Rilasciare dichiarazioni non veritiere espone il venditore a responsabilità civile e penale per dichiarazione mendace. Inoltre, il perito della banca incaricato di valutare l'immobile per l'erogazione del mutuo bloccherà la pratica al minimo riscontro di difformità tra licenza, catasto e stato dei luoghi.
+          <strong>⚠️ Attenzione alle Responsabilità Civili e Penali:</strong><br>
+          Rilasciare dichiarazioni non veritiere espone il venditore a gravi responsabilità per dichiarazione mendace e a richieste di risarcimento danni o risoluzione del contratto per vizi della cosa venduta. Inoltre, il perito della banca incaricato di valutare l'immobile bloccherà l'erogazione del mutuo al minimo riscontro di difformità tra progetto depositato in Comune e stato dei luoghi.
         </div>
 
-        <h4>3. L'Attestazione di Stato Legittimo prima del Compromesso</h4>
-        <p>Prima di firmare una proposta irrevocabile d'acquisto o un preliminare con versamento di caparra, lo Studio Tecnico Giurato &amp; Iacono raccomanda sempre di far redigere la <strong>Relazione di Conformità Urbanistica e Catastale</strong>, corredata dall'Attestato APE: solo così la transazione sarà blindata e priva di contenziosi futuri.</p>
+        <h4 id="stato-legittimo">4. L'Attestazione di Stato Legittimo prima del Compromesso</h4>
+        <p>Prima di firmare una proposta irrevocabile d'acquisto o un preliminare con versamento di caparra confirmatoria, lo Studio Tecnico Giurato &amp; Iacono raccomanda sempre di far redigere la <strong>Relazione di Conformità Urbanistica e Catastale</strong>, corredata dall'Attestato APE: solo così la transazione sarà blindata e priva di contenziosi futuri.</p>
       `
     },
     "piano-paesaggistico": {
       badge: "Vincoli Paesaggistici & SITR",
+      category: "urbanistica",
+      readingTime: "⏱️ 6 min",
+      author: "Studio Tecnico Giurato & Iacono",
       title: "Piano Paesaggistico Regionale (SITR Sicilia): Guida a Vincoli, Fasce e Autorizzazioni",
-      meta: "A cura dello Studio Tecnico Associato Giurato & Iacono (Rosolini, SR)",
+      meta: "A cura dello Studio Tecnico Associato Giurato & Iacono · Ambiti 14 e 15 (Siracusa & Ragusa)",
+      toc: [
+        { id: "vincoli-principali", title: "1. I Principali Vincoli Paesaggistici nel Val di Noto" },
+        { id: "autorizzazione", title: "2. Quando Serve l'Autorizzazione Paesaggistica?" },
+        { id: "semplificata", title: "3. Procedura Semplificata (DPR 31/2017) vs Ordinaria" },
+        { id: "webgis-check", title: "4. Come Verificare la Particella sul WebGIS dello Studio" }
+      ],
       content: `
         <p>Il territorio della Sicilia orientale, in particolare l'area del Val di Noto tra le province di Siracusa e Ragusa, è caratterizzato da uno straordinario patrimonio paesaggistico, agricolo e archeologico, regolamentato dal <strong>Piano Paesaggistico Regionale</strong> (Ambiti 14 e 15) e dal Codice dei Beni Culturali (D.Lgs. 42/2004).</p>
 
-        <h4>1. I Principali Vincoli Paesaggistici da Conoscere</h4>
+        <h4 id="vincoli-principali">1. I Principali Vincoli Paesaggistici nel Val di Noto</h4>
         <ul>
           <li><strong>Fascia di rispetto fluviale (150 metri):</strong> vige il vincolo paesaggistico assoluto entro 150 metri dalle sponde di fiumi, torrenti e corsi d'acqua censiti (es. Cava Grande, Cava d'Ispica, fiumi Tellaro e Anapo);</li>
           <li><strong>Beni isolati e centri storici:</strong> immobili e complessi rurali d'interesse storico-testimoniale (masserie, palmenti, muretti a secco tradizionali);</li>
-          <li><strong>Aree boschive e macchia mediterranea:</strong> sottoposte a rigorose limitazioni d'intervento;</li>
-          <li><strong>Fascia costiera (300 metri dalla battigia):</strong> regime di salvaguardia assoluto per la tutela del litorale.</li>
+          <li><strong>Aree boschive e macchia mediterranea:</strong> sottoposte a rigorose limitazioni d'intervento per la tutela degli ecosistemi;</li>
+          <li><strong>Fascia costiera (300 metri dalla battigia):</strong> regime di tutela per la salvaguardia del litorale.</li>
         </ul>
 
-        <h4>2. Quando Serve l'Autorizzazione Paesaggistica?</h4>
+        <h4 id="autorizzazione">2. Quando Serve l'Autorizzazione Paesaggistica?</h4>
         <p>Qualsiasi intervento che alteri lo stato esteriore dei luoghi ricadenti in area vincolata necessita della preventiva Autorizzazione della <strong>Soprintendenza ai Beni Culturali e Ambientali</strong> competente (Siracusa o Ragusa):</p>
         <ul>
           <li><strong>Interventi Liberi (Allegato A, DPR 31/2017):</strong> opere interne, manutenzione ordinaria senza alterazione dei prospetti, eliminazione barriere architettoniche;</li>
@@ -590,20 +626,36 @@
           <li><strong>Procedura Ordinaria:</strong> nuove costruzioni, ristrutturazioni pesanti e lottizzazioni.</li>
         </ul>
 
+        <h4 id="semplificata">3. Procedura Semplificata (DPR 31/2017) vs Ordinaria</h4>
+        <p>La procedura semplificata riduce sensibilmente i tempi burocratici per gli interventi di lieve entità. Lo studio predispone la relazione paesaggistica semplificata, gli elaborati di simulazione fotografica e il progetto di mitigazione dell'impatto visivo.</p>
+
+        <h4 id="webgis-check">4. Come Verificare la Particella sul WebGIS dello Studio</h4>
         <div class="article-highlight-box">
-          <strong>🗺️ Verifica Istantanea con il nostro WebGIS:</strong><br>
+          <strong>🗺️ Verifica Istantanea sul nostro WebGIS:</strong><br>
           Puoi verificare direttamente sulla mappa interattiva del nostro sito (<a href="mappa.html" style="color: var(--navy); font-weight:700;">WebGIS Catasto &amp; SITR</a>) se la tua particella ricade all'interno di fasce fluviali, boschi o vincoli del Piano Paesaggistico, attivando il layer "PP - Beni Paesaggistici".
         </div>
       `
     },
     "frazionamento-pregeo": {
-      badge: "Topografia & Catasto Terreni",
+      badge: "Topografia & Catasto",
+      category: "topografia",
+      readingTime: "⏱️ 5 min",
+      author: "Geom. Alessandro Giurato",
       title: "Frazionamento Terreni e Accatastamenti: la Procedura Ufficiale PREGEO e DOCFA",
-      meta: "A cura del Geom. Alessandro Giurato · Studio Tecnico Associato Giurato & Iacono",
+      meta: "A cura del Geom. Alessandro Giurato · Studio Tecnico Associato Giurato & Iacono (Rosolini)",
+      toc: [
+        { id: "quando-serve", title: "1. Quando è Necessario il Frazionamento Catastale" },
+        { id: "rilievo-gps", title: "2. Il Rilievo Strumentale sul Campo con GPS GNSS" },
+        { id: "maglia-pf", title: "3. La Maglia Fiduciaria e la Tolleranza DIS" },
+        { id: "approvazione", title: "4. Dalla Firma delle Parti all'Approvazione Telematica" }
+      ],
       content: `
         <p>Il frazionamento catastale è l'atto tecnico indispensabile per dividere un terreno agricolo o edificabile in più particelle autonome, operazione propedeutica a compravendite parziali, divisioni ereditarie tra eredi, donazioni o espropri.</p>
 
-        <h4>1. Il Rilievo Strumentale sul Campo con GPS GNSS</h4>
+        <h4 id="quando-serve">1. Quando è Necessario il Frazionamento Catastale</h4>
+        <p>Ogni volta che si intende trasferire solo una porzione di una particella catastale (ad esempio vendere 2.000 m² di un fondo di 10.000 m², oppure dividere un lotto edificabile tra fratelli), la legge impone la preventiva redazione di un tipo di frazionamento registrato e approvato dall'Ufficio del Territorio dell'Agenzia delle Entrate.</p>
+
+        <h4 id="rilievo-gps">2. Il Rilievo Strumentale sul Campo con GPS GNSS</h4>
         <p>La procedura ha inizio con il sopralluogo e il rilievo topografico ad alta precisione eseguito con strumentazione satellitare <strong>GNSS multifrequenza in modalità RTK</strong>:</p>
         <ul>
           <li>Vengono materializzati i picchetti di confine con precisione centimetrica;</li>
@@ -611,7 +663,7 @@
           <li>Vengono battuti almeno <strong>3 Punti Fiduciali (PF)</strong> dell'Agenzia delle Entrate per collegare il rilievo alla rete geodetica nazionale.</li>
         </ul>
 
-        <h4>2. La Maglia Fiduciaria e l'Archivio DIS dell'Agenzia delle Entrate</h4>
+        <h4 id="maglia-pf">3. La Maglia Fiduciaria e la Tolleranza DIS</h4>
         <p>Il software ministeriale <strong>PREGEO</strong> (Pretrattamento Atti Geometrici) calcola la posizione delle nuove linee dividenti mediante una roto-traslazione e verifica che le mutue distanze tra i PF misurati rientrino nelle tolleranze previste dalla Tabella Attuale dei Punti Fiduciali (TAF) e dall'archivio delle distanze storiche (DIS).</p>
 
         <div class="article-highlight-box">
@@ -619,7 +671,7 @@
           Nel nostro WebGIS con 142.838 PF della Sicilia è possibile cliccare su qualsiasi terreno per generare automaticamente la triangolazione con i 3 PF ottimali e scaricare il <strong>Libretto Pregeo (.DAT)</strong> precompilato.
         </div>
 
-        <h4>3. Dalla Firma delle Parti all'Approvazione Telematica</h4>
+        <h4 id="approvazione">4. Dalla Firma delle Parti all'Approvazione Telematica</h4>
         <p>Una volta redatto il tipo di frazionamento e il modello censuario:</p>
         <ol>
           <li>Il documento viene sottoscritto da tutti i comproprietari intestatari del terreno;</li>
@@ -627,33 +679,253 @@
           <li>Viene trasmesso telematicamente con firma digitale all'Agenzia delle Entrate (Ufficio del Territorio di Siracusa o Ragusa) che assegna i nuovi numeri di particella definitivi.</li>
         </ol>
       `
+    },
+    "successione-voltura": {
+      badge: "Catasto & Successioni",
+      category: "catasto",
+      readingTime: "⏱️ 6 min",
+      author: "Geom. Alessandro Giurato",
+      title: "Dichiarazione di Successione e Voltura Catastale: Termini, Calcoli e Casi Complessi",
+      meta: "A cura del Geom. Alessandro Giurato · Studio Tecnico Associato Giurato & Iacono (Rosolini)",
+      toc: [
+        { id: "termini-sanzioni", title: "1. Termini di Presentazione e Sanzioni per Ritardo" },
+        { id: "successione-vs-voltura", title: "2. Successione vs Voltura: Due Adempimenti Obbligatori" },
+        { id: "fabbricati-rurali", title: "3. Casi Complessi Frequenti: Immobili Ex Rurali Non Accatastati" },
+        { id: "calcolo-imposte", title: "4. Il Calcolo delle Imposte Ipotecaria e Catastale" },
+        { id: "assistenza-studio", title: "5. Come Vi Assiste lo Studio Giurato & Iacono" }
+      ],
+      content: `
+        <p>Alla scomparsa di un familiare, gli eredi sono tenuti ad adempiere a una serie di obblighi fiscali e catastali per trasferire la titolarità di fabbricati, terreni e disponibilità finanziarie. Gestire una successione in Sicilia richiede competenze sia tributarie che catastali per non incorrere in sanzioni o blocchi nelle compravendite future.</p>
+
+        <h4 id="termini-sanzioni">1. Termini di Presentazione e Sanzioni per Ritardo</h4>
+        <p>La <strong>Dichiarazione di Successione</strong> deve essere presentata per legge entro <strong>12 mesi dalla data di apertura della successione</strong> (data del decesso) all'Agenzia delle Entrate in via telematica.</p>
+        <ul>
+          <li>La mancata presentazione entro i 12 mesi comporta l'applicazione di sanzioni amministrative dal 120% al 240% dell'imposta dovuta (o sanzioni fisse in assenza di imposta di successione);</li>
+          <li>È possibile ricorrere al <em>ravvedimento operoso</em> per ridurre sensibilmente le sanzioni se ci si regolarizza spontaneamente.</li>
+        </ul>
+
+        <h4 id="successione-vs-voltura">2. Successione vs Voltura: Due Adempimenti Obbligatori</h4>
+        <p>Molti cittadini confondono la Dichiarazione di Successione con la Voltura Catastale:</p>
+        <ul>
+          <li><strong>La Dichiarazione di Successione</strong> assolve all'obbligo fiscale e al pagamento delle relative imposte statali;</li>
+          <li><strong>La Voltura Catastale</strong> è la domanda con cui si aggiornano i registri del Catasto Fabbricati e Terreni, cancellando il nominativo del defunto e iscrivendo i nuovi eredi con le rispettive quote millesimali di possesso.</li>
+        </ul>
+
+        <h4 id="fabbricati-rurali">3. Casi Complessi Frequenti: Immobili Ex Rurali Non Accatastati</h4>
+        <p>In provincia di Siracusa e Ragusa capita frequentemente che nell'asse ereditario figurino vecchie case di campagna o magazzini censiti ancora come "Fabbricato Rurale" al Catasto Terreni, privi di rendita catastale urbana autonoma. In questo caso, prima o contestualmente alla successione, è obbligatorio procedere all'<strong>accatastamento all'Urbano (procedura DOCFA)</strong> per attribuire la corretta categoria e rendita.</p>
+
+        <h4 id="calcolo-imposte">4. Il Calcolo delle Imposte Ipotecaria e Catastale</h4>
+        <p>Sui beni immobili caduti in successione sono sempre dovute all'Agenzia delle Entrate:</p>
+        <ul>
+          <li><strong>Imposta Ipotecaria:</strong> 2% del valore catastale (fissa a € 200,00 se almeno un erede richiede le agevolazioni "Prima Casa");</li>
+          <li><strong>Imposta Catastale:</strong> 1% del valore catastale (fissa a € 200,00 con agevolazione "Prima Casa");</li>
+          <li>Tassa ipotecaria, tributi speciali e imposta di bollo (€ 131,00) + Diritti di voltura catastale (€ 71,00).</li>
+        </ul>
+
+        <div class="article-highlight-box">
+          <strong>🧮 Calcola le Tue Imposte Subito:</strong><br>
+          Puoi utilizzare il nostro <a href="#calcolatori" style="color: var(--navy); font-weight:700;">Calcolatore Successione &amp; Voltura Online</a> per stimare in tempo reale l'importo esatto delle imposte statali dovute per il tuo immobile.
+        </div>
+
+        <h4 id="assistenza-studio">5. Come Vi Assiste lo Studio Giurato &amp; Iacono</h4>
+        <p>Lo Studio Tecnico Associato Giurato &amp; Iacono segue l'intera pratica di successione a 360 gradi: dall'elaborazione dell'albero genealogico al recupero di visure storiche e titoli di provenienza, fino all'invio telematico all'Agenzia delle Entrate e alla voltura automatica con consegna delle visure aggiornate agli eredi.</p>
+      `
+    },
+    "drone-laser-3d": {
+      badge: "Droni, GPS & 3D",
+      category: "topografia",
+      readingTime: "⏱️ 5 min",
+      author: "Geom. Piernicolò Iacono",
+      title: "Aerofotogrammetria con Drone e Rilievi Laser 3D: Quando Servono e Vantaggi",
+      meta: "A cura del Geom. Piernicolò Iacono · Pilota APR Certificato & Topografo",
+      toc: [
+        { id: "cosa-sono", title: "1. Cos'è l'Aerofotogrammetria con Drone (APR)" },
+        { id: "precisione", title: "2. Precisione Centimetrica e Nuvola di Punti 3D" },
+        { id: "applicazioni", title: "3. I Principali Ambiti di Applicazione in Sicilia" },
+        { id: "risparmio", title: "4. Quanto fa Risparmiare Rispetto ai Metodi Tradizionali" }
+      ],
+      content: `
+        <p>L'introduzione dei droni professionali (APR - Aeromobili a Pilotaggio Remoto) combinati con ricevitori GNSS di precisione e laser scanner ha rivoluzionato il modo di rilevare e progettare il territorio. Lo Studio Tecnico Giurato &amp; Iacono è all'avanguardia in Sicilia nell'applicazione di queste tecnologie.</p>
+
+        <h4 id="cosa-sono">1. Cos'è l'Aerofotogrammetria con Drone (APR)</h4>
+        <p>L'aerofotogrammetria è una tecnica di rilievo che consiste nell'acquisizione programmata di centinaia di fotogrammi aerei georeferenziati con sovrapposizione stereoscopica (over-lap longitudinale e trasversale > 75%). Tramite sofisticati algoritmi di Structure-from-Motion (SfM), le immagini bidimensionali vengono convertite in un modello matematico tridimensionale navigabile e misurabile.</p>
+
+        <h4 id="precisione">2. Precisione Centimetrica e Nuvola di Punti 3D</h4>
+        <p>Grazie all'impiego di punti di controllo a terra (GCP - Ground Control Points) battuti con GPS GNSS centimetrico, si ottengono elaborati di altissima accuratezza:</p>
+        <ul>
+          <li><strong>GSD (Ground Sampling Distance):</strong> risoluzione a terra inferiore a 1,5 - 2 cm per pixel;</li>
+          <li><strong>Nuvola di punti densa 3D:</strong> milioni di punti con coordinate spaziali (X, Y, Z) e colore RGB reale;</li>
+          <li><strong>Ortofotopiano georeferenziato:</strong> fotografia zenitale priva di distorsioni prospettiche su cui è possibile misurare distanze e superfici con precisione millimetrica;</li>
+          <li><strong>Modelli Digitali di Elevazione (DSM / DTM):</strong> separazione del terreno naturale dagli elementi vegetativi ed antropici.</li>
+        </ul>
+
+        <h4 id="applicazioni">3. I Principali Ambiti di Applicazione in Sicilia</h4>
+        <p>Nel contesto del sud-est siciliano, i rilievi con drone dello studio trovano applicazione quotidiana per:</p>
+        <ol>
+          <li><strong>Calcolo Volumetrico di Cave e Movimenti Terra:</strong> calcolo esatto dei metri cubi di materiale scavato o riportato, con sezioni e piani quotati;</li>
+          <li><strong>Ispezioni Coperture, Tetti e Facciate Storiche:</strong> verifica dello stato di conservazione di tetti, cupole e cornicioni pericolanti a Rosolini, Noto o Modica senza ponteggi o piattaforme aeree;</li>
+          <li><strong>Rilievi di Terreni Agricoli e Idrogeologici:</strong> curve di livello e tracciamento impluvi per impianti irrigui o regimazione acque;</li>
+          <li><strong>Supporto alla Progettazione Architettonica:</strong> inserimento del modello 3D del nuovo fabbricato nel contesto reale per relazioni d'impatto paesaggistico.</li>
+        </ol>
+
+        <h4 id="risparmio">4. Quanto fa Risparmiare Rispetto ai Metodi Tradizionali</h4>
+        <div class="article-highlight-box">
+          <strong>⚡ Velocità e Sicurezza:</strong><br>
+          Un rilievo a terra di un terreno di 5 ettari con fitta vegetazione richiederebbe 2-3 giorni di lavoro manuale con evidenti rischi per gli operatori. Con il drone l'acquisizione aerea si completa in meno di 40 minuti, garantendo una densità di dettaglio migliaia di volte superiore e abbattendo i costi per il committente.
+        </div>
+      `
+    },
+    "riconfinamento-confini": {
+      badge: "Topografia & Confini",
+      category: "topografia",
+      readingTime: "⏱️ 6 min",
+      author: "Geom. Alessandro Giurato",
+      title: "Riconfinamento di Terreni e Confini Incerti: Come Risolvere le Dispute con il Vicino",
+      meta: "A cura del Geom. Alessandro Giurato · Consulente Tecnico di Parte (CTP)",
+      toc: [
+        { id: "regolamento-termini", title: "1. Regolamento di Confini (Art. 950 c.c.) vs Apposizione Termini (Art. 951 c.c.)" },
+        { id: "mappe-impianto", title: "2. Il Valore Probatorio della Mappa d'Impianto del 1938" },
+        { id: "fasi-tecniche", title: "3. Le 4 Fasi del Riconfinamento Strumentale" },
+        { id: "dispute-vicini", title: "4. Come Evitare Cause Legali e Costi Giudiziari" }
+      ],
+      content: `
+        <p>Nelle campagne siciliane, specie nei territori di Rosolini, Noto, Ispica, Modica e Pachino, le controversie tra confinanti per l'esatta posizione del confine di proprietà sono all'ordine del giorno: muretti a secco crollati, recinzioni spostate abusivamente o terreni incolti da anni generano spesso accesi contenziosi.</p>
+
+        <h4 id="regolamento-termini">1. Regolamento di Confini (Art. 950 c.c.) vs Apposizione Termini (Art. 951 c.c.)</h4>
+        <p>Il Codice Civile disciplina in modo chiaro i due scenari possibili:</p>
+        <ul>
+          <li><strong>Azione di apposizione di termini (Art. 951 c.c.):</strong> il confine tra i fondi è certo ed incontestato, ma i termini lapidei o i cippi di confine sono mancanti o diventati irriconoscibili. Ciascuno dei proprietari ha diritto di chiedere che siano ristabiliti a spese comuni;</li>
+          <li><strong>Azione di regolamento di confini (Art. 950 c.c.):</strong> quando il confine tra due fondi è incerto o contestato. Ciascuno dei proprietari può chiedere che sia stabilito giudizialmente o tramite perizia tecnica di accordo bonario. In mancanza di altri elementi, il giudice si attiene alle <strong>mappe catastali</strong>.</li>
+        </ul>
+
+        <h4 id="mappe-impianto">2. Il Valore Probatorio della Mappa d'Impianto del 1938</h4>
+        <p>Un errore comune è affidarsi all'estratto di mappa catastale attuale (spesso deformato da decenni di digitalizzazioni e frazionamenti manuali). La giurisprudenza riconosce come documento tecnico primario la <strong>Mappa d'Impianto originale</strong> (disegnata su fogli di carta pesante nel 1938-1939 in proiezione Cassini-Soldner):</p>
+        <ul>
+          <li>La mappa d'impianto originale viene acquisita ad altissima risoluzione scanner dall'Ufficio provinciale dell'Agenzia delle Entrate;</li>
+          <li>Viene parametrata sui crocicchi della griglia geodetica originale (a passi di 100 o 200 metri);</li>
+          <li>Si eliminano le deformazioni cartacee tramite algoritmi di correzione geometrica (trasformazione affine).</li>
+        </ul>
+
+        <h4 id="fasi-tecniche">3. Le 4 Fasi del Riconfinamento Strumentale</h4>
+        <ol>
+          <li><strong>Studio degli atti:</strong> analisi degli atti notarili di provenienza e dei frazionamenti storici che hanno generato le particelle;</li>
+          <li><strong>Rilievo dello stato di fatto:</strong> battitura con GPS GNSS di tutti gli elementi stabili presenti sul territorio (fabbricati antichi, spigoli monumentali, Punti Fiduciali TAF);</li>
+          <li><strong>Calcolo di rototraslazione:</strong> sovrapposizione matematica tra rilievo sul campo e mappa d'impianto calibrata;</li>
+          <li><strong>Picchettamento in loco:</strong> materializzazione fisica sul terreno dei vertici del confine con picchetti in ferro o cippi in cemento, preferibilmente in contraddittorio con il tecnico del confinante.</li>
+        </ol>
+
+        <h4 id="dispute-vicini">4. Come Evitare Cause Legali e Costi Giudiziari</h4>
+        <div class="article-highlight-box">
+          <strong>🤝 L'Accordo Bonario tra Tecnici:</strong><br>
+          Avviare una causa civile in Tribunale per una striscia di terreno può costare migliaia di euro e durare anni. Lo Studio Giurato &amp; Iacono opera prioritariamente come mediatore tecnico in contraddittorio con il geometra della controparte, redigendo un <em>Verbale di Accordo e Picchettamento Bonario</em> firmato da entrambe le parti che chiude definitivamente ogni disputa con valore legale.
+        </div>
+      `
+    },
+    "bonus-ristrutturazioni": {
+      badge: "Edilizia & Detrazioni",
+      category: "edilizia",
+      readingTime: "⏱️ 5 min",
+      author: "Geom. Piernicolò Iacono",
+      title: "Bonus Ristrutturazioni e Detrazioni Casa: Guida a Pratiche Edilizie e APE",
+      meta: "A cura del Geom. Piernicolò Iacono · Studio Tecnico Associato Giurato & Iacono (Rosolini)",
+      toc: [
+        { id: "aliquote", title: "1. Le Aliquote e i Massimali di Spesa Vigenti" },
+        { id: "interventi-ammessi", title: "2. Quali Interventi Rientrano nella Manutenzione Straordinaria" },
+        { id: "adempimenti", title: "3. I 4 Adempimenti Tecnici Obbligatori per Non Perdere il Bonus" },
+        { id: "pratica-enea", title: "4. L'Obbligo della Trasmissione ENEA e l'Attestato APE" }
+      ],
+      content: `
+        <p>Chi desidera ristrutturare un appartamento o una casa unifamiliare a Rosolini o nei comuni limitrofi può beneficiare delle detrazioni fiscali IRPEF sulle spese sostenute. Tuttavia, le norme dell'Agenzia delle Entrate e dell'ENEA sono sempre più rigorose: un errore nella documentazione tecnica o nei titoli abilitativi comunali può causare la revoca totale del beneficio fiscale con sanzioni.</p>
+
+        <h4 id="aliquote">1. Le Aliquote e i Massimali di Spesa Vigenti</h4>
+        <p>Il <strong>Bonus Ristrutturazioni Edilizie</strong> (Art. 16-bis del TUIR) consente di detrarre dall'IRPEF una quota percentuale delle spese documentate, ripartita in <strong>10 quote annuali</strong> di pari importo:</p>
+        <ul>
+          <li><strong>Prima Casa:</strong> detrazione al 50% fino al limite massimo di spesa di <strong>€ 96.000,00</strong> per singola unità immobiliare;</li>
+          <li><strong>Seconda Casa / Altri Fabbricati:</strong> detrazione al 36% (o aliquote rimodulate per gli anni successivi);</li>
+          <li><strong>Ecobonus / Risparmio Energetico:</strong> detrazioni per sostituzione infissi, caldaie a condensazione o pompe di calore ad alta efficienza.</li>
+        </ul>
+
+        <h4 id="interventi-ammessi">2. Quali Interventi Rientrano nella Manutenzione Straordinaria</h4>
+        <p>Per le singole unità residenziali, la detrazione <strong>non spetta per la manutenzione ordinaria</strong> (es. semplice tinteggiatura), ma richiede almeno la <strong>Manutenzione Straordinaria</strong>:</p>
+        <ul>
+          <li>Rifacimento integrale dei bagni con rifacimento dell'impianto idrico-fognario;</li>
+          <li>Spostamento di pareti tramezze interne e porte per una diversa distribuzione degli spazi;</li>
+          <li>Rifacimento completo dell'impianto elettrico a norma di legge;</li>
+          <li>Sostituzione dei serramenti esterni con infissi a taglio termico certificati;</li>
+          <li>Consolidamento statico di solai, coperture o aperture su muri maestri.</li>
+        </ul>
+
+        <h4 id="adempimenti">3. I 4 Adempimenti Tecnici Obbligatori per Non Perdere il Bonus</h4>
+        <ol>
+          <li><strong>Titolo Abilitativo Comunale (CILA o SCIA):</strong> depositata allo Sportello Unico Edilizia (SUE) del Comune prima dell'avvio dei lavori;</li>
+          <li><strong>Notifica Preliminare all'ASP e Sicurezza Cantieri:</strong> obbligatoria quando in cantiere operano più imprese (anche non contemporaneamente, es. impresa edile + elettricista + idraulico), con nomina del Coordinatore della Sicurezza (CSE) ai sensi del D.Lgs. 81/2008;</li>
+          <li><strong>Bonifico Parlante:</strong> pagamento delle fatture esclusivamente con bonifico bancario/postale dedicato alle ristrutturazioni contenente codice fiscale del beneficiario e partita IVA dell'impresa;</li>
+          <li><strong>Aggiornamento Catastale DOCFA:</strong> qualora siano state modificate le tramezze o il numero dei vani, da presentare entro 30 giorni dalla fine lavori.</li>
+        </ol>
+
+        <h4 id="pratica-enea">4. L'Obbligo della Trasmissione ENEA e l'Attestato APE</h4>
+        <div class="article-highlight-box">
+          <strong>⚡ Termine Perentorio di 90 Giorni:</strong><br>
+          Per tutti gli interventi che comportano risparmio energetico (infissi, impianti di riscaldamento, climatizzazione, isolamenti) è obbligatorio trasmettere all'<strong>ENEA</strong> la scheda descrittiva dell'intervento entro <strong>90 giorni dalla data di ultimazione dei lavori</strong>. Lo Studio Giurato &amp; Iacono redige l'<strong>Attestato di Prestazione Energetica (APE)</strong> e cura direttamente la trasmissione telematica ENEA con rilascio del codice CPID ufficiale.
+        </div>
+      `
     }
   };
 
+  // Apertura modale articolo con Table of Contents dinamico e tracking
   window.openArticleModal = (slug) => {
     const article = ARTICLES_DATABASE[slug];
     if (!article) return;
+    currentArticleSlug = slug;
 
     const modal = document.getElementById("articleModal");
     const badge = document.getElementById("articleModalBadge");
+    const time = document.getElementById("articleModalReadingTime");
     const title = document.getElementById("articleModalTitle");
     const meta = document.getElementById("articleModalMeta");
     const body = document.getElementById("articleModalBody");
+    const waBtn = document.getElementById("btnArticleAskWhatsApp");
 
     if (badge) badge.textContent = article.badge;
+    if (time) time.textContent = article.readingTime || "⏱️ 5 min";
     if (title) title.textContent = article.title;
     if (meta) meta.textContent = article.meta;
+
+    if (waBtn) {
+      const waMsg = `Buongiorno Studio Giurato & Iacono, ho letto sul vostro sito la guida su "${article.title}" e vorrei richiedere una consulenza tecnica.`;
+      waBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`;
+    }
+
+    // Genera l'indice dei contenuti (TOC) se presente
+    let tocHtml = "";
+    if (article.toc && article.toc.length > 0) {
+      tocHtml = `
+        <nav class="article-toc" aria-label="Indice dei contenuti">
+          <div class="article-toc-title">📑 In questa guida tecnica:</div>
+          <ul>
+            ${article.toc.map(item => `<li><a href="#${item.id}" onclick="event.preventDefault(); document.getElementById('${item.id}')?.scrollIntoView({ behavior: 'smooth' });">${item.title}</a></li>`).join("")}
+          </ul>
+        </nav>
+      `;
+    }
+
     if (body) {
       body.innerHTML = `
+        ${tocHtml}
         ${article.content}
-        <div style="margin-top: 2rem; padding: 1.2rem; background: var(--paper); border: 1.5px solid var(--gold); border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem;">
+        <div style="margin-top: 2.2rem; padding: 1.4rem; background: var(--paper); border: 1.5px solid var(--gold); border-radius: 12px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.2rem;">
           <div>
-            <strong style="color: var(--navy); font-size: 1.05rem;">Hai bisogno di chiarimenti o di una pratica su questo tema?</strong>
-            <p style="margin: 0.2rem 0 0; font-size: 0.85rem; color: var(--muted);">I Geometri Alessandro Giurato e Piernicolò Iacono sono a tua disposizione per una consulenza a Rosolini e dintorni.</p>
+            <strong style="color: var(--navy); font-size: 1.1rem; display: block; margin-bottom: 0.2rem;">Hai un caso specifico o necessiti di una perizia tecnica?</strong>
+            <p style="margin: 0; font-size: 0.88rem; color: var(--muted); line-height: 1.5;">I Geometri Alessandro Giurato e Piernicolò Iacono sono a disposizione per sopralluoghi e consulenze a Rosolini, Noto, Ispica, Modica, Siracusa e Ragusa.</p>
           </div>
-          <a class="btn btn-gold" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Buongiorno, ho letto la vostra guida su ' + article.title + ' e vorrei richiedere informazioni.')}" target="_blank" rel="noopener noreferrer" style="font-size: 0.85rem; padding: 0.55rem 1.1rem; font-weight: 700;">
-            Richiedi Consulenza WhatsApp ↗
-          </a>
+          <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+            <a class="btn btn-gold" href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Buongiorno, vorrei un parere tecnico su ' + article.title)}" target="_blank" rel="noopener noreferrer" style="font-size: 0.85rem; padding: 0.6rem 1.2rem; font-weight: 700;">
+              Parla con il Geometra ↗
+            </a>
+            <button type="button" class="btn btn-ghost" onclick="window.printArticle()" style="font-size: 0.85rem; padding: 0.6rem 1rem;">
+              🖨️ Stampa Guida
+            </button>
+          </div>
         </div>
       `;
     }
@@ -665,6 +937,10 @@
         modal.setAttribute("open", "true");
         modal.style.display = "block";
       }
+      // Aggiorna l'hash URL per consentire la condivisione diretta del link
+      try {
+        history.replaceState(null, null, `#guida=${slug}`);
+      } catch (_) {}
     }
   };
 
@@ -677,6 +953,31 @@
         modal.removeAttribute("open");
         modal.style.display = "none";
       }
+      try {
+        history.replaceState(null, null, window.location.pathname);
+      } catch (_) {}
+    }
+    currentArticleSlug = null;
+  };
+
+  window.printArticle = () => {
+    window.print();
+  };
+
+  window.shareCurrentArticle = () => {
+    if (!currentArticleSlug) return;
+    const shareUrl = `${window.location.origin}${window.location.pathname}#guida=${currentArticleSlug}`;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        const btn = document.getElementById("btnShareArticle");
+        if (btn) {
+          const oldText = btn.innerHTML;
+          btn.innerHTML = "✅ Link Copiato!";
+          setTimeout(() => { btn.innerHTML = oldText; }, 2500);
+        }
+      });
+    } else {
+      prompt("Copia il link diretto di questa guida:", shareUrl);
     }
   };
 
@@ -692,6 +993,72 @@
     );
     if (!isInDialog) {
       window.closeArticleModal();
+    }
+  });
+
+  // Ricerca Dinamica e Filtro per Categoria nel Blog
+  const blogSearchInput = document.getElementById("blogSearchInput");
+  const blogFilterPills = document.getElementById("blogFilterPills");
+  const blogGrid = document.getElementById("blogGrid");
+  const blogNoResults = document.getElementById("blogNoResults");
+
+  let activeCategory = "all";
+
+  const filterBlogCards = () => {
+    if (!blogGrid) return;
+    const q = (blogSearchInput?.value || "").trim().toLowerCase();
+    const cards = blogGrid.querySelectorAll(".blog-card");
+    let matchCount = 0;
+
+    cards.forEach((card) => {
+      const cat = card.getAttribute("data-category") || "";
+      const kw = card.getAttribute("data-keywords") || "";
+      const text = card.textContent.toLowerCase();
+
+      const matchesCat = activeCategory === "all" || cat === activeCategory;
+      const matchesSearch = !q || text.includes(q) || kw.includes(q);
+
+      if (matchesCat && matchesSearch) {
+        card.style.display = "";
+        matchCount++;
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    if (blogNoResults) {
+      blogNoResults.style.display = matchCount === 0 ? "block" : "none";
+    }
+  };
+
+  blogSearchInput?.addEventListener("input", filterBlogCards);
+
+  blogFilterPills?.querySelectorAll(".blog-pill-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      blogFilterPills.querySelectorAll(".blog-pill-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      activeCategory = btn.getAttribute("data-category") || "all";
+      filterBlogCards();
+    });
+  });
+
+  window.resetBlogSearch = () => {
+    if (blogSearchInput) blogSearchInput.value = "";
+    activeCategory = "all";
+    blogFilterPills?.querySelectorAll(".blog-pill-btn").forEach((b, i) => {
+      b.classList.toggle("active", i === 0);
+    });
+    filterBlogCards();
+  };
+
+  // Apertura automatica guida se presente hash nell'URL (es. #guida=salva-casa)
+  window.addEventListener("DOMContentLoaded", () => {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith("#guida=")) {
+      const slug = hash.replace("#guida=", "").trim();
+      if (ARTICLES_DATABASE[slug]) {
+        setTimeout(() => window.openArticleModal(slug), 300);
+      }
     }
   });
 
