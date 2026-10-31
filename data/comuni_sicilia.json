@@ -1,0 +1,2732 @@
+{
+  "A014": {
+    "name": "Acate (RG)",
+    "shortName": "Acate",
+    "prov": "RG",
+    "lat": 37.0264,
+    "lon": 14.49373
+  },
+  "A025": {
+    "name": "Aci Bonaccorsi (CT)",
+    "shortName": "Aci Bonaccorsi",
+    "prov": "CT",
+    "lat": 37.59789,
+    "lon": 15.10861
+  },
+  "A026": {
+    "name": "Aci Castello (CT)",
+    "shortName": "Aci Castello",
+    "prov": "CT",
+    "lat": 37.55582,
+    "lon": 15.14523
+  },
+  "A027": {
+    "name": "Aci Catena (CT)",
+    "shortName": "Aci Catena",
+    "prov": "CT",
+    "lat": 37.60268,
+    "lon": 15.14224
+  },
+  "A029": {
+    "name": "Aci Sant'Antonio (CT)",
+    "shortName": "Aci Sant'Antonio",
+    "prov": "CT",
+    "lat": 37.60602,
+    "lon": 15.12585
+  },
+  "A028": {
+    "name": "Acireale (CT)",
+    "shortName": "Acireale",
+    "prov": "CT",
+    "lat": 37.61215,
+    "lon": 15.16629
+  },
+  "A049": {
+    "name": "Acquaviva Platani (CL)",
+    "shortName": "Acquaviva Platani",
+    "prov": "CL",
+    "lat": 37.5717,
+    "lon": 13.70014
+  },
+  "M211": {
+    "name": "Acquedolci (ME)",
+    "shortName": "Acquedolci",
+    "prov": "ME",
+    "lat": 38.05636,
+    "lon": 14.58806
+  },
+  "A056": {
+    "name": "Adrano (CT)",
+    "shortName": "Adrano",
+    "prov": "CT",
+    "lat": 37.66181,
+    "lon": 14.83269
+  },
+  "A070": {
+    "name": "Agira (EN)",
+    "shortName": "Agira",
+    "prov": "EN",
+    "lat": 37.65721,
+    "lon": 14.5238
+  },
+  "A089": {
+    "name": "Agrigento (AG)",
+    "shortName": "Agrigento",
+    "prov": "AG",
+    "lat": 37.30971,
+    "lon": 13.58457
+  },
+  "A098": {
+    "name": "Aidone (EN)",
+    "shortName": "Aidone",
+    "prov": "EN",
+    "lat": 37.416,
+    "lon": 14.44789
+  },
+  "A176": {
+    "name": "Alcamo (TP)",
+    "shortName": "Alcamo",
+    "prov": "TP",
+    "lat": 37.9806,
+    "lon": 12.96497
+  },
+  "A177": {
+    "name": "Alcara li Fusi (ME)",
+    "shortName": "Alcara li Fusi",
+    "prov": "ME",
+    "lat": 38.02145,
+    "lon": 14.70109
+  },
+  "A181": {
+    "name": "Alessandria della Rocca (AG)",
+    "shortName": "Alessandria della Rocca",
+    "prov": "AG",
+    "lat": 37.56973,
+    "lon": 13.45349
+  },
+  "A194": {
+    "name": "Alì (ME)",
+    "shortName": "Alì",
+    "prov": "ME",
+    "lat": 38.02694,
+    "lon": 15.41797
+  },
+  "A201": {
+    "name": "Alì Terme (ME)",
+    "shortName": "Alì Terme",
+    "prov": "ME",
+    "lat": 38.00375,
+    "lon": 15.42262
+  },
+  "A195": {
+    "name": "Alia (PA)",
+    "shortName": "Alia",
+    "prov": "PA",
+    "lat": 37.77858,
+    "lon": 13.71313
+  },
+  "A202": {
+    "name": "Alimena (PA)",
+    "shortName": "Alimena",
+    "prov": "PA",
+    "lat": 37.69213,
+    "lon": 14.11367
+  },
+  "A203": {
+    "name": "Aliminusa (PA)",
+    "shortName": "Aliminusa",
+    "prov": "PA",
+    "lat": 37.86417,
+    "lon": 13.78104
+  },
+  "A229": {
+    "name": "Altavilla Milicia (PA)",
+    "shortName": "Altavilla Milicia",
+    "prov": "PA",
+    "lat": 38.04232,
+    "lon": 13.55045
+  },
+  "A239": {
+    "name": "Altofonte (PA)",
+    "shortName": "Altofonte",
+    "prov": "PA",
+    "lat": 38.04436,
+    "lon": 13.29829
+  },
+  "A313": {
+    "name": "Antillo (ME)",
+    "shortName": "Antillo",
+    "prov": "ME",
+    "lat": 37.97613,
+    "lon": 15.24539
+  },
+  "A351": {
+    "name": "Aragona (AG)",
+    "shortName": "Aragona",
+    "prov": "AG",
+    "lat": 37.40243,
+    "lon": 13.61779
+  },
+  "A478": {
+    "name": "Assoro (EN)",
+    "shortName": "Assoro",
+    "prov": "EN",
+    "lat": 37.62816,
+    "lon": 14.42409
+  },
+  "A494": {
+    "name": "Augusta (SR)",
+    "shortName": "Augusta",
+    "prov": "SR",
+    "lat": 37.23061,
+    "lon": 15.21944
+  },
+  "A522": {
+    "name": "Avola (SR)",
+    "shortName": "Avola",
+    "prov": "SR",
+    "lat": 36.90839,
+    "lon": 15.13544
+  },
+  "A546": {
+    "name": "Bagheria (PA)",
+    "shortName": "Bagheria",
+    "prov": "PA",
+    "lat": 38.07888,
+    "lon": 13.51098
+  },
+  "A592": {
+    "name": "Balestrate (PA)",
+    "shortName": "Balestrate",
+    "prov": "PA",
+    "lat": 38.05132,
+    "lon": 13.00439
+  },
+  "A638": {
+    "name": "Barcellona Pozzo di Gotto (ME)",
+    "shortName": "Barcellona Pozzo di Gotto",
+    "prov": "ME",
+    "lat": 38.14693,
+    "lon": 15.21858
+  },
+  "A676": {
+    "name": "Barrafranca (EN)",
+    "shortName": "Barrafranca",
+    "prov": "EN",
+    "lat": 37.37285,
+    "lon": 14.20388
+  },
+  "A698": {
+    "name": "Basicò (ME)",
+    "shortName": "Basicò",
+    "prov": "ME",
+    "lat": 38.0616,
+    "lon": 15.06175
+  },
+  "A719": {
+    "name": "Baucina (PA)",
+    "shortName": "Baucina",
+    "prov": "PA",
+    "lat": 37.92513,
+    "lon": 13.53724
+  },
+  "A764": {
+    "name": "Belmonte Mezzagno (PA)",
+    "shortName": "Belmonte Mezzagno",
+    "prov": "PA",
+    "lat": 38.04835,
+    "lon": 13.39011
+  },
+  "A766": {
+    "name": "Belpasso (CT)",
+    "shortName": "Belpasso",
+    "prov": "CT",
+    "lat": 37.59139,
+    "lon": 14.97705
+  },
+  "A841": {
+    "name": "Biancavilla (CT)",
+    "shortName": "Biancavilla",
+    "prov": "CT",
+    "lat": 37.64126,
+    "lon": 14.86954
+  },
+  "A882": {
+    "name": "Bisacquino (PA)",
+    "shortName": "Bisacquino",
+    "prov": "PA",
+    "lat": 37.70579,
+    "lon": 13.25873
+  },
+  "A896": {
+    "name": "Bivona (AG)",
+    "shortName": "Bivona",
+    "prov": "AG",
+    "lat": 37.61811,
+    "lon": 13.4404
+  },
+  "M268": {
+    "name": "Blufi (PA)",
+    "shortName": "Blufi",
+    "prov": "PA",
+    "lat": 37.75231,
+    "lon": 14.07674
+  },
+  "A946": {
+    "name": "Bolognetta (PA)",
+    "shortName": "Bolognetta",
+    "prov": "PA",
+    "lat": 37.96472,
+    "lon": 13.45568
+  },
+  "A957": {
+    "name": "Bompensiere (CL)",
+    "shortName": "Bompensiere",
+    "prov": "CL",
+    "lat": 37.47263,
+    "lon": 13.78064
+  },
+  "A958": {
+    "name": "Bompietro (PA)",
+    "shortName": "Bompietro",
+    "prov": "PA",
+    "lat": 37.74708,
+    "lon": 14.09952
+  },
+  "A991": {
+    "name": "Borgetto (PA)",
+    "shortName": "Borgetto",
+    "prov": "PA",
+    "lat": 38.04642,
+    "lon": 13.14274
+  },
+  "B198": {
+    "name": "Brolo (ME)",
+    "shortName": "Brolo",
+    "prov": "ME",
+    "lat": 38.15685,
+    "lon": 14.82772
+  },
+  "B202": {
+    "name": "Bronte (CT)",
+    "shortName": "Bronte",
+    "prov": "CT",
+    "lat": 37.78752,
+    "lon": 14.8329
+  },
+  "B237": {
+    "name": "Buccheri (SR)",
+    "shortName": "Buccheri",
+    "prov": "SR",
+    "lat": 37.12651,
+    "lon": 14.85047
+  },
+  "B275": {
+    "name": "Burgio (AG)",
+    "shortName": "Burgio",
+    "prov": "AG",
+    "lat": 37.59887,
+    "lon": 13.28954
+  },
+  "B287": {
+    "name": "Buscemi (SR)",
+    "shortName": "Buscemi",
+    "prov": "SR",
+    "lat": 37.08523,
+    "lon": 14.88416
+  },
+  "B288": {
+    "name": "Buseto Palizzolo (TP)",
+    "shortName": "Buseto Palizzolo",
+    "prov": "TP",
+    "lat": 38.01217,
+    "lon": 12.71132
+  },
+  "B302": {
+    "name": "Butera (CL)",
+    "shortName": "Butera",
+    "prov": "CL",
+    "lat": 37.18643,
+    "lon": 14.18628
+  },
+  "B315": {
+    "name": "Caccamo (PA)",
+    "shortName": "Caccamo",
+    "prov": "PA",
+    "lat": 37.9318,
+    "lon": 13.66353
+  },
+  "B377": {
+    "name": "Calamonaci (AG)",
+    "shortName": "Calamonaci",
+    "prov": "AG",
+    "lat": 37.52534,
+    "lon": 13.2909
+  },
+  "B381": {
+    "name": "Calascibetta (EN)",
+    "shortName": "Calascibetta",
+    "prov": "EN",
+    "lat": 37.58956,
+    "lon": 14.27309
+  },
+  "B384": {
+    "name": "Calatabiano (CT)",
+    "shortName": "Calatabiano",
+    "prov": "CT",
+    "lat": 37.82333,
+    "lon": 15.22775
+  },
+  "B385": {
+    "name": "Calatafimi-Segesta (TP)",
+    "shortName": "Calatafimi-Segesta",
+    "prov": "TP",
+    "lat": 37.91416,
+    "lon": 12.86271
+  },
+  "B427": {
+    "name": "Caltabellotta (AG)",
+    "shortName": "Caltabellotta",
+    "prov": "AG",
+    "lat": 37.5769,
+    "lon": 13.21565
+  },
+  "B428": {
+    "name": "Caltagirone (CT)",
+    "shortName": "Caltagirone",
+    "prov": "CT",
+    "lat": 37.23809,
+    "lon": 14.51274
+  },
+  "B429": {
+    "name": "Caltanissetta (CL)",
+    "shortName": "Caltanissetta",
+    "prov": "CL",
+    "lat": 37.49213,
+    "lon": 14.06185
+  },
+  "B430": {
+    "name": "Caltavuturo (PA)",
+    "shortName": "Caltavuturo",
+    "prov": "PA",
+    "lat": 37.82031,
+    "lon": 13.89007
+  },
+  "B460": {
+    "name": "Camastra (AG)",
+    "shortName": "Camastra",
+    "prov": "AG",
+    "lat": 37.25216,
+    "lon": 13.79377
+  },
+  "B486": {
+    "name": "Cammarata (AG)",
+    "shortName": "Cammarata",
+    "prov": "AG",
+    "lat": 37.63273,
+    "lon": 13.63798
+  },
+  "B520": {
+    "name": "Campobello di Licata (AG)",
+    "shortName": "Campobello di Licata",
+    "prov": "AG",
+    "lat": 37.25978,
+    "lon": 13.91889
+  },
+  "B521": {
+    "name": "Campobello di Mazara (TP)",
+    "shortName": "Campobello di Mazara",
+    "prov": "TP",
+    "lat": 37.63459,
+    "lon": 12.74409
+  },
+  "B533": {
+    "name": "Campofelice di Fitalia (PA)",
+    "shortName": "Campofelice di Fitalia",
+    "prov": "PA",
+    "lat": 37.82622,
+    "lon": 13.48457
+  },
+  "B532": {
+    "name": "Campofelice di Roccella (PA)",
+    "shortName": "Campofelice di Roccella",
+    "prov": "PA",
+    "lat": 37.99201,
+    "lon": 13.88585
+  },
+  "B535": {
+    "name": "Campofiorito (PA)",
+    "shortName": "Campofiorito",
+    "prov": "PA",
+    "lat": 37.75326,
+    "lon": 13.26919
+  },
+  "B537": {
+    "name": "Campofranco (CL)",
+    "shortName": "Campofranco",
+    "prov": "CL",
+    "lat": 37.51201,
+    "lon": 13.71255
+  },
+  "B556": {
+    "name": "Camporeale (PA)",
+    "shortName": "Camporeale",
+    "prov": "PA",
+    "lat": 37.897,
+    "lon": 13.09531
+  },
+  "B561": {
+    "name": "Camporotondo Etneo (CT)",
+    "shortName": "Camporotondo Etneo",
+    "prov": "CT",
+    "lat": 37.5674,
+    "lon": 15.00596
+  },
+  "B602": {
+    "name": "Canicattì (AG)",
+    "shortName": "Canicattì",
+    "prov": "AG",
+    "lat": 37.36024,
+    "lon": 13.84999
+  },
+  "B603": {
+    "name": "Canicattini Bagni (SR)",
+    "shortName": "Canicattini Bagni",
+    "prov": "SR",
+    "lat": 37.03499,
+    "lon": 15.06174
+  },
+  "B645": {
+    "name": "Capaci (PA)",
+    "shortName": "Capaci",
+    "prov": "PA",
+    "lat": 38.17084,
+    "lon": 13.23935
+  },
+  "B660": {
+    "name": "Capizzi (ME)",
+    "shortName": "Capizzi",
+    "prov": "ME",
+    "lat": 37.84887,
+    "lon": 14.47842
+  },
+  "B666": {
+    "name": "Capo d'Orlando (ME)",
+    "shortName": "Capo d'Orlando",
+    "prov": "ME",
+    "lat": 38.1603,
+    "lon": 14.74393
+  },
+  "B695": {
+    "name": "Capri Leone (ME)",
+    "shortName": "Capri Leone",
+    "prov": "ME",
+    "lat": 38.10753,
+    "lon": 14.70724
+  },
+  "B780": {
+    "name": "Carini (PA)",
+    "shortName": "Carini",
+    "prov": "PA",
+    "lat": 38.13319,
+    "lon": 13.18241
+  },
+  "B787": {
+    "name": "Carlentini (SR)",
+    "shortName": "Carlentini",
+    "prov": "SR",
+    "lat": 37.27598,
+    "lon": 15.01477
+  },
+  "B804": {
+    "name": "Caronia (ME)",
+    "shortName": "Caronia",
+    "prov": "ME",
+    "lat": 38.02471,
+    "lon": 14.44077
+  },
+  "B918": {
+    "name": "Casalvecchio Siculo (ME)",
+    "shortName": "Casalvecchio Siculo",
+    "prov": "ME",
+    "lat": 37.95821,
+    "lon": 15.3235
+  },
+  "C006": {
+    "name": "Cassaro (SR)",
+    "shortName": "Cassaro",
+    "prov": "SR",
+    "lat": 37.10523,
+    "lon": 14.94764
+  },
+  "C091": {
+    "name": "Castel di Iudica (CT)",
+    "shortName": "Castel di Iudica",
+    "prov": "CT",
+    "lat": 37.49444,
+    "lon": 14.64945
+  },
+  "C094": {
+    "name": "Castel di Lucio (ME)",
+    "shortName": "Castel di Lucio",
+    "prov": "ME",
+    "lat": 37.88722,
+    "lon": 14.31046
+  },
+  "C067": {
+    "name": "Castelbuono (PA)",
+    "shortName": "Castelbuono",
+    "prov": "PA",
+    "lat": 37.93385,
+    "lon": 14.08826
+  },
+  "C074": {
+    "name": "Casteldaccia (PA)",
+    "shortName": "Casteldaccia",
+    "prov": "PA",
+    "lat": 38.05537,
+    "lon": 13.53252
+  },
+  "C051": {
+    "name": "Castell'Umberto (ME)",
+    "shortName": "Castell'Umberto",
+    "prov": "ME",
+    "lat": 38.08458,
+    "lon": 14.80688
+  },
+  "C130": {
+    "name": "Castellammare del Golfo (TP)",
+    "shortName": "Castellammare del Golfo",
+    "prov": "TP",
+    "lat": 38.02638,
+    "lon": 12.88044
+  },
+  "C135": {
+    "name": "Castellana Sicula (PA)",
+    "shortName": "Castellana Sicula",
+    "prov": "PA",
+    "lat": 37.78176,
+    "lon": 14.04409
+  },
+  "C210": {
+    "name": "Castelmola (ME)",
+    "shortName": "Castelmola",
+    "prov": "ME",
+    "lat": 37.85819,
+    "lon": 15.27666
+  },
+  "C275": {
+    "name": "Casteltermini (AG)",
+    "shortName": "Casteltermini",
+    "prov": "AG",
+    "lat": 37.54081,
+    "lon": 13.6434
+  },
+  "C286": {
+    "name": "Castelvetrano (TP)",
+    "shortName": "Castelvetrano",
+    "prov": "TP",
+    "lat": 37.67916,
+    "lon": 12.79164
+  },
+  "C297": {
+    "name": "Castiglione di Sicilia (CT)",
+    "shortName": "Castiglione di Sicilia",
+    "prov": "CT",
+    "lat": 37.8827,
+    "lon": 15.12239
+  },
+  "C341": {
+    "name": "Castrofilippo (AG)",
+    "shortName": "Castrofilippo",
+    "prov": "AG",
+    "lat": 37.34869,
+    "lon": 13.75018
+  },
+  "C344": {
+    "name": "Castronovo di Sicilia (PA)",
+    "shortName": "Castronovo di Sicilia",
+    "prov": "PA",
+    "lat": 37.67842,
+    "lon": 13.60374
+  },
+  "C347": {
+    "name": "Castroreale (ME)",
+    "shortName": "Castroreale",
+    "prov": "ME",
+    "lat": 38.09848,
+    "lon": 15.21103
+  },
+  "C351": {
+    "name": "Catania (CT)",
+    "shortName": "Catania",
+    "prov": "CT",
+    "lat": 37.50288,
+    "lon": 15.08705
+  },
+  "C353": {
+    "name": "Catenanuova (EN)",
+    "shortName": "Catenanuova",
+    "prov": "EN",
+    "lat": 37.56792,
+    "lon": 14.69146
+  },
+  "C356": {
+    "name": "Cattolica Eraclea (AG)",
+    "shortName": "Cattolica Eraclea",
+    "prov": "AG",
+    "lat": 37.43953,
+    "lon": 13.3954
+  },
+  "C420": {
+    "name": "Cefalà Diana (PA)",
+    "shortName": "Cefalà Diana",
+    "prov": "PA",
+    "lat": 37.91541,
+    "lon": 13.46372
+  },
+  "C421": {
+    "name": "Cefalù (PA)",
+    "shortName": "Cefalù",
+    "prov": "PA",
+    "lat": 38.0397,
+    "lon": 14.02202
+  },
+  "C471": {
+    "name": "Centuripe (EN)",
+    "shortName": "Centuripe",
+    "prov": "EN",
+    "lat": 37.62031,
+    "lon": 14.74143
+  },
+  "C480": {
+    "name": "Cerami (EN)",
+    "shortName": "Cerami",
+    "prov": "EN",
+    "lat": 37.81035,
+    "lon": 14.50637
+  },
+  "C496": {
+    "name": "Cerda (PA)",
+    "shortName": "Cerda",
+    "prov": "PA",
+    "lat": 37.90386,
+    "lon": 13.81537
+  },
+  "C568": {
+    "name": "Cesarò (ME)",
+    "shortName": "Cesarò",
+    "prov": "ME",
+    "lat": 37.84375,
+    "lon": 14.71218
+  },
+  "C612": {
+    "name": "Chiaramonte Gulfi (RG)",
+    "shortName": "Chiaramonte Gulfi",
+    "prov": "RG",
+    "lat": 37.03158,
+    "lon": 14.70127
+  },
+  "C654": {
+    "name": "Chiusa Sclafani (PA)",
+    "shortName": "Chiusa Sclafani",
+    "prov": "PA",
+    "lat": 37.67706,
+    "lon": 13.26987
+  },
+  "C668": {
+    "name": "Cianciana (AG)",
+    "shortName": "Cianciana",
+    "prov": "AG",
+    "lat": 37.51745,
+    "lon": 13.43526
+  },
+  "C696": {
+    "name": "Ciminna (PA)",
+    "shortName": "Ciminna",
+    "prov": "PA",
+    "lat": 37.89726,
+    "lon": 13.56195
+  },
+  "C708": {
+    "name": "Cinisi (PA)",
+    "shortName": "Cinisi",
+    "prov": "PA",
+    "lat": 38.1549,
+    "lon": 13.10914
+  },
+  "C871": {
+    "name": "Collesano (PA)",
+    "shortName": "Collesano",
+    "prov": "PA",
+    "lat": 37.92106,
+    "lon": 13.93755
+  },
+  "C927": {
+    "name": "Comiso (RG)",
+    "shortName": "Comiso",
+    "prov": "RG",
+    "lat": 36.94566,
+    "lon": 14.60469
+  },
+  "C928": {
+    "name": "Comitini (AG)",
+    "shortName": "Comitini",
+    "prov": "AG",
+    "lat": 37.40861,
+    "lon": 13.64362
+  },
+  "C956": {
+    "name": "Condrò (ME)",
+    "shortName": "Condrò",
+    "prov": "ME",
+    "lat": 38.1757,
+    "lon": 15.32649
+  },
+  "C968": {
+    "name": "Contessa Entellina (PA)",
+    "shortName": "Contessa Entellina",
+    "prov": "PA",
+    "lat": 37.7282,
+    "lon": 13.18404
+  },
+  "D009": {
+    "name": "Corleone (PA)",
+    "shortName": "Corleone",
+    "prov": "PA",
+    "lat": 37.81204,
+    "lon": 13.30158
+  },
+  "D234": {
+    "name": "Custonaci (TP)",
+    "shortName": "Custonaci",
+    "prov": "TP",
+    "lat": 38.07803,
+    "lon": 12.67554
+  },
+  "D267": {
+    "name": "Delia (CL)",
+    "shortName": "Delia",
+    "prov": "CL",
+    "lat": 37.35606,
+    "lon": 13.92763
+  },
+  "C342": {
+    "name": "Enna (EN)",
+    "shortName": "Enna",
+    "prov": "EN",
+    "lat": 37.56706,
+    "lon": 14.27909
+  },
+  "D423": {
+    "name": "Erice (TP)",
+    "shortName": "Erice",
+    "prov": "TP",
+    "lat": 38.0381,
+    "lon": 12.58704
+  },
+  "D474": {
+    "name": "Falcone (ME)",
+    "shortName": "Falcone",
+    "prov": "ME",
+    "lat": 38.11643,
+    "lon": 15.08229
+  },
+  "D514": {
+    "name": "Favara (AG)",
+    "shortName": "Favara",
+    "prov": "AG",
+    "lat": 37.31071,
+    "lon": 13.65646
+  },
+  "D518": {
+    "name": "Favignana (TP)",
+    "shortName": "Favignana",
+    "prov": "TP",
+    "lat": 37.93178,
+    "lon": 12.32724
+  },
+  "D540": {
+    "name": "Ferla (SR)",
+    "shortName": "Ferla",
+    "prov": "SR",
+    "lat": 37.11861,
+    "lon": 14.94147
+  },
+  "D567": {
+    "name": "Ficarazzi (PA)",
+    "shortName": "Ficarazzi",
+    "prov": "PA",
+    "lat": 38.08835,
+    "lon": 13.46321
+  },
+  "D569": {
+    "name": "Ficarra (ME)",
+    "shortName": "Ficarra",
+    "prov": "ME",
+    "lat": 38.11042,
+    "lon": 14.82748
+  },
+  "D622": {
+    "name": "Fiumedinisi (ME)",
+    "shortName": "Fiumedinisi",
+    "prov": "ME",
+    "lat": 38.02503,
+    "lon": 15.38231
+  },
+  "D623": {
+    "name": "Fiumefreddo di Sicilia (CT)",
+    "shortName": "Fiumefreddo di Sicilia",
+    "prov": "CT",
+    "lat": 37.79293,
+    "lon": 15.2082
+  },
+  "D635": {
+    "name": "Floresta (ME)",
+    "shortName": "Floresta",
+    "prov": "ME",
+    "lat": 37.9877,
+    "lon": 14.90945
+  },
+  "D636": {
+    "name": "Floridia (SR)",
+    "shortName": "Floridia",
+    "prov": "SR",
+    "lat": 37.08211,
+    "lon": 15.15289
+  },
+  "D661": {
+    "name": "Fondachelli-Fantina (ME)",
+    "shortName": "Fondachelli-Fantina",
+    "prov": "ME",
+    "lat": 37.98598,
+    "lon": 15.17308
+  },
+  "D733": {
+    "name": "Forza d'Agrò (ME)",
+    "shortName": "Forza d'Agrò",
+    "prov": "ME",
+    "lat": 37.91411,
+    "lon": 15.33513
+  },
+  "D765": {
+    "name": "Francavilla di Sicilia (ME)",
+    "shortName": "Francavilla di Sicilia",
+    "prov": "ME",
+    "lat": 37.90125,
+    "lon": 15.13614
+  },
+  "D768": {
+    "name": "Francofonte (SR)",
+    "shortName": "Francofonte",
+    "prov": "SR",
+    "lat": 37.23078,
+    "lon": 14.88013
+  },
+  "D793": {
+    "name": "Frazzanò (ME)",
+    "shortName": "Frazzanò",
+    "prov": "ME",
+    "lat": 38.07234,
+    "lon": 14.74475
+  },
+  "D824": {
+    "name": "Furci Siculo (ME)",
+    "shortName": "Furci Siculo",
+    "prov": "ME",
+    "lat": 37.9609,
+    "lon": 15.37997
+  },
+  "D825": {
+    "name": "Furnari (ME)",
+    "shortName": "Furnari",
+    "prov": "ME",
+    "lat": 38.10475,
+    "lon": 15.12549
+  },
+  "D844": {
+    "name": "Gaggi (ME)",
+    "shortName": "Gaggi",
+    "prov": "ME",
+    "lat": 37.86086,
+    "lon": 15.22056
+  },
+  "D849": {
+    "name": "Gagliano Castelferrato (EN)",
+    "shortName": "Gagliano Castelferrato",
+    "prov": "EN",
+    "lat": 37.71032,
+    "lon": 14.53558
+  },
+  "D861": {
+    "name": "Galati Mamertino (ME)",
+    "shortName": "Galati Mamertino",
+    "prov": "ME",
+    "lat": 38.03303,
+    "lon": 14.77102
+  },
+  "D885": {
+    "name": "Gallodoro (ME)",
+    "shortName": "Gallodoro",
+    "prov": "ME",
+    "lat": 37.90168,
+    "lon": 15.29382
+  },
+  "D907": {
+    "name": "Gangi (PA)",
+    "shortName": "Gangi",
+    "prov": "PA",
+    "lat": 37.79815,
+    "lon": 14.20525
+  },
+  "D960": {
+    "name": "Gela (CL)",
+    "shortName": "Gela",
+    "prov": "CL",
+    "lat": 37.06545,
+    "lon": 14.25035
+  },
+  "D977": {
+    "name": "Geraci Siculo (PA)",
+    "shortName": "Geraci Siculo",
+    "prov": "PA",
+    "lat": 37.85899,
+    "lon": 14.15415
+  },
+  "E013": {
+    "name": "Giardinello (PA)",
+    "shortName": "Giardinello",
+    "prov": "PA",
+    "lat": 38.08861,
+    "lon": 13.15678
+  },
+  "E014": {
+    "name": "Giardini-Naxos (ME)",
+    "shortName": "Giardini-Naxos",
+    "prov": "ME",
+    "lat": 37.84023,
+    "lon": 15.27742
+  },
+  "E016": {
+    "name": "Giarratana (RG)",
+    "shortName": "Giarratana",
+    "prov": "RG",
+    "lat": 37.04828,
+    "lon": 14.79303
+  },
+  "E017": {
+    "name": "Giarre (CT)",
+    "shortName": "Giarre",
+    "prov": "CT",
+    "lat": 37.73004,
+    "lon": 15.1845
+  },
+  "E023": {
+    "name": "Gibellina (TP)",
+    "shortName": "Gibellina",
+    "prov": "TP",
+    "lat": 37.80994,
+    "lon": 12.86982
+  },
+  "E043": {
+    "name": "Gioiosa Marea (ME)",
+    "shortName": "Gioiosa Marea",
+    "prov": "ME",
+    "lat": 38.17199,
+    "lon": 14.89284
+  },
+  "E055": {
+    "name": "Giuliana (PA)",
+    "shortName": "Giuliana",
+    "prov": "PA",
+    "lat": 37.67427,
+    "lon": 13.23787
+  },
+  "E074": {
+    "name": "Godrano (PA)",
+    "shortName": "Godrano",
+    "prov": "PA",
+    "lat": 37.90304,
+    "lon": 13.42862
+  },
+  "E133": {
+    "name": "Grammichele (CT)",
+    "shortName": "Grammichele",
+    "prov": "CT",
+    "lat": 37.21501,
+    "lon": 14.63724
+  },
+  "E142": {
+    "name": "Graniti (ME)",
+    "shortName": "Graniti",
+    "prov": "ME",
+    "lat": 37.89133,
+    "lon": 15.22671
+  },
+  "E149": {
+    "name": "Gratteri (PA)",
+    "shortName": "Gratteri",
+    "prov": "PA",
+    "lat": 37.96731,
+    "lon": 13.97307
+  },
+  "E156": {
+    "name": "Gravina di Catania (CT)",
+    "shortName": "Gravina di Catania",
+    "prov": "CT",
+    "lat": 37.56058,
+    "lon": 15.06213
+  },
+  "E209": {
+    "name": "Grotte (AG)",
+    "shortName": "Grotte",
+    "prov": "AG",
+    "lat": 37.40255,
+    "lon": 13.69918
+  },
+  "E233": {
+    "name": "Gualtieri Sicaminò (ME)",
+    "shortName": "Gualtieri Sicaminò",
+    "prov": "ME",
+    "lat": 38.16307,
+    "lon": 15.31676
+  },
+  "E337": {
+    "name": "Isnello (PA)",
+    "shortName": "Isnello",
+    "prov": "PA",
+    "lat": 37.94398,
+    "lon": 14.00607
+  },
+  "E350": {
+    "name": "Isola delle Femmine (PA)",
+    "shortName": "Isola delle Femmine",
+    "prov": "PA",
+    "lat": 38.20059,
+    "lon": 13.24621
+  },
+  "E366": {
+    "name": "Ispica (RG)",
+    "shortName": "Ispica",
+    "prov": "RG",
+    "lat": 36.78618,
+    "lon": 14.90352
+  },
+  "E374": {
+    "name": "Itala (ME)",
+    "shortName": "Itala",
+    "prov": "ME",
+    "lat": 38.05061,
+    "lon": 15.43732
+  },
+  "E390": {
+    "name": "Joppolo Giancaxio (AG)",
+    "shortName": "Joppolo Giancaxio",
+    "prov": "AG",
+    "lat": 37.38775,
+    "lon": 13.5541
+  },
+  "E431": {
+    "name": "Lampedusa e Linosa (AG)",
+    "shortName": "Lampedusa e Linosa",
+    "prov": "AG",
+    "lat": 35.50196,
+    "lon": 12.60984
+  },
+  "E459": {
+    "name": "Lascari (PA)",
+    "shortName": "Lascari",
+    "prov": "PA",
+    "lat": 37.99988,
+    "lon": 13.94112
+  },
+  "E523": {
+    "name": "Leni (ME)",
+    "shortName": "Leni",
+    "prov": "ME",
+    "lat": 38.55495,
+    "lon": 14.82417
+  },
+  "E532": {
+    "name": "Lentini (SR)",
+    "shortName": "Lentini",
+    "prov": "SR",
+    "lat": 37.28451,
+    "lon": 14.99934
+  },
+  "E536": {
+    "name": "Leonforte (EN)",
+    "shortName": "Leonforte",
+    "prov": "EN",
+    "lat": 37.63918,
+    "lon": 14.39207
+  },
+  "E541": {
+    "name": "Lercara Friddi (PA)",
+    "shortName": "Lercara Friddi",
+    "prov": "PA",
+    "lat": 37.74749,
+    "lon": 13.60284
+  },
+  "E555": {
+    "name": "Letojanni (ME)",
+    "shortName": "Letojanni",
+    "prov": "ME",
+    "lat": 37.88031,
+    "lon": 15.30626
+  },
+  "E571": {
+    "name": "Librizzi (ME)",
+    "shortName": "Librizzi",
+    "prov": "ME",
+    "lat": 38.09717,
+    "lon": 14.95819
+  },
+  "E573": {
+    "name": "Licata (AG)",
+    "shortName": "Licata",
+    "prov": "AG",
+    "lat": 37.10157,
+    "lon": 13.93718
+  },
+  "E578": {
+    "name": "Licodia Eubea (CT)",
+    "shortName": "Licodia Eubea",
+    "prov": "CT",
+    "lat": 37.15573,
+    "lon": 14.70332
+  },
+  "E594": {
+    "name": "Limina (ME)",
+    "shortName": "Limina",
+    "prov": "ME",
+    "lat": 37.94088,
+    "lon": 15.27264
+  },
+  "E602": {
+    "name": "Linguaglossa (CT)",
+    "shortName": "Linguaglossa",
+    "prov": "CT",
+    "lat": 37.84073,
+    "lon": 15.14401
+  },
+  "E606": {
+    "name": "Lipari (ME)",
+    "shortName": "Lipari",
+    "prov": "ME",
+    "lat": 38.46904,
+    "lon": 14.95652
+  },
+  "E674": {
+    "name": "Longi (ME)",
+    "shortName": "Longi",
+    "prov": "ME",
+    "lat": 38.02717,
+    "lon": 14.75261
+  },
+  "E714": {
+    "name": "Lucca Sicula (AG)",
+    "shortName": "Lucca Sicula",
+    "prov": "AG",
+    "lat": 37.57846,
+    "lon": 13.30671
+  },
+  "E854": {
+    "name": "Maletto (CT)",
+    "shortName": "Maletto",
+    "prov": "CT",
+    "lat": 37.8295,
+    "lon": 14.86629
+  },
+  "E855": {
+    "name": "Malfa (ME)",
+    "shortName": "Malfa",
+    "prov": "ME",
+    "lat": 38.577,
+    "lon": 14.83604
+  },
+  "E869": {
+    "name": "Malvagna (ME)",
+    "shortName": "Malvagna",
+    "prov": "ME",
+    "lat": 37.91866,
+    "lon": 15.05435
+  },
+  "E876": {
+    "name": "Mandanici (ME)",
+    "shortName": "Mandanici",
+    "prov": "ME",
+    "lat": 38.0023,
+    "lon": 15.31711
+  },
+  "M283": {
+    "name": "Maniace (CT)",
+    "shortName": "Maniace",
+    "prov": "CT",
+    "lat": 37.86201,
+    "lon": 14.80775
+  },
+  "E953": {
+    "name": "Marianopoli (CL)",
+    "shortName": "Marianopoli",
+    "prov": "CL",
+    "lat": 37.59883,
+    "lon": 13.91508
+  },
+  "E957": {
+    "name": "Marineo (PA)",
+    "shortName": "Marineo",
+    "prov": "PA",
+    "lat": 37.95268,
+    "lon": 13.41411
+  },
+  "E974": {
+    "name": "Marsala (TP)",
+    "shortName": "Marsala",
+    "prov": "TP",
+    "lat": 37.79917,
+    "lon": 12.43495
+  },
+  "F004": {
+    "name": "Mascali (CT)",
+    "shortName": "Mascali",
+    "prov": "CT",
+    "lat": 37.7575,
+    "lon": 15.19536
+  },
+  "F005": {
+    "name": "Mascalucia (CT)",
+    "shortName": "Mascalucia",
+    "prov": "CT",
+    "lat": 37.57306,
+    "lon": 15.05302
+  },
+  "F061": {
+    "name": "Mazara del Vallo (TP)",
+    "shortName": "Mazara del Vallo",
+    "prov": "TP",
+    "lat": 37.65135,
+    "lon": 12.58972
+  },
+  "F065": {
+    "name": "Mazzarino (CL)",
+    "shortName": "Mazzarino",
+    "prov": "CL",
+    "lat": 37.305,
+    "lon": 14.21424
+  },
+  "F066": {
+    "name": "Mazzarrà Sant'Andrea (ME)",
+    "shortName": "Mazzarrà Sant'Andrea",
+    "prov": "ME",
+    "lat": 38.0898,
+    "lon": 15.13586
+  },
+  "M271": {
+    "name": "Mazzarrone (CT)",
+    "shortName": "Mazzarrone",
+    "prov": "CT",
+    "lat": 37.08401,
+    "lon": 14.5616
+  },
+  "F107": {
+    "name": "Melilli (SR)",
+    "shortName": "Melilli",
+    "prov": "SR",
+    "lat": 37.17851,
+    "lon": 15.12675
+  },
+  "F126": {
+    "name": "Menfi (AG)",
+    "shortName": "Menfi",
+    "prov": "AG",
+    "lat": 37.59822,
+    "lon": 12.96641
+  },
+  "F147": {
+    "name": "Merì (ME)",
+    "shortName": "Merì",
+    "prov": "ME",
+    "lat": 38.16794,
+    "lon": 15.24644
+  },
+  "F158": {
+    "name": "Messina (ME)",
+    "shortName": "Messina",
+    "prov": "ME",
+    "lat": 38.19396,
+    "lon": 15.55572
+  },
+  "F184": {
+    "name": "Mezzojuso (PA)",
+    "shortName": "Mezzojuso",
+    "prov": "PA",
+    "lat": 37.8645,
+    "lon": 13.46451
+  },
+  "F206": {
+    "name": "Milazzo (ME)",
+    "shortName": "Milazzo",
+    "prov": "ME",
+    "lat": 38.22087,
+    "lon": 15.24274
+  },
+  "E618": {
+    "name": "Milena (CL)",
+    "shortName": "Milena",
+    "prov": "CL",
+    "lat": 37.47145,
+    "lon": 13.73628
+  },
+  "F209": {
+    "name": "Militello in Val di Catania (CT)",
+    "shortName": "Militello in Val di Catania",
+    "prov": "CT",
+    "lat": 37.27481,
+    "lon": 14.794
+  },
+  "F210": {
+    "name": "Militello Rosmarino (ME)",
+    "shortName": "Militello Rosmarino",
+    "prov": "ME",
+    "lat": 38.04636,
+    "lon": 14.67604
+  },
+  "F214": {
+    "name": "Milo (CT)",
+    "shortName": "Milo",
+    "prov": "CT",
+    "lat": 37.72334,
+    "lon": 15.11607
+  },
+  "F217": {
+    "name": "Mineo (CT)",
+    "shortName": "Mineo",
+    "prov": "CT",
+    "lat": 37.26487,
+    "lon": 14.69111
+  },
+  "F231": {
+    "name": "Mirabella Imbaccari (CT)",
+    "shortName": "Mirabella Imbaccari",
+    "prov": "CT",
+    "lat": 37.32444,
+    "lon": 14.44603
+  },
+  "F242": {
+    "name": "Mirto (ME)",
+    "shortName": "Mirto",
+    "prov": "ME",
+    "lat": 38.08512,
+    "lon": 14.75285
+  },
+  "F246": {
+    "name": "Misilmeri (PA)",
+    "shortName": "Misilmeri",
+    "prov": "PA",
+    "lat": 38.03514,
+    "lon": 13.45155
+  },
+  "F250": {
+    "name": "Misterbianco (CT)",
+    "shortName": "Misterbianco",
+    "prov": "CT",
+    "lat": 37.52084,
+    "lon": 15.00637
+  },
+  "F251": {
+    "name": "Mistretta (ME)",
+    "shortName": "Mistretta",
+    "prov": "ME",
+    "lat": 37.93049,
+    "lon": 14.36235
+  },
+  "F258": {
+    "name": "Modica (RG)",
+    "shortName": "Modica",
+    "prov": "RG",
+    "lat": 36.85885,
+    "lon": 14.76136
+  },
+  "F277": {
+    "name": "Moio Alcantara (ME)",
+    "shortName": "Moio Alcantara",
+    "prov": "ME",
+    "lat": 37.89884,
+    "lon": 15.05053
+  },
+  "F359": {
+    "name": "Monforte San Giorgio (ME)",
+    "shortName": "Monforte San Giorgio",
+    "prov": "ME",
+    "lat": 38.15687,
+    "lon": 15.38352
+  },
+  "F368": {
+    "name": "Mongiuffi Melia (ME)",
+    "shortName": "Mongiuffi Melia",
+    "prov": "ME",
+    "lat": 37.9042,
+    "lon": 15.27493
+  },
+  "F377": {
+    "name": "Monreale (PA)",
+    "shortName": "Monreale",
+    "prov": "PA",
+    "lat": 38.08233,
+    "lon": 13.2917
+  },
+  "F395": {
+    "name": "Montagnareale (ME)",
+    "shortName": "Montagnareale",
+    "prov": "ME",
+    "lat": 38.13246,
+    "lon": 14.94771
+  },
+  "F400": {
+    "name": "Montalbano Elicona (ME)",
+    "shortName": "Montalbano Elicona",
+    "prov": "ME",
+    "lat": 38.02371,
+    "lon": 15.01413
+  },
+  "F414": {
+    "name": "Montallegro (AG)",
+    "shortName": "Montallegro",
+    "prov": "AG",
+    "lat": 37.39109,
+    "lon": 13.35068
+  },
+  "F489": {
+    "name": "Montedoro (CL)",
+    "shortName": "Montedoro",
+    "prov": "CL",
+    "lat": 37.45374,
+    "lon": 13.81638
+  },
+  "F544": {
+    "name": "Montelepre (PA)",
+    "shortName": "Montelepre",
+    "prov": "PA",
+    "lat": 38.08979,
+    "lon": 13.17327
+  },
+  "F553": {
+    "name": "Montemaggiore Belsito (PA)",
+    "shortName": "Montemaggiore Belsito",
+    "prov": "PA",
+    "lat": 37.84789,
+    "lon": 13.76258
+  },
+  "F610": {
+    "name": "Monterosso Almo (RG)",
+    "shortName": "Monterosso Almo",
+    "prov": "RG",
+    "lat": 37.08888,
+    "lon": 14.76257
+  },
+  "F655": {
+    "name": "Montevago (AG)",
+    "shortName": "Montevago",
+    "prov": "AG",
+    "lat": 37.70262,
+    "lon": 12.99018
+  },
+  "F772": {
+    "name": "Motta Camastra (ME)",
+    "shortName": "Motta Camastra",
+    "prov": "ME",
+    "lat": 37.89569,
+    "lon": 15.1725
+  },
+  "F773": {
+    "name": "Motta d'Affermo (ME)",
+    "shortName": "Motta d'Affermo",
+    "prov": "ME",
+    "lat": 37.98129,
+    "lon": 14.30206
+  },
+  "F781": {
+    "name": "Motta Sant'Anastasia (CT)",
+    "shortName": "Motta Sant'Anastasia",
+    "prov": "CT",
+    "lat": 37.5121,
+    "lon": 14.96977
+  },
+  "F830": {
+    "name": "Mussomeli (CL)",
+    "shortName": "Mussomeli",
+    "prov": "CL",
+    "lat": 37.58022,
+    "lon": 13.75403
+  },
+  "F845": {
+    "name": "Naro (AG)",
+    "shortName": "Naro",
+    "prov": "AG",
+    "lat": 37.29606,
+    "lon": 13.79204
+  },
+  "F848": {
+    "name": "Naso (ME)",
+    "shortName": "Naso",
+    "prov": "ME",
+    "lat": 38.12194,
+    "lon": 14.7882
+  },
+  "F890": {
+    "name": "Nicolosi (CT)",
+    "shortName": "Nicolosi",
+    "prov": "CT",
+    "lat": 37.61414,
+    "lon": 15.02671
+  },
+  "F892": {
+    "name": "Nicosia (EN)",
+    "shortName": "Nicosia",
+    "prov": "EN",
+    "lat": 37.74805,
+    "lon": 14.39855
+  },
+  "F899": {
+    "name": "Niscemi (CL)",
+    "shortName": "Niscemi",
+    "prov": "CL",
+    "lat": 37.14528,
+    "lon": 14.38504
+  },
+  "F900": {
+    "name": "Nissoria (EN)",
+    "shortName": "Nissoria",
+    "prov": "EN",
+    "lat": 37.65516,
+    "lon": 14.44936
+  },
+  "F901": {
+    "name": "Nizza di Sicilia (ME)",
+    "shortName": "Nizza di Sicilia",
+    "prov": "ME",
+    "lat": 37.98886,
+    "lon": 15.40794
+  },
+  "F943": {
+    "name": "Noto (SR)",
+    "shortName": "Noto",
+    "prov": "SR",
+    "lat": 36.8917,
+    "lon": 15.0667
+  },
+  "F951": {
+    "name": "Novara di Sicilia (ME)",
+    "shortName": "Novara di Sicilia",
+    "prov": "ME",
+    "lat": 38.01625,
+    "lon": 15.13194
+  },
+  "G036": {
+    "name": "Oliveri (ME)",
+    "shortName": "Oliveri",
+    "prov": "ME",
+    "lat": 38.12463,
+    "lon": 15.05948
+  },
+  "G209": {
+    "name": "Pace del Mela (ME)",
+    "shortName": "Pace del Mela",
+    "prov": "ME",
+    "lat": 38.18013,
+    "lon": 15.3057
+  },
+  "G208": {
+    "name": "Paceco (TP)",
+    "shortName": "Paceco",
+    "prov": "TP",
+    "lat": 37.98109,
+    "lon": 12.5571
+  },
+  "G211": {
+    "name": "Pachino (SR)",
+    "shortName": "Pachino",
+    "prov": "SR",
+    "lat": 36.71609,
+    "lon": 15.09315
+  },
+  "G234": {
+    "name": "Pagliara (ME)",
+    "shortName": "Pagliara",
+    "prov": "ME",
+    "lat": 37.98659,
+    "lon": 15.3595
+  },
+  "G253": {
+    "name": "Palagonia (CT)",
+    "shortName": "Palagonia",
+    "prov": "CT",
+    "lat": 37.32766,
+    "lon": 14.74576
+  },
+  "G263": {
+    "name": "Palazzo Adriano (PA)",
+    "shortName": "Palazzo Adriano",
+    "prov": "PA",
+    "lat": 37.68162,
+    "lon": 13.37966
+  },
+  "G267": {
+    "name": "Palazzolo Acreide (SR)",
+    "shortName": "Palazzolo Acreide",
+    "prov": "SR",
+    "lat": 37.06188,
+    "lon": 14.90383
+  },
+  "G273": {
+    "name": "Palermo (PA)",
+    "shortName": "Palermo",
+    "prov": "PA",
+    "lat": 38.1157,
+    "lon": 13.36236
+  },
+  "G282": {
+    "name": "Palma di Montechiaro (AG)",
+    "shortName": "Palma di Montechiaro",
+    "prov": "AG",
+    "lat": 37.19168,
+    "lon": 13.76368
+  },
+  "G315": {
+    "name": "Pantelleria (TP)",
+    "shortName": "Pantelleria",
+    "prov": "TP",
+    "lat": 36.83189,
+    "lon": 11.94474
+  },
+  "G347": {
+    "name": "Partanna (TP)",
+    "shortName": "Partanna",
+    "prov": "TP",
+    "lat": 37.7214,
+    "lon": 12.88966
+  },
+  "G348": {
+    "name": "Partinico (PA)",
+    "shortName": "Partinico",
+    "prov": "PA",
+    "lat": 38.04808,
+    "lon": 13.11522
+  },
+  "G371": {
+    "name": "Paternò (CT)",
+    "shortName": "Paternò",
+    "prov": "CT",
+    "lat": 37.57697,
+    "lon": 14.90252
+  },
+  "G377": {
+    "name": "Patti (ME)",
+    "shortName": "Patti",
+    "prov": "ME",
+    "lat": 38.13978,
+    "lon": 14.96404
+  },
+  "G402": {
+    "name": "Pedara (CT)",
+    "shortName": "Pedara",
+    "prov": "CT",
+    "lat": 37.6172,
+    "lon": 15.06022
+  },
+  "G510": {
+    "name": "Petralia Soprana (PA)",
+    "shortName": "Petralia Soprana",
+    "prov": "PA",
+    "lat": 37.79634,
+    "lon": 14.10825
+  },
+  "G511": {
+    "name": "Petralia Sottana (PA)",
+    "shortName": "Petralia Sottana",
+    "prov": "PA",
+    "lat": 37.80594,
+    "lon": 14.09222
+  },
+  "M281": {
+    "name": "Petrosino (TP)",
+    "shortName": "Petrosino",
+    "prov": "TP",
+    "lat": 37.71277,
+    "lon": 12.49232
+  },
+  "G522": {
+    "name": "Pettineo (ME)",
+    "shortName": "Pettineo",
+    "prov": "ME",
+    "lat": 37.96661,
+    "lon": 14.29122
+  },
+  "G543": {
+    "name": "Piana degli Albanesi (PA)",
+    "shortName": "Piana degli Albanesi",
+    "prov": "PA",
+    "lat": 37.99447,
+    "lon": 13.28199
+  },
+  "G580": {
+    "name": "Piazza Armerina (EN)",
+    "shortName": "Piazza Armerina",
+    "prov": "EN",
+    "lat": 37.38421,
+    "lon": 14.36604
+  },
+  "G597": {
+    "name": "Piedimonte Etneo (CT)",
+    "shortName": "Piedimonte Etneo",
+    "prov": "CT",
+    "lat": 37.80767,
+    "lon": 15.17821
+  },
+  "G624": {
+    "name": "Pietraperzia (EN)",
+    "shortName": "Pietraperzia",
+    "prov": "EN",
+    "lat": 37.42163,
+    "lon": 14.13691
+  },
+  "G699": {
+    "name": "Piraino (ME)",
+    "shortName": "Piraino",
+    "prov": "ME",
+    "lat": 38.1619,
+    "lon": 14.86317
+  },
+  "G767": {
+    "name": "Poggioreale (TP)",
+    "shortName": "Poggioreale",
+    "prov": "TP",
+    "lat": 37.76215,
+    "lon": 13.03394
+  },
+  "G792": {
+    "name": "Polizzi Generosa (PA)",
+    "shortName": "Polizzi Generosa",
+    "prov": "PA",
+    "lat": 37.81291,
+    "lon": 13.99947
+  },
+  "G797": {
+    "name": "Pollina (PA)",
+    "shortName": "Pollina",
+    "prov": "PA",
+    "lat": 37.99425,
+    "lon": 14.14658
+  },
+  "F299": {
+    "name": "Porto Empedocle (AG)",
+    "shortName": "Porto Empedocle",
+    "prov": "AG",
+    "lat": 37.28847,
+    "lon": 13.52747
+  },
+  "M257": {
+    "name": "Portopalo di Capo Passero (SR)",
+    "shortName": "Portopalo di Capo Passero",
+    "prov": "SR",
+    "lat": 36.68333,
+    "lon": 15.13397
+  },
+  "G953": {
+    "name": "Pozzallo (RG)",
+    "shortName": "Pozzallo",
+    "prov": "RG",
+    "lat": 36.72659,
+    "lon": 14.84616
+  },
+  "M279": {
+    "name": "Priolo Gargallo (SR)",
+    "shortName": "Priolo Gargallo",
+    "prov": "SR",
+    "lat": 37.15942,
+    "lon": 15.18829
+  },
+  "H070": {
+    "name": "Prizzi (PA)",
+    "shortName": "Prizzi",
+    "prov": "PA",
+    "lat": 37.72165,
+    "lon": 13.43099
+  },
+  "H148": {
+    "name": "Racalmuto (AG)",
+    "shortName": "Racalmuto",
+    "prov": "AG",
+    "lat": 37.40771,
+    "lon": 13.73142
+  },
+  "H151": {
+    "name": "Raccuja (ME)",
+    "shortName": "Raccuja",
+    "prov": "ME",
+    "lat": 38.05561,
+    "lon": 14.91065
+  },
+  "H154": {
+    "name": "Raddusa (CT)",
+    "shortName": "Raddusa",
+    "prov": "CT",
+    "lat": 37.47292,
+    "lon": 14.53173
+  },
+  "H159": {
+    "name": "Raffadali (AG)",
+    "shortName": "Raffadali",
+    "prov": "AG",
+    "lat": 37.4049,
+    "lon": 13.53109
+  },
+  "M287": {
+    "name": "Ragalna (CT)",
+    "shortName": "Ragalna",
+    "prov": "CT",
+    "lat": 37.63013,
+    "lon": 14.93914
+  },
+  "H163": {
+    "name": "Ragusa (RG)",
+    "shortName": "Ragusa",
+    "prov": "RG",
+    "lat": 36.92509,
+    "lon": 14.7307
+  },
+  "H168": {
+    "name": "Ramacca (CT)",
+    "shortName": "Ramacca",
+    "prov": "CT",
+    "lat": 37.38487,
+    "lon": 14.69378
+  },
+  "H175": {
+    "name": "Randazzo (CT)",
+    "shortName": "Randazzo",
+    "prov": "CT",
+    "lat": 37.87791,
+    "lon": 14.94605
+  },
+  "H194": {
+    "name": "Ravanusa (AG)",
+    "shortName": "Ravanusa",
+    "prov": "AG",
+    "lat": 37.26824,
+    "lon": 13.97248
+  },
+  "H205": {
+    "name": "Realmonte (AG)",
+    "shortName": "Realmonte",
+    "prov": "AG",
+    "lat": 37.30681,
+    "lon": 13.46279
+  },
+  "H221": {
+    "name": "Regalbuto (EN)",
+    "shortName": "Regalbuto",
+    "prov": "EN",
+    "lat": 37.65263,
+    "lon": 14.6408
+  },
+  "H228": {
+    "name": "Reitano (ME)",
+    "shortName": "Reitano",
+    "prov": "ME",
+    "lat": 37.97308,
+    "lon": 14.34445
+  },
+  "H245": {
+    "name": "Resuttano (CL)",
+    "shortName": "Resuttano",
+    "prov": "CL",
+    "lat": 37.68013,
+    "lon": 14.03105
+  },
+  "H269": {
+    "name": "Ribera (AG)",
+    "shortName": "Ribera",
+    "prov": "AG",
+    "lat": 37.50382,
+    "lon": 13.26866
+  },
+  "H281": {
+    "name": "Riesi (CL)",
+    "shortName": "Riesi",
+    "prov": "CL",
+    "lat": 37.28338,
+    "lon": 14.08221
+  },
+  "H325": {
+    "name": "Riposto (CT)",
+    "shortName": "Riposto",
+    "prov": "CT",
+    "lat": 37.73182,
+    "lon": 15.20384
+  },
+  "H405": {
+    "name": "Roccafiorita (ME)",
+    "shortName": "Roccafiorita",
+    "prov": "ME",
+    "lat": 37.92988,
+    "lon": 15.26847
+  },
+  "H418": {
+    "name": "Roccalumera (ME)",
+    "shortName": "Roccalumera",
+    "prov": "ME",
+    "lat": 37.97509,
+    "lon": 15.39453
+  },
+  "H422": {
+    "name": "Roccamena (PA)",
+    "shortName": "Roccamena",
+    "prov": "PA",
+    "lat": 37.83859,
+    "lon": 13.1553
+  },
+  "H428": {
+    "name": "Roccapalumba (PA)",
+    "shortName": "Roccapalumba",
+    "prov": "PA",
+    "lat": 37.80607,
+    "lon": 13.63945
+  },
+  "H380": {
+    "name": "Roccavaldina (ME)",
+    "shortName": "Roccavaldina",
+    "prov": "ME",
+    "lat": 38.1823,
+    "lon": 15.37498
+  },
+  "H455": {
+    "name": "Roccella Valdemone (ME)",
+    "shortName": "Roccella Valdemone",
+    "prov": "ME",
+    "lat": 37.93275,
+    "lon": 15.00952
+  },
+  "H479": {
+    "name": "Rodì Milici (ME)",
+    "shortName": "Rodì Milici",
+    "prov": "ME",
+    "lat": 38.11046,
+    "lon": 15.16957
+  },
+  "H519": {
+    "name": "Rometta (ME)",
+    "shortName": "Rometta",
+    "prov": "ME",
+    "lat": 38.17266,
+    "lon": 15.41549
+  },
+  "H574": {
+    "name": "Rosolini (SR)",
+    "shortName": "Rosolini",
+    "prov": "SR",
+    "lat": 36.82035,
+    "lon": 14.95353
+  },
+  "H688": {
+    "name": "Salaparuta (TP)",
+    "shortName": "Salaparuta",
+    "prov": "TP",
+    "lat": 37.75698,
+    "lon": 13.00627
+  },
+  "H700": {
+    "name": "Salemi (TP)",
+    "shortName": "Salemi",
+    "prov": "TP",
+    "lat": 37.816,
+    "lon": 12.80151
+  },
+  "H743": {
+    "name": "Sambuca di Sicilia (AG)",
+    "shortName": "Sambuca di Sicilia",
+    "prov": "AG",
+    "lat": 37.64742,
+    "lon": 13.11073
+  },
+  "H778": {
+    "name": "San Biagio Platani (AG)",
+    "shortName": "San Biagio Platani",
+    "prov": "AG",
+    "lat": 37.50899,
+    "lon": 13.52423
+  },
+  "H792": {
+    "name": "San Cataldo (CL)",
+    "shortName": "San Cataldo",
+    "prov": "CL",
+    "lat": 37.48716,
+    "lon": 13.99048
+  },
+  "H797": {
+    "name": "San Cipirello (PA)",
+    "shortName": "San Cipirello",
+    "prov": "PA",
+    "lat": 37.96023,
+    "lon": 13.1817
+  },
+  "H805": {
+    "name": "San Cono (CT)",
+    "shortName": "San Cono",
+    "prov": "CT",
+    "lat": 37.28994,
+    "lon": 14.366
+  },
+  "H842": {
+    "name": "San Filippo del Mela (ME)",
+    "shortName": "San Filippo del Mela",
+    "prov": "ME",
+    "lat": 38.16929,
+    "lon": 15.27181
+  },
+  "H850": {
+    "name": "San Fratello (ME)",
+    "shortName": "San Fratello",
+    "prov": "ME",
+    "lat": 38.01289,
+    "lon": 14.59623
+  },
+  "H914": {
+    "name": "San Giovanni Gemini (AG)",
+    "shortName": "San Giovanni Gemini",
+    "prov": "AG",
+    "lat": 37.62994,
+    "lon": 13.6412
+  },
+  "H922": {
+    "name": "San Giovanni la Punta (CT)",
+    "shortName": "San Giovanni la Punta",
+    "prov": "CT",
+    "lat": 37.57707,
+    "lon": 15.0943
+  },
+  "H933": {
+    "name": "San Giuseppe Jato (PA)",
+    "shortName": "San Giuseppe Jato",
+    "prov": "PA",
+    "lat": 37.96819,
+    "lon": 13.18116
+  },
+  "H940": {
+    "name": "San Gregorio di Catania (CT)",
+    "shortName": "San Gregorio di Catania",
+    "prov": "CT",
+    "lat": 37.56488,
+    "lon": 15.10846
+  },
+  "H982": {
+    "name": "San Marco d'Alunzio (ME)",
+    "shortName": "San Marco d'Alunzio",
+    "prov": "ME",
+    "lat": 38.07305,
+    "lon": 14.69884
+  },
+  "I028": {
+    "name": "San Mauro Castelverde (PA)",
+    "shortName": "San Mauro Castelverde",
+    "prov": "PA",
+    "lat": 37.91446,
+    "lon": 14.19009
+  },
+  "I035": {
+    "name": "San Michele di Ganzaria (CT)",
+    "shortName": "San Michele di Ganzaria",
+    "prov": "CT",
+    "lat": 37.27947,
+    "lon": 14.42612
+  },
+  "I084": {
+    "name": "San Pier Niceto (ME)",
+    "shortName": "San Pier Niceto",
+    "prov": "ME",
+    "lat": 38.15873,
+    "lon": 15.35152
+  },
+  "I086": {
+    "name": "San Piero Patti (ME)",
+    "shortName": "San Piero Patti",
+    "prov": "ME",
+    "lat": 38.05068,
+    "lon": 14.96622
+  },
+  "I098": {
+    "name": "San Pietro Clarenza (CT)",
+    "shortName": "San Pietro Clarenza",
+    "prov": "CT",
+    "lat": 37.57233,
+    "lon": 15.02419
+  },
+  "I147": {
+    "name": "San Salvatore di Fitalia (ME)",
+    "shortName": "San Salvatore di Fitalia",
+    "prov": "ME",
+    "lat": 38.07054,
+    "lon": 14.77746
+  },
+  "I328": {
+    "name": "San Teodoro (ME)",
+    "shortName": "San Teodoro",
+    "prov": "ME",
+    "lat": 37.84781,
+    "lon": 14.69937
+  },
+  "I407": {
+    "name": "San Vito Lo Capo (TP)",
+    "shortName": "San Vito Lo Capo",
+    "prov": "TP",
+    "lat": 38.1731,
+    "lon": 12.73502
+  },
+  "I199": {
+    "name": "Sant'Agata di Militello (ME)",
+    "shortName": "Sant'Agata di Militello",
+    "prov": "ME",
+    "lat": 38.06952,
+    "lon": 14.63368
+  },
+  "I202": {
+    "name": "Sant'Agata li Battiati (CT)",
+    "shortName": "Sant'Agata li Battiati",
+    "prov": "CT",
+    "lat": 37.55865,
+    "lon": 15.08023
+  },
+  "I215": {
+    "name": "Sant'Alessio Siculo (ME)",
+    "shortName": "Sant'Alessio Siculo",
+    "prov": "ME",
+    "lat": 37.91758,
+    "lon": 15.34478
+  },
+  "I216": {
+    "name": "Sant'Alfio (CT)",
+    "shortName": "Sant'Alfio",
+    "prov": "CT",
+    "lat": 37.74407,
+    "lon": 15.14411
+  },
+  "I283": {
+    "name": "Sant'Angelo di Brolo (ME)",
+    "shortName": "Sant'Angelo di Brolo",
+    "prov": "ME",
+    "lat": 38.1132,
+    "lon": 14.88215
+  },
+  "I290": {
+    "name": "Sant'Angelo Muxaro (AG)",
+    "shortName": "Sant'Angelo Muxaro",
+    "prov": "AG",
+    "lat": 37.47919,
+    "lon": 13.54428
+  },
+  "I169": {
+    "name": "Santa Caterina Villarmosa (CL)",
+    "shortName": "Santa Caterina Villarmosa",
+    "prov": "CL",
+    "lat": 37.59175,
+    "lon": 14.03189
+  },
+  "I174": {
+    "name": "Santa Cristina Gela (PA)",
+    "shortName": "Santa Cristina Gela",
+    "prov": "PA",
+    "lat": 37.98509,
+    "lon": 13.32752
+  },
+  "I178": {
+    "name": "Santa Croce Camerina (RG)",
+    "shortName": "Santa Croce Camerina",
+    "prov": "RG",
+    "lat": 36.82854,
+    "lon": 14.52544
+  },
+  "I184": {
+    "name": "Santa Domenica Vittoria (ME)",
+    "shortName": "Santa Domenica Vittoria",
+    "prov": "ME",
+    "lat": 37.91555,
+    "lon": 14.96189
+  },
+  "I185": {
+    "name": "Santa Elisabetta (AG)",
+    "shortName": "Santa Elisabetta",
+    "prov": "AG",
+    "lat": 37.43158,
+    "lon": 13.5549
+  },
+  "I188": {
+    "name": "Santa Flavia (PA)",
+    "shortName": "Santa Flavia",
+    "prov": "PA",
+    "lat": 38.08217,
+    "lon": 13.525
+  },
+  "I220": {
+    "name": "Santa Lucia del Mela (ME)",
+    "shortName": "Santa Lucia del Mela",
+    "prov": "ME",
+    "lat": 38.13999,
+    "lon": 15.28318
+  },
+  "I224": {
+    "name": "Santa Margherita di Belice (AG)",
+    "shortName": "Santa Margherita di Belice",
+    "prov": "AG",
+    "lat": 37.69197,
+    "lon": 13.02402
+  },
+  "I240": {
+    "name": "Santa Maria di Licodia (CT)",
+    "shortName": "Santa Maria di Licodia",
+    "prov": "CT",
+    "lat": 37.61618,
+    "lon": 14.8874
+  },
+  "I254": {
+    "name": "Santa Marina Salina (ME)",
+    "shortName": "Santa Marina Salina",
+    "prov": "ME",
+    "lat": 38.55942,
+    "lon": 14.8717
+  },
+  "I291": {
+    "name": "Santa Ninfa (TP)",
+    "shortName": "Santa Ninfa",
+    "prov": "TP",
+    "lat": 37.77382,
+    "lon": 12.88022
+  },
+  "I311": {
+    "name": "Santa Teresa di Riva (ME)",
+    "shortName": "Santa Teresa di Riva",
+    "prov": "ME",
+    "lat": 37.94571,
+    "lon": 15.36795
+  },
+  "I314": {
+    "name": "Santa Venerina (CT)",
+    "shortName": "Santa Venerina",
+    "prov": "CT",
+    "lat": 37.68698,
+    "lon": 15.13888
+  },
+  "I370": {
+    "name": "Santo Stefano di Camastra (ME)",
+    "shortName": "Santo Stefano di Camastra",
+    "prov": "ME",
+    "lat": 38.01635,
+    "lon": 14.34833
+  },
+  "I356": {
+    "name": "Santo Stefano Quisquina (AG)",
+    "shortName": "Santo Stefano Quisquina",
+    "prov": "AG",
+    "lat": 37.6247,
+    "lon": 13.49032
+  },
+  "I420": {
+    "name": "Saponara (ME)",
+    "shortName": "Saponara",
+    "prov": "ME",
+    "lat": 38.19387,
+    "lon": 15.43425
+  },
+  "I477": {
+    "name": "Savoca (ME)",
+    "shortName": "Savoca",
+    "prov": "ME",
+    "lat": 37.95607,
+    "lon": 15.33979
+  },
+  "I492": {
+    "name": "Scaletta Zanclea (ME)",
+    "shortName": "Scaletta Zanclea",
+    "prov": "ME",
+    "lat": 38.04286,
+    "lon": 15.45933
+  },
+  "I533": {
+    "name": "Sciacca (AG)",
+    "shortName": "Sciacca",
+    "prov": "AG",
+    "lat": 37.50777,
+    "lon": 13.08293
+  },
+  "I534": {
+    "name": "Sciara (PA)",
+    "shortName": "Sciara",
+    "prov": "PA",
+    "lat": 37.91464,
+    "lon": 13.76261
+  },
+  "I535": {
+    "name": "Scicli (RG)",
+    "shortName": "Scicli",
+    "prov": "RG",
+    "lat": 36.79359,
+    "lon": 14.7059
+  },
+  "I538": {
+    "name": "Scillato (PA)",
+    "shortName": "Scillato",
+    "prov": "PA",
+    "lat": 37.8567,
+    "lon": 13.90683
+  },
+  "I541": {
+    "name": "Sclafani Bagni (PA)",
+    "shortName": "Sclafani Bagni",
+    "prov": "PA",
+    "lat": 37.82113,
+    "lon": 13.8546
+  },
+  "I548": {
+    "name": "Scordia (CT)",
+    "shortName": "Scordia",
+    "prov": "CT",
+    "lat": 37.29649,
+    "lon": 14.84609
+  },
+  "I644": {
+    "name": "Serradifalco (CL)",
+    "shortName": "Serradifalco",
+    "prov": "CL",
+    "lat": 37.45654,
+    "lon": 13.88251
+  },
+  "I723": {
+    "name": "Siculiana (AG)",
+    "shortName": "Siculiana",
+    "prov": "AG",
+    "lat": 37.33648,
+    "lon": 13.42004
+  },
+  "I747": {
+    "name": "Sinagra (ME)",
+    "shortName": "Sinagra",
+    "prov": "ME",
+    "lat": 38.08324,
+    "lon": 14.84953
+  },
+  "I754": {
+    "name": "Siracusa (SR)",
+    "shortName": "Siracusa",
+    "prov": "SR",
+    "lat": 37.05992,
+    "lon": 15.29333
+  },
+  "I785": {
+    "name": "Solarino (SR)",
+    "shortName": "Solarino",
+    "prov": "SR",
+    "lat": 37.10124,
+    "lon": 15.1191
+  },
+  "I824": {
+    "name": "Sommatino (CL)",
+    "shortName": "Sommatino",
+    "prov": "CL",
+    "lat": 37.33386,
+    "lon": 13.99122
+  },
+  "I864": {
+    "name": "Sortino (SR)",
+    "shortName": "Sortino",
+    "prov": "SR",
+    "lat": 37.16257,
+    "lon": 15.03283
+  },
+  "I881": {
+    "name": "Spadafora (ME)",
+    "shortName": "Spadafora",
+    "prov": "ME",
+    "lat": 38.22208,
+    "lon": 15.37414
+  },
+  "I891": {
+    "name": "Sperlinga (EN)",
+    "shortName": "Sperlinga",
+    "prov": "EN",
+    "lat": 37.7649,
+    "lon": 14.35337
+  },
+  "L016": {
+    "name": "Sutera (CL)",
+    "shortName": "Sutera",
+    "prov": "CL",
+    "lat": 37.52558,
+    "lon": 13.7313
+  },
+  "L042": {
+    "name": "Taormina (ME)",
+    "shortName": "Taormina",
+    "prov": "ME",
+    "lat": 37.85113,
+    "lon": 15.28308
+  },
+  "M210": {
+    "name": "Terme Vigliatore (ME)",
+    "shortName": "Terme Vigliatore",
+    "prov": "ME",
+    "lat": 38.13673,
+    "lon": 15.16241
+  },
+  "L112": {
+    "name": "Termini Imerese (PA)",
+    "shortName": "Termini Imerese",
+    "prov": "PA",
+    "lat": 37.98681,
+    "lon": 13.69594
+  },
+  "L131": {
+    "name": "Terrasini (PA)",
+    "shortName": "Terrasini",
+    "prov": "PA",
+    "lat": 38.15295,
+    "lon": 13.08239
+  },
+  "L271": {
+    "name": "Torregrotta (ME)",
+    "shortName": "Torregrotta",
+    "prov": "ME",
+    "lat": 38.19166,
+    "lon": 15.35232
+  },
+  "M286": {
+    "name": "Torrenova (ME)",
+    "shortName": "Torrenova",
+    "prov": "ME",
+    "lat": 38.09113,
+    "lon": 14.67734
+  },
+  "L282": {
+    "name": "Torretta (PA)",
+    "shortName": "Torretta",
+    "prov": "PA",
+    "lat": 38.13118,
+    "lon": 13.23314
+  },
+  "L308": {
+    "name": "Tortorici (ME)",
+    "shortName": "Tortorici",
+    "prov": "ME",
+    "lat": 38.03054,
+    "lon": 14.82486
+  },
+  "L317": {
+    "name": "Trabia (PA)",
+    "shortName": "Trabia",
+    "prov": "PA",
+    "lat": 37.99576,
+    "lon": 13.65541
+  },
+  "L331": {
+    "name": "Trapani (TP)",
+    "shortName": "Trapani",
+    "prov": "TP",
+    "lat": 38.0185,
+    "lon": 12.51366
+  },
+  "L332": {
+    "name": "Trappeto (PA)",
+    "shortName": "Trappeto",
+    "prov": "PA",
+    "lat": 38.06656,
+    "lon": 13.03653
+  },
+  "L355": {
+    "name": "Trecastagni (CT)",
+    "shortName": "Trecastagni",
+    "prov": "CT",
+    "lat": 37.617,
+    "lon": 15.0792
+  },
+  "L369": {
+    "name": "Tremestieri Etneo (CT)",
+    "shortName": "Tremestieri Etneo",
+    "prov": "CT",
+    "lat": 37.57584,
+    "lon": 15.07214
+  },
+  "L431": {
+    "name": "Tripi (ME)",
+    "shortName": "Tripi",
+    "prov": "ME",
+    "lat": 38.04934,
+    "lon": 15.09943
+  },
+  "L448": {
+    "name": "Troina (EN)",
+    "shortName": "Troina",
+    "prov": "EN",
+    "lat": 37.78502,
+    "lon": 14.60045
+  },
+  "L478": {
+    "name": "Tusa (ME)",
+    "shortName": "Tusa",
+    "prov": "ME",
+    "lat": 37.98457,
+    "lon": 14.23853
+  },
+  "L482": {
+    "name": "Ucria (ME)",
+    "shortName": "Ucria",
+    "prov": "ME",
+    "lat": 38.04563,
+    "lon": 14.88092
+  },
+  "L519": {
+    "name": "Ustica (PA)",
+    "shortName": "Ustica",
+    "prov": "PA",
+    "lat": 38.71008,
+    "lon": 13.19284
+  },
+  "G319": {
+    "name": "Valderice (TP)",
+    "shortName": "Valderice",
+    "prov": "TP",
+    "lat": 38.03795,
+    "lon": 12.61749
+  },
+  "L561": {
+    "name": "Valdina (ME)",
+    "shortName": "Valdina",
+    "prov": "ME",
+    "lat": 38.1935,
+    "lon": 15.37074
+  },
+  "L583": {
+    "name": "Valguarnera Caropepe (EN)",
+    "shortName": "Valguarnera Caropepe",
+    "prov": "EN",
+    "lat": 37.49668,
+    "lon": 14.38816
+  },
+  "L603": {
+    "name": "Valledolmo (PA)",
+    "shortName": "Valledolmo",
+    "prov": "PA",
+    "lat": 37.74708,
+    "lon": 13.82826
+  },
+  "L609": {
+    "name": "Vallelunga Pratameno (CL)",
+    "shortName": "Vallelunga Pratameno",
+    "prov": "CL",
+    "lat": 37.68021,
+    "lon": 13.83047
+  },
+  "L658": {
+    "name": "Valverde (CT)",
+    "shortName": "Valverde",
+    "prov": "CT",
+    "lat": 37.579,
+    "lon": 15.12482
+  },
+  "L735": {
+    "name": "Venetico (ME)",
+    "shortName": "Venetico",
+    "prov": "ME",
+    "lat": 38.21905,
+    "lon": 15.3648
+  },
+  "L740": {
+    "name": "Ventimiglia di Sicilia (PA)",
+    "shortName": "Ventimiglia di Sicilia",
+    "prov": "PA",
+    "lat": 37.92614,
+    "lon": 13.56791
+  },
+  "L828": {
+    "name": "Viagrande (CT)",
+    "shortName": "Viagrande",
+    "prov": "CT",
+    "lat": 37.61059,
+    "lon": 15.09633
+  },
+  "L837": {
+    "name": "Vicari (PA)",
+    "shortName": "Vicari",
+    "prov": "PA",
+    "lat": 37.82658,
+    "lon": 13.57075
+  },
+  "L916": {
+    "name": "Villabate (PA)",
+    "shortName": "Villabate",
+    "prov": "PA",
+    "lat": 38.07564,
+    "lon": 13.44209
+  },
+  "L944": {
+    "name": "Villafranca Sicula (AG)",
+    "shortName": "Villafranca Sicula",
+    "prov": "AG",
+    "lat": 37.58683,
+    "lon": 13.29094
+  },
+  "L950": {
+    "name": "Villafranca Tirrena (ME)",
+    "shortName": "Villafranca Tirrena",
+    "prov": "ME",
+    "lat": 38.23545,
+    "lon": 15.4325
+  },
+  "L951": {
+    "name": "Villafrati (PA)",
+    "shortName": "Villafrati",
+    "prov": "PA",
+    "lat": 37.90807,
+    "lon": 13.48672
+  },
+  "L959": {
+    "name": "Villalba (CL)",
+    "shortName": "Villalba",
+    "prov": "CL",
+    "lat": 37.65498,
+    "lon": 13.84393
+  },
+  "M011": {
+    "name": "Villarosa (EN)",
+    "shortName": "Villarosa",
+    "prov": "EN",
+    "lat": 37.58792,
+    "lon": 14.17423
+  },
+  "M081": {
+    "name": "Vita (TP)",
+    "shortName": "Vita",
+    "prov": "TP",
+    "lat": 37.86843,
+    "lon": 12.81459
+  },
+  "M088": {
+    "name": "Vittoria (RG)",
+    "shortName": "Vittoria",
+    "prov": "RG",
+    "lat": 36.94879,
+    "lon": 14.53801
+  },
+  "M100": {
+    "name": "Vizzini (CT)",
+    "shortName": "Vizzini",
+    "prov": "CT",
+    "lat": 37.16103,
+    "lon": 14.74852
+  },
+  "M139": {
+    "name": "Zafferana Etnea (CT)",
+    "shortName": "Zafferana Etnea",
+    "prov": "CT",
+    "lat": 37.69471,
+    "lon": 15.10338
+  }
+}

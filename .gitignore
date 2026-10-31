@@ -1,0 +1,17 @@
+# AI & Agent local caches
+.gemini/
+.claude/
+.antigravity/
+
+# Editor & OS
+.cursor/
+.vscode/
+Thumbs.db
+Desktop.ini
+*.tmp
+__pycache__/
+*.pyc
+
+# Raw land registry database dumps (compiled into data/)
+*.taf
+*.dis

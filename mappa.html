@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Visualizzatore WebGIS Professionale — Studio Tecnico Associato Geometri Giurato & Iacono (Rosolini, Siracusa). Mappe catastali Agenzia delle Entrate in tempo reale, Piano Paesaggistico Regione Siciliana (SR e RG), ricerca particella e misurazioni.">
-  <meta name="keywords" content="webgis catasto rosolini, mappa catastale agenzia entrate siracusa ragusa, piano paesaggistico sicilia, particelle catastali wms, sitr sicilia, giurato iacono">
+  <meta name="description" content="Visualizzatore WebGIS Professionale Regionale — Studio Tecnico Associato Geometri Giurato & Iacono (Rosolini, Siracusa). Mappe catastali Agenzia delle Entrate per tutta la Sicilia (390 comuni, 9 province), Piano Paesaggistico SITR Regione Siciliana, Punti Fiduciali (PF), ricerca particelle e misurazioni.">
+  <meta name="keywords" content="webgis catasto sicilia, mappa catastale agenzia entrate sicilia, punti fiduciali sicilia, pregeo pf sicilia, piano paesaggistico sitr sicilia, particelle catastali siracusa ragusa catania palermo messina trapani agrigento caltanissetta enna, giurato iacono">
   <meta name="author" content="Geom. Alessandro Giurato &amp; Geom. Piernicolò Iacono">
   <meta name="theme-color" content="#0b1c2d">
 
@@ -25,6 +25,12 @@
 
   <title>WebGIS Catasto &amp; Piano Paesaggistico | Studio Tecnico Giurato &amp; Iacono</title>
   <link rel="canonical" href="https://www.studiotecnicogiuratoiacono.it/mappa.html">
+  <link rel="manifest" href="manifest.json">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="WebGIS Catasto">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B1C2D'/%3E%3Cpath d='M20 22 H32 A8 8 0 0 1 40 30 A8 8 0 0 1 32 38 H24 V46' fill='none' stroke='%23C9A227' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M42 22 V46' fill='none' stroke='%23C9A227' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='30' r='3' fill='%23C9A227'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +41,7 @@
   <link rel="preconnect" href="https://mt2.google.com" crossorigin>
   <link rel="preconnect" href="https://mt3.google.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261030-12">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
 <body class="webgis-page-body">
@@ -94,8 +100,15 @@
               <label style="font-size: 0.82rem; margin: 0; font-weight: 600; color: var(--navy);">
                 Provincia
                 <select id="gisProvinciaSelect" style="margin-top: 0.2rem; padding: 0.5rem; font-size: 0.85rem; border-radius: 8px; width: 100%;">
-                  <option value="SR" selected>Provincia di Siracusa (SR)</option>
-                  <option value="RG">Provincia di Ragusa (RG)</option>
+                  <option value="SR" selected>Siracusa (SR)</option>
+                  <option value="RG">Ragusa (RG)</option>
+                  <option value="CT">Catania (CT)</option>
+                  <option value="PA">Palermo (PA)</option>
+                  <option value="ME">Messina (ME)</option>
+                  <option value="TP">Trapani (TP)</option>
+                  <option value="AG">Agrigento (AG)</option>
+                  <option value="CL">Caltanissetta (CL)</option>
+                  <option value="EN">Enna (EN)</option>
                 </select>
               </label>
               <label style="font-size: 0.82rem; margin: 0; font-weight: 600; color: var(--navy);">
@@ -170,15 +183,28 @@
               </div>
             </div>
 
-            <!-- PP - Beni Paesaggistici (SR/RG) -->
+            <!-- Punti Fiduciali Pregeo (VisualTAF) -->
             <div class="wms-layer-item">
               <div class="layer-toggle-row">
                 <label class="checkbox-label">
-                  <input type="checkbox" id="togglePpBeni"> <strong>PP - Beni Paesaggistici (SR/RG)</strong>
+                  <input type="checkbox" id="toggleShowPFGlobal" checked> <strong>🔴 Punti Fiduciali (PF / VisualTAF)</strong>
+                </label>
+                <span style="font-size: 0.68rem; background: #fee2e2; color: #991b1b; padding: 1px 6px; border-radius: 999px; font-weight: 700;">PREGEO</span>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                Archivio ufficiale TAF: 27.283 PF reali (Siracusa &amp; Ragusa), monografie originali Agenzia delle Entrate con foto e quote
+              </div>
+            </div>
+
+            <!-- PP - Beni Paesaggistici (Sicilia) -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="togglePpBeni"> <strong>PP - Beni Paesaggistici (Sicilia)</strong>
                 </label>
               </div>
               <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
-                SITR Sicilia: Beni Paesaggistici (Siracusa &amp; Ragusa)
+                SITR Regione Siciliana: Beni Paesaggistici regionali (SR, RG, CT, AG, CL, EN, ME, TP)
               </div>
               <div class="opacity-slider-row">
                 <span>Opacità: <strong id="ppBeniOpacityVal">80%</strong></span>
@@ -186,15 +212,15 @@
               </div>
             </div>
 
-            <!-- PP - Regimi Normativi / Livelli Tutela (SR/RG) -->
+            <!-- PP - Regimi Normativi / Livelli Tutela (Sicilia) -->
             <div class="wms-layer-item">
               <div class="layer-toggle-row">
                 <label class="checkbox-label">
-                  <input type="checkbox" id="togglePpRegimi"> <strong>PP - Regimi Normativi / Livelli Tutela (SR/RG)</strong>
+                  <input type="checkbox" id="togglePpRegimi"> <strong>PP - Regimi Normativi / Livelli Tutela</strong>
                 </label>
               </div>
               <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
-                SITR Sicilia: Regimi Normativi (Siracusa &amp; Ragusa)
+                SITR Regione Siciliana: Livelli di tutela e regimi normativi
               </div>
               <div class="opacity-slider-row">
                 <span>Opacità: <strong id="ppRegimiOpacityVal">75%</strong></span>
@@ -202,19 +228,160 @@
               </div>
             </div>
 
-            <!-- PP - Componenti del Paesaggio (SR/RG) -->
+            <!-- PP - Componenti del Paesaggio (Sicilia) -->
             <div class="wms-layer-item">
               <div class="layer-toggle-row">
                 <label class="checkbox-label">
-                  <input type="checkbox" id="togglePpComponenti"> <strong>PP - Componenti del Paesaggio (SR/RG)</strong>
+                  <input type="checkbox" id="togglePpComponenti"> <strong>PP - Componenti del Paesaggio</strong>
                 </label>
               </div>
               <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
-                SITR Sicilia: Componenti del Paesaggio (Siracusa &amp; Ragusa)
+                SITR Regione Siciliana: Componenti geomorfologiche, botaniche e paesaggistiche
               </div>
               <div class="opacity-slider-row">
                 <span>Opacità: <strong id="ppComponentiOpacityVal">65%</strong></span>
                 <input type="range" id="ppComponentiOpacity" min="0" max="100" value="65">
+              </div>
+            </div>
+
+            <!-- PAI - Rischio Idraulico (Regione Siciliana) -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="togglePaiIdraulica"> <strong>🌊 P.A.I. - Pericolosità Idraulica</strong>
+                </label>
+                <span style="font-size: 0.68rem; background: #e0f2fe; color: #0369a1; padding: 1px 6px; border-radius: 999px; font-weight: 700;">ALLUVIONI</span>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                Autorità di Bacino Sicilia: Fasce P1, P2, P3, P4
+              </div>
+              <div class="opacity-slider-row">
+                <span>Opacità: <strong id="paiIdraulicaOpacityVal">75%</strong></span>
+                <input type="range" id="paiIdraulicaOpacity" min="0" max="100" value="75">
+              </div>
+            </div>
+
+            <!-- PAI - Rischio Frane / Dissesti (Regione Siciliana) -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="togglePaiGeom"> <strong>⛰️ P.A.I. - Pericolosità Frane / Dissesti</strong>
+                </label>
+                <span style="font-size: 0.68rem; background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 999px; font-weight: 700;">FRANE</span>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                Autorità di Bacino Sicilia: Rischio geomorfologico R1, R2, R3, R4
+              </div>
+              <div class="opacity-slider-row">
+                <span>Opacità: <strong id="paiGeomOpacityVal">75%</strong></span>
+                <input type="range" id="paiGeomOpacity" min="0" max="100" value="75">
+              </div>
+            </div>
+
+            <!-- CTR 1:10.000 Regione Siciliana -->
+            <div class="wms-layer-item">
+              <div class="layer-toggle-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="toggleCtr10k"> <strong>🗺️ C.T.R. 1:10.000 Regionale</strong>
+                </label>
+                <span style="font-size: 0.68rem; background: #ecfdf5; color: #065f46; padding: 1px 6px; border-radius: 999px; font-weight: 700;">CTR</span>
+              </div>
+              <div style="font-size: 0.74rem; color: var(--muted); margin-bottom: 0.4rem;">
+                SITR Sicilia: Carta Tecnica Regionale ufficiale 1:10.000 (Edizione 2013)
+              </div>
+              <div class="opacity-slider-row">
+                <span>Opacità: <strong id="ctr10kOpacityVal">85%</strong></span>
+                <input type="range" id="ctr10kOpacity" min="0" max="100" value="85">
+              </div>
+            </div>
+
+            <!-- Importazione Estratto Sister .EMP / CAD .DXF -->
+            <div class="wms-layer-item" style="border-top: 1px solid #e2e8f0; padding-top: 0.6rem; margin-top: 0.6rem;">
+              <div style="font-size: 0.82rem; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 0.35rem;">
+                <span>📂</span> Importa Sister (.EMP) / CAD (.DXF)
+              </div>
+              <div class="cad-dropzone" id="cadDropzone">
+                <span style="font-size: 1.1rem; display: block; margin-bottom: 0.2rem;">📥</span>
+                <span class="cad-dropzone-text">Trascina qui Estratto Sister (.EMP) o CAD (.DXF)<br><small style="color: #64748b;">oppure clicca per selezionare</small></span>
+                <input type="file" id="cadFileInput" accept=".emp,.dxf,.txt" style="display: none;">
+              </div>
+              <div id="cadImportStatus" style="font-size: 0.72rem; margin-top: 0.3rem; display: none;"></div>
+            </div>
+          </div>
+
+          <!-- Topography & PF Mode (NEW) -->
+          <div class="sidebar-block topo-mode-block" style="background: #fffdf5; border: 1.5px solid var(--gold); border-radius: 12px; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <h4 style="margin: 0; color: var(--navy); display: flex; align-items: center; gap: 0.4rem; font-size: 0.95rem;">
+                <span>📐</span> Rilievi Topografici &amp; PF
+              </h4>
+              <span id="topoBadge" style="font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 999px; background: #e2e8f0; color: #475569; font-weight: 700;">INATTIVA</span>
+            </div>
+            
+            <p style="font-size: 0.76rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.35;">
+              Visualizza i Punti Fiduciali (PF), consulta le monografie originali con fotografie sul posto e genera automaticamente le triangolazioni topografiche tra i fiduciali del foglio selezionato.
+            </p>
+
+            <button class="btn btn-gold" id="btnToggleTopoMode" type="button" style="width: 100%; min-height: 40px; font-size: 0.86rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+              <span>🧭</span> Attiva Modalità Rilievi Topografici
+            </button>
+
+            <!-- Topo Sub-controls (visible when active) -->
+            <div id="topoControlsPanel" style="display: none; margin-top: 0.85rem; border-top: 1px solid rgba(201, 162, 39, 0.3); padding-top: 0.8rem;">
+              <div style="display: grid; gap: 0.45rem;">
+                <label class="checkbox-label" style="font-size: 0.8rem; font-weight: 600; color: var(--navy);">
+                  <input type="checkbox" id="toggleShowPF" checked> 🔴 Mostra Punti Fiduciali (PF)
+                </label>
+                <label class="checkbox-label" style="font-size: 0.8rem; font-weight: 600; color: var(--navy);">
+                  <input type="checkbox" id="toggleShowTriangulation" checked> 📐 Mostra Triangolazioni &amp; Mutue Distanze
+                </label>
+                <label class="checkbox-label" style="font-size: 0.8rem; font-weight: 600; color: var(--navy);">
+                  <input type="checkbox" id="togglePFLabels" checked> 🏷️ Etichette e Nomi PF
+                </label>
+                <label class="checkbox-label" style="font-size: 0.8rem; font-weight: 700; color: #b45309; background: #fef3c7; padding: 0.25rem 0.45rem; border-radius: 6px; border: 1px solid #fde68a;">
+                  <input type="checkbox" id="toggleOnlyOfficialMono"> 📸 Mostra solo PF con Foto Ufficiale <span id="officialMonoCountBadge" style="font-size: 0.74rem; font-weight: 700; opacity: 0.9;">(15)</span>
+                </label>
+              </div>
+
+              <!-- Topo Status / Summary -->
+              <div id="topoStatusBox" style="margin-top: 0.65rem; background: #ffffff; border: 1px solid var(--mist); border-radius: 8px; padding: 0.55rem 0.7rem; font-size: 0.76rem; color: #334155; line-height: 1.35;">
+                <strong>Foglio attivo:</strong> <span id="topoActiveSheet">-</span><br>
+                <strong>PF nel foglio:</strong> <span id="topoCountPF">0</span> rilevati<br>
+                <strong>Triangoli di appoggio:</strong> <span id="topoCountTriangles">0</span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-top: 0.65rem;">
+                <button class="btn btn-ghost" id="btnExportPregeo" type="button" style="font-size: 0.75rem; padding: 0.45rem 0.3rem; color: var(--navy); border-color: var(--gold); min-height: 34px;">
+                  📄 Esporta TAF / Pregeo
+                </button>
+                <button class="btn btn-ghost" id="btnZoomToSheetPF" type="button" style="font-size: 0.75rem; padding: 0.45rem 0.3rem; color: var(--navy); border-color: #d7d2c8; min-height: 34px;">
+                  🎯 Centra su PF Foglio
+                </button>
+              </div>
+
+              <!-- Caricamento File TAF Ufficiale & Monografie -->
+              <div style="margin-top: 0.55rem; display: grid; gap: 0.4rem;">
+                <input type="file" id="inputTafFile" accept=".taf,.txt,.dat" style="display: none;">
+                <button class="btn btn-ghost" id="btnUploadTaf" type="button" style="width: 100%; font-size: 0.75rem; padding: 0.45rem 0.3rem; color: var(--navy); border-color: var(--gold); min-height: 34px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.35rem;">
+                  <span>📂</span> Carica File TAF Ufficiale (.taf)
+                </button>
+                <div id="tafUploadStatus" style="display: none; font-size: 0.74rem; margin-top: 0.2rem; padding: 0.35rem 0.5rem; border-radius: 6px; background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; line-height: 1.3;"></div>
+
+                <input type="file" id="inputMonoPdfFile" accept=".pdf" multiple style="display: none;">
+                <button class="btn btn-ghost" id="btnUploadOfficialMono" type="button" style="width: 100%; font-size: 0.75rem; padding: 0.45rem 0.3rem; color: #b45309; border-color: #fde68a; background: #fefce8; min-height: 34px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.35rem;">
+                  <span>📸</span> Importa Monografie Ufficiali (PDF)
+                </button>
+                <div id="monoUploadStatus" style="display: none; font-size: 0.74rem; margin-top: 0.2rem; padding: 0.35rem 0.5rem; border-radius: 6px; background: #fef3c7; color: #92400e; border: 1px solid #fde68a; line-height: 1.3;"></div>
+              </div>
+
+              <!-- Triangolazione Automatica Particella -->
+              <div style="margin-top: 0.75rem; padding-top: 0.65rem; border-top: 1px dashed rgba(201, 162, 39, 0.4);">
+                <button class="btn btn-gold" id="btnTriangulateLastParcel" type="button" style="width: 100%; min-height: 38px; font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 0.4rem;">
+                  <span>📐</span> Triangola Particella con 3 PF
+                </button>
+                <button class="btn btn-ghost" id="btnClearParcelTriangulation" type="button" style="width: 100%; margin-top: 0.35rem; font-size: 0.75rem; display: none; color: #dc2626; border-color: #fca5a5; min-height: 30px;">
+                  ✕ Rimuovi Triangolazione Particella
+                </button>
               </div>
             </div>
           </div>
@@ -272,8 +439,14 @@
           <a href="index.html" class="map-floating-home-btn" title="Torna alla Home dello Studio">
             <span aria-hidden="true">←</span> <span>Studio Tecnico</span>
           </a>
-          <button type="button" class="map-floating-legend-btn" id="btnToggleLegend" aria-expanded="false" title="Legenda Vincoli e Catasto">
+          <button type="button" class="map-floating-legend-btn" id="btnToggleLegend" aria-expanded="false" aria-label="Legenda Vincoli e Catasto" title="Legenda Vincoli e Catasto">
             <span aria-hidden="true">📖</span> <span>Legenda Vincoli</span>
+          </button>
+          <button type="button" class="map-floating-topo-btn" id="btnFloatingTopo" aria-label="Modalità Rilievi Topografici e Punti Fiduciali" title="Modalità Rilievi Topografici &amp; PF">
+            <span aria-hidden="true">🧭</span> <span>Rilievi &amp; PF</span>
+          </button>
+          <button type="button" class="map-floating-legend-btn" id="btnToggleSolarMode" aria-label="Modalità Sole alto contrasto per rilievi in cantiere" title="Modalità Sole / Alto Contrasto per Rilievi in Cantiere">
+            <span aria-hidden="true">☀️</span> <span>Modalità Sole</span>
           </button>
         </div>
 
@@ -304,6 +477,28 @@
               <div class="legend-item"><span class="legend-swatch pp-beni"></span><span><strong>Beni Paesaggistici:</strong> Coste, corsi d'acqua, boschi (art. 136/142)</span></div>
             </div>
           </div>
+
+          <div class="legend-section">
+            <span class="legend-section-title">Rilievi Topografici &amp; Pregeo</span>
+            <div class="legend-list">
+              <div class="legend-item"><span class="legend-swatch topo-pf"></span><span><strong>Punto Fiduciale (PF):</strong> Caposaldo catastale trigonometrico</span></div>
+              <div class="legend-item"><span class="legend-swatch topo-triangle"></span><span><strong>Triangolazione:</strong> Maglia di appoggio e mutue distanze</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating HUD for Parcel Triangulation (VisualTAF style) -->
+        <div id="parcelTriangulationHud" class="parcel-triangulation-hud" role="region" aria-label="Triangolazione Particella">
+          <div class="hud-header">
+            <div>
+              <h4 class="hud-title"><span>📐</span> Triangolazione Particella</h4>
+              <div class="hud-subtitle" id="hudParcelSubtitle">3 Punti Fiduciali (PF) di Appoggio</div>
+            </div>
+            <button type="button" class="hud-close-btn" id="btnHudClose" aria-label="Chiudi Scheda Triangolazione">✕</button>
+          </div>
+          <div id="hudBodyContent">
+            <!-- Popolato dinamicamente da triangulateParcelWithPF() -->
+          </div>
         </div>
 
         <div id="leafletMap" class="leaflet-fullscreen-container" aria-label="Visualizzatore WebGIS Interattivo"></div>
@@ -320,8 +515,182 @@
     </div>
   </main>
 
+  <!-- Modal Bussola & Navigazione GPS in Cantiere -->
+  <div class="compass-modal-overlay" id="compassModal" role="dialog" aria-modal="true" aria-label="Bussola di puntamento Punto Fiduciale">
+    <div class="compass-card">
+      <button type="button" class="compass-close-btn" id="btnCloseCompass" aria-label="Chiudi bussola">✕</button>
+      <div style="font-size: 0.8rem; font-weight: 700; color: #c9a227; text-transform: uppercase; letter-spacing: 0.5px;">NAVIGATORE SUL CAMPO</div>
+      <h3 style="margin: 0.2rem 0; font-size: 1.1rem; color: #ffffff;" id="compassTargetPfId">PF00/0000/0000</h3>
+      <div style="font-size: 0.76rem; color: #94a3b8;" id="compassTargetDesc">Puntamento GPS al Punto Fiduciale</div>
+      
+      <div class="compass-rose-container">
+        <div class="compass-rose" id="compassRose">
+          <span class="compass-cardinal n">N</span>
+          <span class="compass-cardinal e">E</span>
+          <span class="compass-cardinal s">S</span>
+          <span class="compass-cardinal w">W</span>
+        </div>
+        <div class="compass-needle" id="compassNeedle"></div>
+        <div class="compass-center-dot"></div>
+      </div>
+
+      <div class="compass-readout" id="compassDistance">-- m</div>
+      <div class="compass-sub-readout" id="compassBearing">In attesa del segnale GPS...</div>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+        <a href="#" target="_blank" id="compassGoogleMapsLink" class="btn btn-gold" style="font-size: 0.78rem; text-decoration: none; padding: 0.45rem; display: flex; align-items: center; justify-content: center; gap: 4px;">
+          🗺️ Google Maps
+        </a>
+        <button type="button" class="btn btn-ghost" id="btnRecenterCompass" style="font-size: 0.78rem; padding: 0.45rem; color: #f8fafc; border-color: #475569;">
+          🎯 Aggiorna GPS
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Foto Georeferenziata Sopralluogo -->
+  <div class="photo-modal-overlay" id="photoModal" role="dialog" aria-modal="true" aria-label="Anteprima Foto Rilievo">
+    <div class="photo-modal-card">
+      <div class="photo-modal-header">
+        <strong style="font-size: 0.95rem;">📸 Foto Georeferenziata con Watermark</strong>
+        <button type="button" class="compass-close-btn" id="btnClosePhotoModal" aria-label="Chiudi anteprima foto rilievo" style="position: static; font-size: 1.3rem;">✕</button>
+      </div>
+      <div class="photo-modal-body">
+        <img id="photoPreviewImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Anteprima Rilievo">
+        <div style="font-size: 0.74rem; color: #475569; margin-top: 6px;">
+          Timbro dello Studio, data/ora, coordinate WGS84 e catastali impresse.
+        </div>
+      </div>
+      <div class="photo-modal-footer">
+        <button type="button" class="btn btn-ghost" id="btnRetakePhoto" style="font-size: 0.8rem; color: #475569;">Scatta Altra</button>
+        <a id="btnDownloadPhoto" href="#" download="FOTO_RILIEVO.jpg" class="btn btn-gold" style="font-size: 0.8rem; text-decoration: none;">💾 Scarica Foto (.JPG)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Scheda Peritale di Inquadramento Pregeo (Anteprima A4 a Schermo) -->
+  <div class="peritale-modal-overlay" id="peritaleModal" role="dialog" aria-modal="true" aria-label="Scheda Peritale di Inquadramento Catastale">
+    <div class="peritale-modal-card">
+      <div class="peritale-modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 1.3rem;">📑</span>
+          <div>
+            <h3 style="margin: 0; font-size: 1.05rem; color: #ffffff;">Relazione Tecnico-Peritale di Inquadramento</h3>
+            <span style="font-size: 0.74rem; color: #e0c56a;">Conforme Pregeo 10 (APAG 2.12) &bull; Studio Tecnico Associato Giurato &amp; Iacono</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <button type="button" class="btn btn-gold" id="btnPrintPeritaleModal" aria-label="Stampa o salva in PDF la relazione peritale" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">
+            🖨️ Stampa / Salva in PDF
+          </button>
+          <button type="button" class="compass-close-btn" id="btnClosePeritaleModal" aria-label="Chiudi relazione peritale" style="position: static; font-size: 1.3rem;">✕</button>
+        </div>
+      </div>
+      <div class="peritale-modal-body" id="peritaleModalBody">
+        <!-- Contenuto A4 della Scheda Peritale popolato dinamicamente -->
+      </div>
+      <div class="peritale-modal-footer">
+        <button type="button" class="btn btn-ghost" id="btnClosePeritaleModalFooter" style="font-size: 0.82rem; color: #475569;">
+          ✕ Chiudi Anteprima
+        </button>
+        <button type="button" class="btn btn-gold" id="btnPrintPeritaleModalFooter" style="font-size: 0.82rem; padding: 0.4rem 1rem;">
+          🖨️ Stampa o Salva PDF (A4)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="surveyPhotoInput" accept="image/*" capture="environment" style="display: none;">
+
+  <!-- Modal Monografia Ufficiale Agenzia delle Entrate & Foto PF -->
+  <div class="official-mono-modal-overlay" id="officialMonoModal" role="dialog" aria-modal="true" aria-label="Monografia Ufficiale Agenzia delle Entrate">
+    <div class="official-mono-modal-card">
+      <div class="official-mono-modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 1.4rem; background: #c9a227; color: #002b49; width: 38px; height: 38px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-weight: bold;">📸</span>
+          <div>
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <h3 id="monoModalTitle" style="margin: 0; font-size: 1.12rem; color: #ffffff; font-weight: 800;">Monografia Ufficiale Punto Fiduciale</h3>
+              <span id="monoModalBadge" style="font-size: 0.68rem; background: #059669; color: #ffffff; padding: 2px 8px; border-radius: 999px; font-weight: 700; text-transform: uppercase;">Originale Catasto</span>
+            </div>
+            <span id="monoModalSubtitle" style="font-size: 0.74rem; color: #e0c56a;">Agenzia delle Entrate &bull; Ufficio Provinciale - Territorio &bull; Pregeo 10</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <a id="btnDownloadMonoPdf" href="#" download class="btn btn-gold" style="font-size: 0.78rem; padding: 0.35rem 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">
+            <span>📄</span> Scarica PDF Originale
+          </a>
+          <button type="button" class="btn btn-ghost" id="btnPrintMonoModal" aria-label="Stampa scheda monografica ufficiale" style="font-size: 0.78rem; padding: 0.35rem 0.75rem; color: #ffffff; border-color: rgba(255,255,255,0.4);">
+            🖨️ Stampa
+          </button>
+          <button type="button" class="compass-close-btn" id="btnCloseMonoModal" aria-label="Chiudi monografia ufficiale" style="position: static; font-size: 1.3rem;">✕</button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="official-mono-nav-tabs">
+        <button type="button" class="mono-tab-btn active" data-tab="tabPhotos" id="monoTabBtnPhotos">
+          📸 Fotografie &amp; Mappa Catastale
+        </button>
+        <button type="button" class="mono-tab-btn" data-tab="tabDocument" id="monoTabBtnDoc">
+          📑 Scheda Ufficiale Integrale (Pagine)
+        </button>
+        <button type="button" class="mono-tab-btn" data-tab="tabMetrics" id="monoTabBtnMetrics">
+          🧭 Dati Metrici &amp; Pregeo
+        </button>
+      </div>
+
+      <div class="official-mono-modal-body" id="officialMonoModalBody">
+        <!-- Contenuto dinamico della Monografia popolato da script.js -->
+      </div>
+
+      <div class="official-mono-modal-footer">
+        <button type="button" class="btn btn-ghost" id="btnCloseMonoModalFooter" style="font-size: 0.8rem; color: #475569;">
+          ✕ Chiudi
+        </button>
+        <div style="display: flex; gap: 8px;">
+          <a id="btnNavMapsMonoModal" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-ghost" style="font-size: 0.8rem; color: #0284c7; border-color: #bae6fd; background: #f0f9ff; text-decoration: none;">
+            🗺️ Navigatore GPS (Google Maps) ↗
+          </a>
+          <a id="btnDownloadMonoPdfFooter" href="#" download class="btn btn-gold" style="font-size: 0.8rem; padding: 0.4rem 1rem; text-decoration: none;">
+            📄 Scarica PDF Originale
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Fullscreen Lightbox per Zoom Foto ad altissima risoluzione -->
+  <div class="mono-lightbox-overlay" id="monoLightboxModal">
+    <div class="mono-lightbox-content">
+      <button type="button" class="mono-lightbox-close" id="btnCloseMonoLightbox" aria-label="Chiudi ingrandimento">✕</button>
+      <img id="monoLightboxImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" alt="Dettaglio Foto PF">
+      <div class="mono-lightbox-caption" id="monoLightboxCaption"></div>
+    </div>
+  </div>
+
+  <!-- Print Report Container (Hidden on screen, visible during window.print()) -->
+  <div id="printReportContainer" style="display: none;"></div>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="script.js?v=20261026-3"></script>
+  <script src="data/pf/index.js"></script>
+  <script src="data/pf/helmert.js"></script>
+  <script src="data/pf/H574.js"></script>
+  <script src="data/dis/index.js"></script>
+  <script src="data/dis/H574.js"></script>
+  <script src="data/monografie/index.js?v=20261031-1"></script>
+  <script src="script.js?v=20261031-1"></script>
   <script data-goatcounter="https://studiotecnicogiuratoiacono.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+
+  <!-- PWA Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+          console.log('SW registration error:', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
